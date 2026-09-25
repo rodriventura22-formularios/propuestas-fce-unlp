@@ -1264,6 +1264,12 @@
     <b>⚠ Falta conectar la base de datos</b>
     Esta app necesita una base de datos gratuita (Firebase) para que las propuestas se compartan entre todos los docentes y la Secretaría. Buscá el bloque <code>firebaseConfig</code> cerca del inicio del archivo y completalo con los datos de tu proyecto de Firebase (ver instrucciones al final de la conversación). Mientras tanto, guardar propuestas y ver el panel de secretaría no van a funcionar.
   </div>
+  <div class="setup-banner" id="avisoSinMaterias" style="display:none;">
+    <b>⚠ Todavía no tenés asignaturas asignadas</b>
+    Para poder cargar una propuesta, la Secretaría de Asuntos Académicos tiene que asignarte
+    las materias que dictás. Escribile a <b>asuntosacademicos@econo.unlp.edu.ar</b> indicando
+    tu nombre y las asignaturas que tenés a cargo.
+  </div>
   <div class="doc">
     <div class="doc-head">
       <h1>Presentación de propuesta de asignatura</h1>
@@ -1762,6 +1768,28 @@
     <div id="habTableWrap"></div>
   </div>
 
+  <!-- Editor de asignaturas de un docente -->
+  <div id="matModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.45);
+       align-items:center; justify-content:center; z-index:900; padding:20px;">
+    <div style="background:#fff; border-radius:12px; max-width:620px; width:100%; max-height:85vh;
+         display:flex; flex-direction:column; box-shadow:0 18px 50px rgba(0,0,0,.25);">
+      <div style="padding:18px 22px 12px; border-bottom:1px solid var(--line);">
+        <h2 style="margin:0 0 4px; font-size:18px;">Asignaturas habilitadas</h2>
+        <p style="margin:0; font-size:13px; color:var(--ink-soft);">
+          Tildá las materias que puede cargar <b id="matModalEmail"></b>.
+          Si no tiene ninguna, no va a poder cargar propuestas.
+        </p>
+        <input type="text" id="matBuscar" placeholder="Buscar asignatura…" spellcheck="false"
+               style="width:100%; margin-top:12px;">
+      </div>
+      <div id="matLista" style="padding:12px 22px; overflow-y:auto; flex:1;"></div>
+      <div style="padding:14px 22px; border-top:1px solid var(--line); display:flex; justify-content:flex-end; gap:10px;">
+        <button class="btn ghost" id="matCancelarBtn">Cancelar</button>
+        <button class="btn" id="matGuardarBtn">Guardar asignaturas</button>
+      </div>
+    </div>
+  </div>
+
   <p style="font-size:12px; color:var(--ink-soft); margin-top:16px;">
     Cualquier correo institucional habilitado que no figure en la lista de roles ingresa con el rol <b>Docente</b>.
     La cuenta maestra no puede modificarse desde acá.
@@ -2010,6 +2038,29 @@
   /* Correos habilitados desde el panel (se cargan de la base) */
   var HABILITADOS_EXTRA = [];
 
+  /* ============ ASIGNATURAS POR DOCENTE ============
+     Cada docente solo puede cargar las propuestas de las materias que tiene
+     asignadas. Se administra desde "Administración de permisos" y se guarda
+     en config/materias. Las reglas de Firestore verifican lo mismo. */
+  var MATERIAS_POR_DOCENTE = {};   // correo -> [asignaturas]
+
+  function materiasDe(email){
+    var e = (email || "").toLowerCase().trim();
+    var m = MATERIAS_POR_DOCENTE[e];
+    return Array.isArray(m) ? m : [];
+  }
+
+  /* Lista completa del desplegable, guardada antes de cualquier filtro:
+     el panel de Secretaría la necesita entera (p. ej. "Sin propuesta cargada"). */
+  var TODAS_LAS_ASIGNATURAS = [];
+  (function(){
+    var sel = document.getElementById("f_asignatura");
+    if(!sel) return;
+    TODAS_LAS_ASIGNATURAS = Array.prototype.slice.call(sel.options)
+      .map(function(o){ return o.value; })
+      .filter(function(v){ return v && v !== "__otra__"; });
+  })();
+
   function estaHabilitado(email){
     var e = (email || "").toLowerCase().trim();
     if(!e) return false;
@@ -2169,7 +2220,52 @@
       rolesStorage.cargar().then(function(asig){
         ROLES_ASIGNADOS = asig || {};
         aplicarPermisos();
+        aplicarFiltroDeMaterias();
       }).catch(function(){ /* si falla, quedan los roles definidos en el código */ });
+    }
+
+    /* Y las asignaturas habilitadas para este docente */
+    if(typeof materiasStorage !== "undefined"){
+      materiasStorage.cargar().then(function(m){
+        MATERIAS_POR_DOCENTE = m || {};
+        aplicarFiltroDeMaterias();
+      }).catch(function(){ aplicarFiltroDeMaterias(); });
+    }
+  }
+
+  /* Deja en el desplegable solo las asignaturas que la persona puede cargar.
+     Secretaría, Departamento y Dirección de Enseñanza ven la lista completa. */
+  function aplicarFiltroDeMaterias(){
+    var sel = document.getElementById("f_asignatura");
+    var aviso = document.getElementById("avisoSinMaterias");
+    if(!sel) return;
+
+    var esDocente = (rolUsuario() === "docente") && !esMaestro();
+    var permitidas = esDocente ? materiasDe(usuarioActual) : null;
+
+    /* se reconstruye el desplegable desde la lista completa */
+    var valorPrevio = sel.value;
+    var opts = ['<option value="">Seleccionar…</option>'];
+    TODAS_LAS_ASIGNATURAS.forEach(function(a){
+      if(permitidas && permitidas.indexOf(a) < 0) return;
+      opts.push('<option>' + esc(a) + '</option>');
+    });
+    if(!esDocente){ opts.push('<option value="__otra__">➕ Otra (escribir el nombre)</option>'); }
+    sel.innerHTML = opts.join("");
+    if(valorPrevio){ sel.value = valorPrevio; }
+
+    /* Aviso y bloqueo cuando el docente todavía no tiene materias asignadas */
+    var sinMaterias = esDocente && permitidas.length === 0;
+    if(aviso){
+      aviso.style.display = sinMaterias ? "block" : "none";
+    }
+    var form = document.getElementById("viewForm");
+    if(form){
+      var campos = form.querySelectorAll("input, select, textarea, button");
+      Array.prototype.forEach.call(campos, function(el){
+        if(el.id === "gateEmail" || el.closest("#avisoSinMaterias")) return;
+        el.disabled = sinMaterias;
+      });
     }
   }
 
@@ -2432,6 +2528,20 @@
       return Promise.resolve();
     };
 
+    /* En modo de prueba el docente de ejemplo tiene dos materias asignadas,
+       para que se pueda ver cómo queda el desplegable filtrado. */
+    var PRUEBA_MATERIAS = {
+      "docente.prueba@modo-prueba.local": [
+        "Contabilidad I (Bases y Fundamentos) - Cátedra A",
+        "Auditoria"
+      ]
+    };
+    materiasStorage.cargar = function(){ return Promise.resolve(JSON.parse(JSON.stringify(PRUEBA_MATERIAS))); };
+    materiasStorage.guardar = function(a){
+      PRUEBA_MATERIAS = JSON.parse(JSON.stringify(a));
+      return Promise.resolve();
+    };
+
     /* En modo de prueba la lista blanca no aplica: el acceso ya lo dio el panel */
     var PRUEBA_HABILITADOS = [];
     habilitadosStorage.cargar = function(){ return Promise.resolve(PRUEBA_HABILITADOS.slice()); };
@@ -2580,6 +2690,24 @@
       if (!storageReady) return Promise.reject(new Error("La base de datos no está configurada todavía."));
       return db.collection("config").doc("habilitados").set({
         emails: emails,
+        actualizadoPor: usuarioActual,
+        actualizadoEn: new Date().toISOString()
+      });
+    }
+  };
+
+  /* Asignaturas asignadas a cada docente (config/materias) */
+  var materiasStorage = {
+    cargar: function(){
+      if (!storageReady) return Promise.resolve({});
+      return db.collection("config").doc("materias").get().then(function(snap){
+        return snap.exists ? (snap.data().asignaciones || {}) : {};
+      });
+    },
+    guardar: function(asignaciones){
+      if (!storageReady) return Promise.reject(new Error("La base de datos no está configurada todavía."));
+      return db.collection("config").doc("materias").set({
+        asignaciones: asignaciones,
         actualizadoPor: usuarioActual,
         actualizadoEn: new Date().toISOString()
       });
@@ -25097,6 +25225,22 @@
     var data = collectFormData();
     var btn = document.getElementById("saveBtn");
 
+    /* 0) La materia tiene que estar entre las asignadas a este docente.
+       Las reglas de Firestore verifican lo mismo del lado del servidor. */
+    if(rolUsuario() === "docente" && !esMaestro()){
+      var mias = materiasDe(usuarioActual);
+      if(mias.length === 0){
+        showMsg("saveMsg", "Todavía no tenés asignaturas asignadas. Pedile a la Secretaría " +
+          "de Asuntos Académicos que te asigne las materias que dictás.", true);
+        return;
+      }
+      if(mias.indexOf(data.asignatura) < 0){
+        showMsg("saveMsg", "Solo podés cargar propuestas de las asignaturas que tenés asignadas: " +
+          mias.join(", ") + ".", true);
+        return;
+      }
+    }
+
     /* 1) Campos obligatorios */
     var faltan = camposFaltantes(data);
     if(faltan.length > 0){
@@ -26046,8 +26190,9 @@
     var wrap = document.getElementById("habTableWrap");
     if(!storageReady){ wrap.innerHTML = '<div class="empty">La base de datos no está configurada todavía.</div>'; return; }
     wrap.innerHTML = '<p style="color:var(--ink-soft);">Cargando…</p>';
-    habilitadosStorage.cargar().then(function(lista){
-      HABILITADOS_EXTRA = (lista || []).map(function(x){ return String(x).toLowerCase().trim(); });
+    Promise.all([habilitadosStorage.cargar(), materiasStorage.cargar()]).then(function(res){
+      HABILITADOS_EXTRA = (res[0] || []).map(function(x){ return String(x).toLowerCase().trim(); });
+      MATERIAS_POR_DOCENTE = res[1] || {};
       renderHabilitados();
     }).catch(function(err){
       wrap.innerHTML = '<div class="empty">No se pudo cargar la lista: ' + esc(err.message || "") + '</div>';
@@ -26068,14 +26213,30 @@
       return;
     }
     var t = '<div class="table-wrap"><table class="data-table"><thead><tr>' +
-            '<th>Correo institucional</th><th>Origen</th><th style="width:110px;"></th>' +
+            '<th>Correo institucional</th><th>Origen</th>' +
+            '<th>Asignaturas que puede cargar</th><th style="width:170px;"></th>' +
             '</tr></thead><tbody>';
     filas.forEach(function(f){
+      var mats = materiasDe(f.email);
+      var rolDeF = rolDe(f.email);
+      var sinLimite = esEmailMaestro(f.email) || rolDeF !== "docente";
+      var celdaMat;
+      if(sinLimite){
+        /* Secretaría, Departamento y Dirección de Enseñanza no dependen de
+           esta lista: su rol ya define qué pueden hacer. */
+        celdaMat = '<span style="font-size:12px; color:var(--ink-soft);">Todas · rol ' +
+                   esc(ROLES_NOMBRE[rolDeF] || rolDeF) + '</span>';
+      } else if(mats.length === 0){
+        celdaMat = '<span style="color:#9E2B25; font-size:12px;">Sin asignar · no puede cargar</span>';
+      } else {
+        celdaMat = mats.map(function(m){ return '<div style="font-size:12.5px;">' + esc(m) + '</div>'; }).join("");
+      }
       t += '<tr><td>' + esc(f.email) + '</td>' +
            '<td>' + (f.fijo ? '<span class="tag">Precargado</span>' : '<span class="tag">Agregado</span>') + '</td>' +
-           '<td style="text-align:right;">' +
-           (f.fijo ? '<span style="font-size:11.5px; color:var(--ink-soft);">fijo</span>'
-                   : '<button class="btn ghost small" data-quitar-hab="' + esc(f.email) + '">Quitar</button>') +
+           '<td>' + celdaMat + '</td>' +
+           '<td style="text-align:right; white-space:nowrap;">' +
+           '<button class="btn ghost small" data-materias-hab="' + esc(f.email) + '">Asignaturas</button> ' +
+           (f.fijo ? '' : '<button class="btn ghost small" data-quitar-hab="' + esc(f.email) + '">Quitar</button>') +
            '</td></tr>';
     });
     t += '</tbody></table></div>';
@@ -26088,6 +26249,79 @@
         guardarHabilitados(HABILITADOS_EXTRA.filter(function(e){ return e !== correo; }),
           "Se quitó el acceso de " + correo + ".");
       });
+    });
+    Array.prototype.forEach.call(wrap.querySelectorAll("[data-materias-hab]"), function(btn){
+      btn.addEventListener("click", function(){
+        abrirEditorMaterias(btn.getAttribute("data-materias-hab"));
+      });
+    });
+  }
+
+  /* ---------- editor de asignaturas de un docente ---------- */
+  var matEditandoCorreo = "";
+
+  function abrirEditorMaterias(correo){
+    matEditandoCorreo = correo;
+    document.getElementById("matModalEmail").textContent = correo;
+    document.getElementById("matBuscar").value = "";
+    renderListaMaterias();
+    document.getElementById("matModal").style.display = "flex";
+  }
+
+  function cerrarEditorMaterias(){
+    document.getElementById("matModal").style.display = "none";
+    matEditandoCorreo = "";
+  }
+
+  function renderListaMaterias(){
+    var cont = document.getElementById("matLista");
+    var q = normalizarNombre(document.getElementById("matBuscar").value || "");
+    var actuales = materiasDe(matEditandoCorreo);
+    var html = "";
+    TODAS_LAS_ASIGNATURAS.forEach(function(a){
+      var marcada = actuales.indexOf(a) >= 0;
+      if(q && normalizarNombre(a).indexOf(q) < 0 && !marcada) return;
+      html += '<label style="display:flex; gap:8px; align-items:flex-start; padding:5px 2px; font-size:13px; cursor:pointer;">' +
+              '<input type="checkbox" data-mat="' + esc(a) + '"' + (marcada ? " checked" : "") + '>' +
+              '<span>' + esc(a) + '</span></label>';
+    });
+    cont.innerHTML = html || '<p style="color:var(--ink-soft); font-size:13px;">No hay asignaturas que coincidan con la búsqueda.</p>';
+  }
+
+  function guardarMateriasDelDocente(){
+    var seleccionadas = [];
+    Array.prototype.forEach.call(document.querySelectorAll("#matLista input[data-mat]"), function(cb){
+      if(cb.checked){ seleccionadas.push(cb.getAttribute("data-mat")); }
+    });
+    /* las que no están visibles por el filtro de búsqueda no se pierden */
+    var previas = materiasDe(matEditandoCorreo);
+    var visibles = Array.prototype.map.call(document.querySelectorAll("#matLista input[data-mat]"),
+      function(cb){ return cb.getAttribute("data-mat"); });
+    previas.forEach(function(m){
+      if(visibles.indexOf(m) < 0 && seleccionadas.indexOf(m) < 0){ seleccionadas.push(m); }
+    });
+
+    var nuevo = {};
+    Object.keys(MATERIAS_POR_DOCENTE).forEach(function(k){ nuevo[k] = MATERIAS_POR_DOCENTE[k]; });
+    if(seleccionadas.length === 0){ delete nuevo[matEditandoCorreo]; }
+    else { nuevo[matEditandoCorreo] = seleccionadas.sort(); }
+
+    var msg = document.getElementById("habMsg");
+    msg.className = "save-msg";
+    msg.textContent = "Guardando…";
+    var correo = matEditandoCorreo;
+    materiasStorage.guardar(nuevo).then(function(){
+      MATERIAS_POR_DOCENTE = nuevo;
+      msg.className = "save-msg ok";
+      msg.textContent = seleccionadas.length === 0
+        ? ("✓ Se quitaron todas las asignaturas de " + correo + ".")
+        : ("✓ " + correo + " ahora puede cargar " + seleccionadas.length +
+           (seleccionadas.length === 1 ? " asignatura." : " asignaturas."));
+      cerrarEditorMaterias();
+      renderHabilitados();
+    }).catch(function(err){
+      msg.className = "save-msg err";
+      msg.textContent = "No se pudo guardar: " + ((err && err.message) || "error desconocido");
     });
   }
 
@@ -26135,6 +26369,13 @@
     guardarHabilitados(HABILITADOS_EXTRA.concat(nuevos),
       nuevos.length === 1 ? ("Se habilitó " + nuevos[0] + ".")
                           : ("Se habilitaron " + nuevos.length + " correos."));
+  });
+
+  document.getElementById("matBuscar").addEventListener("input", renderListaMaterias);
+  document.getElementById("matCancelarBtn").addEventListener("click", cerrarEditorMaterias);
+  document.getElementById("matGuardarBtn").addEventListener("click", guardarMateriasDelDocente);
+  document.getElementById("matModal").addEventListener("click", function(e){
+    if(e.target === this){ cerrarEditorMaterias(); }
   });
 
   document.getElementById("permRefreshBtn").addEventListener("click", function(){
@@ -27144,10 +27385,9 @@
 
   /* Asignaturas del listado oficial que todavía no tienen propuesta cargada */
   function tablaFaltantesHtml(){
-    var sel = document.getElementById("f_asignatura");
-    var todas = Array.prototype.slice.call(sel.options)
-      .map(function(o){ return o.value; })
-      .filter(function(v){ return v && v !== "__otra__"; });
+    /* Se usa la lista completa, no el desplegable: para un docente el
+       desplegable está filtrado a sus propias materias. */
+    var todas = TODAS_LAS_ASIGNATURAS.slice();
 
     var cargadas = {};
     saaProposals.forEach(function(p){
