@@ -1204,12 +1204,20 @@
     </div>
     <h1>Propuestas de Oferta Académica</h1>
     <p class="gate-sub">1° Semestre 2027</p>
-    <p class="gate-text">Para ingresar, indicá tu correo institucional. Te vamos a enviar un <b>enlace de acceso</b> a esa casilla: abrilo para entrar. Así verificamos que el correo es realmente tuyo.</p>
+    <p class="gate-text" id="gateIntro">Ingresá con tu correo institucional y la contraseña que creaste para esta aplicación.</p>
     <label class="gate-label" for="gateEmail">Correo institucional</label>
     <input type="email" id="gateEmail" placeholder="nombre@econo.unlp.edu.ar" autocomplete="email" spellcheck="false">
+    <label class="gate-label" for="gatePass" style="margin-top:10px;">Contraseña</label>
+    <input type="password" id="gatePass" placeholder="Tu contraseña" autocomplete="current-password">
+    <label class="gate-label" for="gatePass2" id="gatePass2Label" style="margin-top:10px; display:none;">Repetir contraseña</label>
+    <input type="password" id="gatePass2" placeholder="Repetí la contraseña" autocomplete="new-password" style="display:none;">
     <div class="gate-msg" id="gateMsg"></div>
-    <button class="btn" id="gateBtn" style="width:100%; margin-top:12px; padding:11px;">Enviarme el enlace de acceso</button>
-    <p class="gate-foot">Solo se permite el acceso con direcciones <b>@econo.unlp.edu.ar</b><br>
+    <button class="btn" id="gateBtn" style="width:100%; margin-top:12px; padding:11px;">Ingresar</button>
+    <div style="display:flex; justify-content:space-between; gap:12px; margin-top:12px; font-size:12.5px;">
+      <button type="button" class="link-out" id="gateModoBtn" style="padding:0;">Crear mi contraseña</button>
+      <button type="button" class="link-out" id="gateOlvideBtn" style="padding:0;">Olvidé mi contraseña</button>
+    </div>
+    <p class="gate-foot">Solo pueden ingresar los correos <b>@econo.unlp.edu.ar</b> habilitados por la Secretaría.<br>
       Si tu correo no tiene un rol asignado, ingresás con permisos de <b>Docente</b>.</p>
   </div>
 
@@ -1735,8 +1743,27 @@
 
   <div id="permTableWrap"></div>
 
+  <div style="margin-top:34px; padding-top:26px; border-top:2px solid var(--line);">
+    <div class="admin-head">
+      <div>
+        <h1 style="font-size:20px;">Correos habilitados para ingresar</h1>
+        <p>Solo estas personas pueden usar la aplicación. Cualquier otro correo, aunque sea
+          institucional, no va a poder ver ni cargar nada.</p>
+      </div>
+    </div>
+    <div class="perm-add" style="align-items:flex-start;">
+      <div class="field" style="flex:2 1 320px;">
+        <label>Correos a habilitar (uno por línea, o separados por coma)</label>
+        <textarea id="habEmails" rows="3" placeholder="nombre.apellido@econo.unlp.edu.ar&#10;otro.docente@econo.unlp.edu.ar" spellcheck="false" style="width:100%; resize:vertical;"></textarea>
+      </div>
+      <button class="btn" id="habAddBtn">Habilitar</button>
+    </div>
+    <div class="save-msg" id="habMsg" style="margin-bottom:14px;"></div>
+    <div id="habTableWrap"></div>
+  </div>
+
   <p style="font-size:12px; color:var(--ink-soft); margin-top:16px;">
-    Cualquier correo institucional que no figure en esta lista ingresa con el rol <b>Docente</b>.
+    Cualquier correo institucional habilitado que no figure en la lista de roles ingresa con el rol <b>Docente</b>.
     La cuenta maestra no puede modificarse desde acá.
   </p>
 </div>
@@ -1965,6 +1992,31 @@
     staff:        ["estadoSiu","estadoCupos"]
   };
 
+  /* ============ LISTA BLANCA DE ACCESO ============
+     Solo estos correos pueden usar la aplicación. Los de abajo vienen
+     precargados; el resto se administra desde "Administración de permisos"
+     y se guarda en la base (config/habilitados).
+     Las reglas de Firestore verifican lo mismo del lado del servidor, así
+     que un correo fuera de la lista no puede leer ni escribir nada. */
+  var HABILITADOS_BASE = [
+    "asuntosacademicos@econo.unlp.edu.ar",
+    "rodrigo.ventura@econo.unlp.edu.ar",
+    "ignacio.barrionuevo@econo.unlp.edu.ar",
+    "micaela.salguero@econo.unlp.edu.ar",
+    "hugo.collacciani@econo.unlp.edu.ar",
+    "natalia.ceriani@econo.unlp.edu.ar",
+    "vanesa.allazzina@econo.unlp.edu.ar"
+  ];
+  /* Correos habilitados desde el panel (se cargan de la base) */
+  var HABILITADOS_EXTRA = [];
+
+  function estaHabilitado(email){
+    var e = (email || "").toLowerCase().trim();
+    if(!e) return false;
+    if(HABILITADOS_BASE.indexOf(e) >= 0) return true;
+    return HABILITADOS_EXTRA.indexOf(e) >= 0;
+  }
+
   /* Cuenta con el permiso maestro: administra los roles de los demás */
   var EMAILS_MAESTROS = [
     "rodrigo.ventura@econo.unlp.edu.ar",
@@ -2095,13 +2147,10 @@
   function esInstitucional(email){
     return email.toLowerCase().split("@").pop() === DOMINIO_INSTITUCIONAL;
   }
-  /* La sesión la administra Firebase Authentication: el correo se verifica
-     con un enlace enviado a la casilla institucional. Ya no se guarda el
-     usuario en el navegador de forma manual. */
-  var CLAVE_EMAIL_PENDIENTE = "fce_email_para_enlace";
-  function olvidarSesion(){
-    try { localStorage.removeItem(CLAVE_EMAIL_PENDIENTE); } catch(e){}
-  }
+  /* La sesión la administra Firebase Authentication con correo y contraseña.
+     La contraseña es propia de esta aplicación, no la del correo institucional. */
+  function olvidarSesion(){ /* la sesión la cierra firebase.auth().signOut() */ }
+  var MODO_GATE = "ingresar";   // "ingresar" | "crear"
 
   function abrirApp(email){
     usuarioActual = email;
@@ -2124,36 +2173,88 @@
     }
   }
 
+  function cambiarModoGate(modo){
+    MODO_GATE = modo;
+    var crear = (modo === "crear");
+    document.getElementById("gateIntro").textContent = crear
+      ? "Creá una contraseña para esta aplicación. No es la de tu correo: es solo para entrar acá."
+      : "Ingresá con tu correo institucional y la contraseña que creaste para esta aplicación.";
+    document.getElementById("gateBtn").textContent = crear ? "Crear mi contraseña" : "Ingresar";
+    document.getElementById("gateModoBtn").textContent = crear ? "Ya tengo contraseña" : "Crear mi contraseña";
+    document.getElementById("gatePass2").style.display = crear ? "block" : "none";
+    document.getElementById("gatePass2Label").style.display = crear ? "block" : "none";
+    document.getElementById("gatePass").setAttribute("autocomplete", crear ? "new-password" : "current-password");
+    document.getElementById("gateMsg").textContent = "";
+  }
+
+  function mensajeErrorAuth(err){
+    var code = (err && err.code) || "";
+    if(code === "auth/invalid-credential" || code === "auth/wrong-password" || code === "auth/user-not-found"){
+      return "El correo o la contraseña no son correctos. Si es tu primera vez, usá «Crear mi contraseña».";
+    }
+    if(code === "auth/email-already-in-use"){
+      return "Ese correo ya tiene una contraseña creada. Usá «Ya tengo contraseña» para ingresar, o «Olvidé mi contraseña».";
+    }
+    if(code === "auth/weak-password"){ return "La contraseña debe tener al menos 6 caracteres."; }
+    if(code === "auth/too-many-requests"){ return "Demasiados intentos seguidos. Esperá unos minutos y volvé a probar."; }
+    if(code === "auth/network-request-failed"){ return "No se pudo conectar. Revisá tu conexión a internet."; }
+    return (err && err.message) || "Error desconocido.";
+  }
+
   function intentarIngreso(){
-    var email = document.getElementById("gateEmail").value.trim();
+    var email = document.getElementById("gateEmail").value.trim().toLowerCase();
+    var pass  = document.getElementById("gatePass").value;
     var msg = document.getElementById("gateMsg");
-    if(!email){
-      msg.textContent = "Ingresá tu correo institucional para continuar."; return;
-    }
-    if(!emailValido(email)){
-      msg.textContent = "El correo no tiene un formato válido."; return;
-    }
+    msg.style.color = "";
+    if(!email){ msg.textContent = "Ingresá tu correo institucional para continuar."; return; }
+    if(!emailValido(email)){ msg.textContent = "El correo no tiene un formato válido."; return; }
     if(!esInstitucional(email)){
       msg.textContent = "Solo se permite el acceso con correos @" + DOMINIO_INSTITUCIONAL + "."; return;
     }
+    if(!pass){ msg.textContent = "Escribí tu contraseña."; return; }
     if(!authListo()){
-      msg.textContent = "El sistema de verificación no está disponible. Revisá la configuración de Firebase.";
+      msg.textContent = "El sistema de acceso no está disponible. Revisá la configuración de Firebase."; return;
+    }
+
+    var btn = document.getElementById("gateBtn");
+    var auth = firebase.auth();
+
+    if(MODO_GATE === "crear"){
+      var pass2 = document.getElementById("gatePass2").value;
+      if(pass.length < 6){ msg.textContent = "La contraseña debe tener al menos 6 caracteres."; return; }
+      if(pass !== pass2){ msg.textContent = "Las dos contraseñas no coinciden."; return; }
+      btn.disabled = true; msg.textContent = "Creando tu contraseña…";
+      auth.createUserWithEmailAndPassword(email, pass).then(function(){
+        btn.disabled = false;   /* onAuthStateChanged se encarga de abrir la app */
+      }).catch(function(err){
+        btn.disabled = false;
+        msg.textContent = mensajeErrorAuth(err);
+      });
       return;
     }
-    var btn = document.getElementById("gateBtn");
-    btn.disabled = true;
-    msg.textContent = "Enviando enlace de acceso…";
-    firebase.auth().sendSignInLinkToEmail(email.toLowerCase(), {
-      url: location.href.split("#")[0].split("?")[0],
-      handleCodeInApp: true
-    }).then(function(){
-      try { localStorage.setItem(CLAVE_EMAIL_PENDIENTE, email.toLowerCase()); } catch(e){}
+
+    btn.disabled = true; msg.textContent = "Verificando…";
+    auth.signInWithEmailAndPassword(email, pass).then(function(){
       btn.disabled = false;
-      msg.innerHTML = "✓ Te enviamos un enlace a <b>" + esc(email.toLowerCase()) + "</b>. " +
-        "Abrilo desde tu correo institucional para ingresar. Si no lo ves, revisá la carpeta de correo no deseado.";
     }).catch(function(err){
       btn.disabled = false;
-      msg.textContent = "No se pudo enviar el enlace: " + ((err && err.message) || "error desconocido");
+      msg.textContent = mensajeErrorAuth(err);
+    });
+  }
+
+  function recuperarContrasena(){
+    var email = document.getElementById("gateEmail").value.trim().toLowerCase();
+    var msg = document.getElementById("gateMsg");
+    if(!email || !emailValido(email)){
+      msg.textContent = "Escribí primero tu correo institucional y volvé a tocar «Olvidé mi contraseña»."; return;
+    }
+    if(!authListo()){ msg.textContent = "El sistema de acceso no está disponible."; return; }
+    msg.textContent = "Enviando…";
+    firebase.auth().sendPasswordResetEmail(email).then(function(){
+      msg.innerHTML = "✓ Te enviamos un correo a <b>" + esc(email) + "</b> para que puedas elegir una contraseña nueva. " +
+        "Si no lo ves, revisá la carpeta de correo no deseado.";
+    }).catch(function(err){
+      msg.textContent = "No se pudo enviar: " + mensajeErrorAuth(err);
     });
   }
 
@@ -2162,11 +2263,14 @@
   }
 
   document.getElementById("gateBtn").addEventListener("click", intentarIngreso);
-  document.getElementById("gateEmail").addEventListener("keydown", function(e){
-    if(e.key === "Enter"){ intentarIngreso(); }
+  document.getElementById("gateModoBtn").addEventListener("click", function(){
+    cambiarModoGate(MODO_GATE === "crear" ? "ingresar" : "crear");
   });
-  document.getElementById("gateEmail").addEventListener("input", function(){
-    document.getElementById("gateMsg").textContent = "";
+  document.getElementById("gateOlvideBtn").addEventListener("click", recuperarContrasena);
+  ["gateEmail","gatePass","gatePass2"].forEach(function(id){
+    var el = document.getElementById(id);
+    el.addEventListener("keydown", function(e){ if(e.key === "Enter"){ intentarIngreso(); } });
+    el.addEventListener("input", function(){ document.getElementById("gateMsg").textContent = ""; });
   });
   document.getElementById("logoutBtn").addEventListener("click", function(){
     olvidarSesion();
@@ -2320,6 +2424,21 @@
       PRUEBA_ROLES_ASIG = JSON.parse(JSON.stringify(asignaciones));
       return Promise.resolve();
     };
+
+    var PRUEBA_ARCHIVO = {};
+    archivoStorage.cargar = function(){ return Promise.resolve(JSON.parse(JSON.stringify(PRUEBA_ARCHIVO))); };
+    archivoStorage.guardar = function(pl){
+      PRUEBA_ARCHIVO = JSON.parse(JSON.stringify(pl));
+      return Promise.resolve();
+    };
+
+    /* En modo de prueba la lista blanca no aplica: el acceso ya lo dio el panel */
+    var PRUEBA_HABILITADOS = [];
+    habilitadosStorage.cargar = function(){ return Promise.resolve(PRUEBA_HABILITADOS.slice()); };
+    habilitadosStorage.guardar = function(emails){
+      PRUEBA_HABILITADOS = (emails || []).slice();
+      return Promise.resolve();
+    };
   }
 
   function entrarModoPrueba(rol){
@@ -2342,36 +2461,33 @@
     var auth = firebase.auth();
     var msg = document.getElementById("gateMsg");
 
-    /* 1) El usuario vuelve desde el enlace recibido por correo */
-    if(auth.isSignInWithEmailLink(location.href)){
-      var email = "";
-      try { email = localStorage.getItem(CLAVE_EMAIL_PENDIENTE) || ""; } catch(e){}
-      if(!email){
-        /* abrió el enlace en otro dispositivo: se le pide confirmar el correo */
-        email = (window.prompt("Para completar el ingreso, confirmá tu correo institucional:") || "").trim().toLowerCase();
-      }
-      if(email){
-        if(msg) msg.textContent = "Verificando el enlace…";
-        auth.signInWithEmailLink(email, location.href).then(function(){
-          try { localStorage.removeItem(CLAVE_EMAIL_PENDIENTE); } catch(e){}
-          history.replaceState(null, "", location.href.split("?")[0]);
-        }).catch(function(err){
-          if(msg) msg.textContent = "El enlace no es válido o ya venció. Pedí uno nuevo. (" + ((err && err.code) || "error") + ")";
-        });
-      }
-    }
-
-    /* 2) Solo se abre la aplicación con una sesión verificada e institucional */
+    /* Solo se abre la aplicación con una sesión válida, institucional y habilitada */
     auth.onAuthStateChanged(function(user){
-      if(user && user.email && user.emailVerified !== false && esInstitucional(user.email)){
-        abrirApp(user.email.toLowerCase());
-      } else if(user){
-        /* sesión de un correo no institucional: se cierra */
+      if(!user){ if(g) g.focus(); return; }
+      var correo = (user.email || "").toLowerCase();
+      if(!esInstitucional(correo)){
         auth.signOut();
         if(msg) msg.textContent = "Solo se permite el acceso con correos @" + DOMINIO_INSTITUCIONAL + ".";
-      } else {
-        if(g) g.focus();
+        return;
       }
+      /* Se consulta la lista blanca antes de abrir la aplicación. Las reglas de
+         Firestore verifican lo mismo, así que esto es además de esa protección. */
+      if(msg) msg.textContent = "Verificando…";
+      habilitadosStorage.cargar().then(function(lista){
+        HABILITADOS_EXTRA = (lista || []).map(function(x){ return String(x).toLowerCase().trim(); });
+      }).catch(function(){ /* si no se puede leer, quedan solo los precargados */ })
+      .then(function(){
+        if(estaHabilitado(correo)){
+          if(msg) msg.textContent = "";
+          abrirApp(correo);
+        } else {
+          auth.signOut();
+          if(msg){
+            msg.innerHTML = "Tu correo todavía no está habilitado para usar esta aplicación. " +
+              "Pedile el alta a la Secretaría de Asuntos Académicos.";
+          }
+        }
+      });
     });
   }
   if(MODO_PRUEBA){
@@ -2446,6 +2562,24 @@
       if (!storageReady) return Promise.reject(new Error("La base de datos no está configurada todavía."));
       return db.collection("config").doc("archivo").set({
         plantillas: plantillas,
+        actualizadoPor: usuarioActual,
+        actualizadoEn: new Date().toISOString()
+      });
+    }
+  };
+
+  /* Lista blanca de correos habilitados (config/habilitados) */
+  var habilitadosStorage = {
+    cargar: function(){
+      if (!storageReady) return Promise.resolve([]);
+      return db.collection("config").doc("habilitados").get().then(function(snap){
+        return snap.exists ? (snap.data().emails || []) : [];
+      });
+    },
+    guardar: function(emails){
+      if (!storageReady) return Promise.reject(new Error("La base de datos no está configurada todavía."));
+      return db.collection("config").doc("habilitados").set({
+        emails: emails,
         actualizadoPor: usuarioActual,
         actualizadoEn: new Date().toISOString()
       });
@@ -21564,7 +21698,7 @@
     {btn:"tabAdminBtn", view:"viewAdmin", onShow:function(){ loadAdminData(); }},
     {btn:"tabSaaBtn",   view:"viewSaa",   onShow:function(){ loadSaaData(); }},
     {btn:"tabCronoBtn", view:"viewCrono", onShow:function(){ cargarCronograma(); }},
-    {btn:"tabPermBtn",  view:"viewPerm",  onShow:function(){ cargarPermisos(); }}
+    {btn:"tabPermBtn",  view:"viewPerm",  onShow:function(){ cargarPermisos(); cargarHabilitados(); }}
   ];
 
   TABS.forEach(function(tab){
@@ -25907,7 +26041,105 @@
     persistirPermisos("Rol asignado a " + em + ".");
   });
 
-  document.getElementById("permRefreshBtn").addEventListener("click", cargarPermisos);
+  /* ---------- lista blanca de correos habilitados ---------- */
+  function cargarHabilitados(){
+    var wrap = document.getElementById("habTableWrap");
+    if(!storageReady){ wrap.innerHTML = '<div class="empty">La base de datos no está configurada todavía.</div>'; return; }
+    wrap.innerHTML = '<p style="color:var(--ink-soft);">Cargando…</p>';
+    habilitadosStorage.cargar().then(function(lista){
+      HABILITADOS_EXTRA = (lista || []).map(function(x){ return String(x).toLowerCase().trim(); });
+      renderHabilitados();
+    }).catch(function(err){
+      wrap.innerHTML = '<div class="empty">No se pudo cargar la lista: ' + esc(err.message || "") + '</div>';
+    });
+  }
+
+  function renderHabilitados(){
+    var wrap = document.getElementById("habTableWrap");
+    var filas = [];
+    HABILITADOS_BASE.forEach(function(e){ filas.push({email:e, fijo:true}); });
+    HABILITADOS_EXTRA.forEach(function(e){
+      if(HABILITADOS_BASE.indexOf(e) < 0){ filas.push({email:e, fijo:false}); }
+    });
+    filas.sort(function(a,b){ return a.email.localeCompare(b.email); });
+
+    if(filas.length === 0){
+      wrap.innerHTML = '<div class="empty">Todavía no hay correos habilitados.</div>';
+      return;
+    }
+    var t = '<div class="table-wrap"><table class="data-table"><thead><tr>' +
+            '<th>Correo institucional</th><th>Origen</th><th style="width:110px;"></th>' +
+            '</tr></thead><tbody>';
+    filas.forEach(function(f){
+      t += '<tr><td>' + esc(f.email) + '</td>' +
+           '<td>' + (f.fijo ? '<span class="tag">Precargado</span>' : '<span class="tag">Agregado</span>') + '</td>' +
+           '<td style="text-align:right;">' +
+           (f.fijo ? '<span style="font-size:11.5px; color:var(--ink-soft);">fijo</span>'
+                   : '<button class="btn ghost small" data-quitar-hab="' + esc(f.email) + '">Quitar</button>') +
+           '</td></tr>';
+    });
+    t += '</tbody></table></div>';
+    wrap.innerHTML = t;
+
+    Array.prototype.forEach.call(wrap.querySelectorAll("[data-quitar-hab]"), function(btn){
+      btn.addEventListener("click", function(){
+        var correo = btn.getAttribute("data-quitar-hab");
+        if(!window.confirm("¿Quitar el acceso de " + correo + "?\n\nNo va a poder volver a ingresar hasta que lo habilites de nuevo.")) return;
+        guardarHabilitados(HABILITADOS_EXTRA.filter(function(e){ return e !== correo; }),
+          "Se quitó el acceso de " + correo + ".");
+      });
+    });
+  }
+
+  function guardarHabilitados(lista, mensajeOk){
+    var msg = document.getElementById("habMsg");
+    msg.className = "save-msg";
+    msg.textContent = "Guardando…";
+    habilitadosStorage.guardar(lista).then(function(){
+      HABILITADOS_EXTRA = lista;
+      msg.className = "save-msg ok";
+      msg.textContent = "✓ " + mensajeOk;
+      renderHabilitados();
+    }).catch(function(err){
+      msg.className = "save-msg err";
+      msg.textContent = "No se pudo guardar: " + ((err && err.message) || "error desconocido");
+    });
+  }
+
+  document.getElementById("habAddBtn").addEventListener("click", function(){
+    var txt = document.getElementById("habEmails").value || "";
+    var msg = document.getElementById("habMsg");
+    msg.className = "save-msg";
+    var candidatos = txt.split(/[\s,;]+/).map(function(x){ return x.toLowerCase().trim(); })
+                        .filter(Boolean);
+    if(candidatos.length === 0){
+      msg.className = "save-msg err";
+      msg.textContent = "Escribí al menos un correo para habilitar.";
+      return;
+    }
+    var invalidos = candidatos.filter(function(e){ return !emailValido(e) || !esInstitucional(e); });
+    if(invalidos.length){
+      msg.className = "save-msg err";
+      msg.textContent = "Estos correos no son válidos o no son institucionales: " + invalidos.join(", ");
+      return;
+    }
+    var nuevos = candidatos.filter(function(e){
+      return HABILITADOS_BASE.indexOf(e) < 0 && HABILITADOS_EXTRA.indexOf(e) < 0;
+    });
+    if(nuevos.length === 0){
+      msg.className = "save-msg err";
+      msg.textContent = "Todos esos correos ya estaban habilitados.";
+      return;
+    }
+    document.getElementById("habEmails").value = "";
+    guardarHabilitados(HABILITADOS_EXTRA.concat(nuevos),
+      nuevos.length === 1 ? ("Se habilitó " + nuevos[0] + ".")
+                          : ("Se habilitaron " + nuevos.length + " correos."));
+  });
+
+  document.getElementById("permRefreshBtn").addEventListener("click", function(){
+    cargarPermisos(); cargarHabilitados();
+  });
 
   /* ---------------- panel Secretaría de Asuntos Académicos ---------------- */
   var saaProposals = [];
