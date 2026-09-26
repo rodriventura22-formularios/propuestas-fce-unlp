@@ -63,6 +63,34 @@
   .gate-card h1{margin:0; font-size:20px; font-weight:600; color:var(--ink);}
   .gate-sub{margin:2px 0 18px; color:var(--ink-soft); font-size:13.5px;}
   .gate-text{margin:0 0 18px; font-size:13.5px; color:var(--ink); line-height:1.5;}
+  /* selección de sedes en la propuesta de finales */
+  .sedes-check{display:flex; flex-wrap:wrap; gap:9px; margin:12px 0 4px;}
+  .sede-op{display:flex; align-items:flex-start; gap:8px; padding:9px 13px; border:1.5px solid var(--line);
+    border-radius:9px; cursor:pointer; background:#fff; flex:1 1 260px; transition:border-color .15s, background .15s;}
+  .sede-op:hover{border-color:var(--brand);}
+  .sede-op.activa{border-color:var(--brand); background:#EFF5F7;}
+  .sede-op input{margin-top:2px; flex:none;}
+  .sede-op span{display:flex; flex-direction:column; gap:2px; font-size:13.5px;}
+  .sede-op small{color:var(--ink-soft); font-size:11.5px; line-height:1.35;}
+  .sede-bloque{margin-top:20px; padding-top:4px;}
+  .sede-bloque-head{display:flex; align-items:baseline; gap:10px; font-weight:700; font-size:14.5px;
+    color:var(--brand); margin-bottom:7px;}
+  .sede-bloque-head small{font-weight:500; color:var(--ink-soft); font-size:12px;}
+
+  /* cuadros del detalle de una propuesta de finales */
+  table.mini{width:100%; border-collapse:collapse; margin:6px 0 14px; font-size:13px;}
+  table.mini th{text-align:left; background:#F4F2ED; border:1px solid var(--line);
+    padding:6px 9px; font-weight:600; font-size:12px; color:var(--ink-soft);}
+  table.mini td{border:1px solid var(--line); padding:6px 9px; vertical-align:top;}
+
+  /* selector de tipo de propuesta (Cursada / Final) */
+  .tipo-prop-bar{display:flex; gap:8px; margin:0 0 20px; border-bottom:2px solid var(--line); padding-bottom:0;}
+  .tipo-prop-btn{background:none; border:none; border-bottom:3px solid transparent; padding:9px 20px;
+    font-family:inherit; font-size:14px; font-weight:600; color:var(--ink-soft); cursor:pointer; margin-bottom:-2px;}
+  .tipo-prop-btn:hover{color:var(--ink);}
+  .tipo-prop-btn.activo{color:var(--brand); border-bottom-color:var(--brand);}
+  .ro-box{padding:9px 11px; background:#F4F2ED; border:1px solid var(--line); border-radius:7px;
+    font-size:13.5px; color:var(--ink); min-height:38px; box-sizing:border-box;}
   .gate-label{display:block; text-align:left; font-size:12.5px; font-weight:600; color:var(--ink-soft); margin-bottom:5px;}
   .gate-card input{width:100%; box-sizing:border-box; font-size:15px; padding:10px 11px;}
   .gate-msg{min-height:18px; margin-top:8px; font-size:12.5px; color:var(--danger); text-align:left;}
@@ -367,9 +395,35 @@
   .fin-nav button:disabled{opacity:.35; cursor:default;}
   .fin-nav select{min-width:250px;}
   input.fin-input{
-    font-family:inherit; font-size:10.5px; padding:2px 4px;
+    font-family:inherit; font-size:12.5px; padding:5px 7px;
     border:1px solid var(--line); border-radius:3px; background:#fff; color:var(--ink);
   }
+  /* en las tablas por sede el campo ocupa todo el ancho de su celda */
+  table.tabla-fin td input.fin-input{width:100%; box-sizing:border-box;}
+  table.tabla-fin td input.fin-asig{font-size:13px; font-weight:500;}
+
+  /* marca de estado sobre la celda de asignatura */
+  table.tabla-fin td.fin-marca{position:relative; transition:background .12s;}
+  table.tabla-fin td.fin-marca.m-verde{background:#BFE3C9;}
+  table.tabla-fin td.fin-marca.m-amarillo{background:#F5DE9B;}
+  table.tabla-fin td.fin-marca.m-sin{background:#ECEBE7;}
+  table.tabla-fin td.fin-marca.marcable{cursor:pointer;}
+  table.tabla-fin td.fin-marca.marcable:hover{filter:brightness(.96);}
+  .fin-punto{
+    display:inline-block; width:13px; height:13px; border-radius:50%; flex:none;
+    border:1.5px solid rgba(0,0,0,.22); margin-right:8px; vertical-align:middle; cursor:pointer;
+  }
+  .fin-punto.m-verde{background:#3F8F5B;}
+  .fin-punto.m-amarillo{background:#D9A520;}
+  .fin-punto.m-sin{background:#C7C4BD;}
+  .fin-celda-asig{display:flex; align-items:center; gap:0;}
+  .fin-celda-asig input{flex:1 1 auto; min-width:0;}
+  /* leyenda de colores */
+  .fin-leyenda{display:flex; flex-wrap:wrap; gap:18px; align-items:center;
+    margin:0 0 12px; font-size:12.5px; color:var(--ink-soft);}
+  .fin-leyenda span{display:flex; align-items:center; gap:7px;}
+  .fin-leyenda i{width:13px; height:13px; border-radius:50%; display:inline-block;
+    border:1.5px solid rgba(0,0,0,.22);}
   input.fin-input:focus{outline:1.5px solid var(--teal);}
   input.fin-fecha{width:130px; text-align:center;}
   input.fin-hora{width:92px; text-align:center;}
@@ -401,14 +455,23 @@
   #viewSaa .siu-leyenda{font-size:10.5px; margin-bottom:5px; gap:6px 12px;}
   #viewSaa .siu-leyenda .siu-chip{width:11px; height:11px;}
 
-  #viewSaa .filters{gap:7px; margin-bottom:8px;}
+  #viewSaa .filters{gap:9px; margin-bottom:12px;}
   #viewSaa .filters input,
-  #viewSaa .filters select{font-size:12px; padding:5px 7px;}
+  #viewSaa .filters select{font-size:13.5px; padding:8px 11px;}
 
-  #viewSaa .fin-navbar{padding:6px 10px; margin-bottom:8px;}
-  #viewSaa .fin-navbar button{font-size:12px; padding:5px 12px;}
-  #viewSaa .fin-nav-centro select{font-size:12.5px; padding:5px 8px; min-width:250px;}
-  #viewSaa .fin-nav-centro label{font-size:11px;}
+  #viewSaa .fin-navbar{padding:10px 14px; margin-bottom:12px;}
+  #viewSaa .fin-navbar button{font-size:13.5px; padding:9px 18px;}
+  #viewSaa .fin-nav-centro select{font-size:14px; padding:8px 12px; min-width:280px;}
+  #viewSaa .fin-nav-centro label{font-size:12.5px;}
+
+  /* fila "Ver" con las sedes */
+  #saaVistasFinales{padding:11px 14px; margin-bottom:12px; gap:20px !important;}
+  #saaVistasFinales .eval-modo-label{font-size:13.5px;}
+  #saaVistasFinales label{font-size:13.5px;}
+  #saaVistasFinales input[type="radio"]{width:15px; height:15px;}
+
+  /* estadísticas, ahora debajo del encabezado del bloque */
+  .cal-mes-bloque > .cal-top{margin:2px 0 14px;}
 
   /* ---------- alertas de restricciones de fechas ---------- */
   .alerta-box{
@@ -818,27 +881,31 @@
   #cronoTableWrap table.saa-table th.col-siu,
   #saaTableWrap table.saa-table td.col-siu,
   #cronoTableWrap table.saa-table td.col-siu{
-    width:44px; min-width:44px; max-width:44px; text-align:center; padding:2px;
+    width:34px; min-width:34px; max-width:34px; text-align:center; padding:2px;
   }
 
   /* Estado de carga en SIU Guaraní */
   #saaTableWrap table.saa-table select.saa-select-siu,
   #cronoTableWrap table.saa-table select.saa-select-siu{
-    width:30px; max-width:30px; height:20px;
-    border-radius:50%; border:1px solid rgba(0,0,0,0.22);
+    /* mismo círculo que las marcas del panel de finales */
+    width:13px; max-width:13px; height:13px;
+    border-radius:50%; border:1.5px solid rgba(0,0,0,0.22);
     padding:0; color:transparent; cursor:pointer;
     appearance:none; -webkit-appearance:none; -moz-appearance:none;
-    text-indent:-9999px;
+    text-indent:-9999px; vertical-align:middle;
+    transition:filter .12s;
   }
+  #saaTableWrap table.saa-table select.saa-select-siu:hover,
+  #cronoTableWrap table.saa-table select.saa-select-siu:hover{filter:brightness(.92);}
   #saaTableWrap table.saa-table select.saa-select-siu option,
   #cronoTableWrap table.saa-table select.saa-select-siu option{color:var(--ink); text-indent:0;}
   .siu-chip{
-    display:inline-block; width:16px; height:16px; border-radius:50%;
-    border:1px solid rgba(0,0,0,0.22); vertical-align:middle;
+    display:inline-block; width:13px; height:13px; border-radius:50%;
+    border:1.5px solid rgba(0,0,0,0.22); vertical-align:middle;
   }
-  .siu-verde, select.siu-verde{background:#2F8F4E !important;}
-  .siu-amarillo, select.siu-amarillo{background:#E3B341 !important;}
-  .siu-gris, select.siu-gris{background:#BFC6CB !important;}
+  .siu-verde, select.siu-verde{background:#3F8F5B !important;}
+  .siu-amarillo, select.siu-amarillo{background:#D9A520 !important;}
+  .siu-gris, select.siu-gris{background:#C7C4BD !important;}
 
   /* Columnas de cupos */
   #saaTableWrap table.saa-table th.col-cupos-est,
@@ -1272,14 +1339,21 @@
   </div>
   <div class="doc">
     <div class="doc-head">
-      <h1>Presentación de propuesta de asignatura</h1>
+      <h1 id="docTitulo">Presentación de propuesta de asignatura</h1>
       <div class="edit-banner" id="editBanner" style="display:none;">
         <span id="editBannerText"></span>
         <button class="btn small ghost" id="cancelEditBtn">Cancelar edición</button>
       </div>
     </div>
 
+    <!-- Selector del tipo de propuesta -->
+    <div class="tipo-prop-bar">
+      <button type="button" class="tipo-prop-btn activo" data-tipo-prop="cursada">Cursadas</button>
+      <button type="button" class="tipo-prop-btn" data-tipo-prop="final">Finales</button>
+      <button type="button" class="tipo-prop-btn" data-tipo-prop="sede">Cursadas para sedes</button>
+    </div>
 
+    <div id="formCursada">
     <div class="info-block dynamic-block">
     <div class="info-block-header">
       <span class="title">Información dinámica</span>
@@ -1289,6 +1363,17 @@
     <div class="section">
       <div class="section-bar">Datos generales</div>
       <div class="section-body">
+            <div class="field-row" id="filaSede" style="display:none;">
+              <div class="field" style="flex:1 1 280px;">
+                <label>Sede <span class="req">*</span></label>
+                <select id="f_sede">
+                  <option value="">Seleccionar sede…</option>
+                  <option value="brandsen">Brandsen</option>
+                  <option value="saladillo">Saladillo</option>
+                  <option value="tresarroyos">Tres Arroyos</option>
+                </select>
+              </div>
+            </div>
         <div class="field-row">
           <div class="field" style="flex:2 1 300px;">
             <label>Nombre de la asignatura <span class="req">*</span></label>
@@ -1563,7 +1648,7 @@
       </div>
     </div>
 
-    <div class="section">
+    <div class="section" id="secCronograma">
       <div class="section-bar">Planificación y cronograma del curso</div>
       <div class="section-body">
         <p class="section-note">Distribución de contenidos por semana, trabajos prácticos y evaluaciones.</p>
@@ -1575,7 +1660,7 @@
       </div>
     </div>
 
-    <div class="section">
+    <div class="section" id="secEvaluacion">
       <div class="section-bar">Cronograma propuesto de evaluación</div>
       <div class="section-body">
         <p class="section-note">Las fechas propuestas están sujetas a confirmación por los Departamentos en función de la coordinación a nivel Facultad.</p>
@@ -1599,7 +1684,7 @@
     </div>
     </div>
 
-    <div class="info-block static-block">
+    <div class="info-block static-block" id="bloqueEstatico">
     <div class="info-block-header static">
       <span class="title">Información estática</span>
       <span class="sub">Se mantiene estable entre semestres: fundamentación y metodologías</span>
@@ -1635,6 +1720,100 @@
       </div>
     </div>
     </div>
+
+    </div><!-- /#formCursada -->
+
+    <!-- ===================== PROPUESTA DE FINALES ===================== -->
+    <div id="formFinal" style="display:none;">
+      <div class="info-block dynamic-block">
+        <div class="info-block-header">
+          <span class="title">Propuesta de mesas de final</span>
+          <span class="sub">Llamados, clases de consulta y metodología de evaluación del examen final</span>
+        </div>
+
+        <div class="section">
+          <div class="section-bar">Datos de la asignatura</div>
+          <div class="section-body">
+            <div class="field-row">
+              <div class="field" style="flex:2 1 300px;">
+                <label>Nombre de la asignatura <span class="req">*</span></label>
+                <select id="fin_asignatura"><option value="">Seleccionar…</option></select>
+                <div class="template-strip" id="finStrip" style="display:none;">
+                  <span id="finStripText"></span>
+                  <div id="finStripOptions"></div>
+                </div>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Carrera/s</label>
+                <div class="ro-box" id="fin_carreras">—</div>
+              </div>
+              <div class="field">
+                <label>Plan/es de estudio</label>
+                <div class="ro-box" id="fin_planes">—</div>
+              </div>
+            </div>
+            <p class="section-note" id="fin_catalogoHint" style="display:none;"></p>
+            <div class="field-row">
+              <div class="field">
+                <label>Docente responsable <span class="req">*</span></label>
+                <input type="text" id="fin_docente" placeholder="Apellido, Nombre">
+              </div>
+              <div class="field">
+                <label>Email de contacto <span class="req">*</span></label>
+                <input type="email" id="fin_email" placeholder="nombre@econo.unlp.edu.ar" spellcheck="false">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-bar">Cronograma de mesas de final</div>
+          <div class="section-body">
+            <p class="section-note">Marcá el calendario que corresponde a esta asignatura. El día de la semana
+              se calcula solo a partir de la fecha. Las mesas de Brandsen, Saladillo y Tres Arroyos las carga
+              la Secretaría de Asuntos Académicos.</p>
+            <div id="finSedesCheck" class="sedes-check"></div>
+            <div id="finSedesTablas"></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-bar">Cronograma de clases de consulta</div>
+          <div class="section-body">
+            <table class="grid" id="finConsultasTable">
+                <thead><tr>
+                  <th style="width:130px;">Día</th>
+                  <th style="width:130px;">Horario</th>
+                  <th style="width:200px;">Docente</th>
+                  <th style="width:140px;">Modalidad</th>
+                  <th>Detalles</th>
+                  <th class="row-actions"></th>
+                </tr></thead>
+                <tbody id="finConsultasBody"></tbody>
+              </table>
+            <button type="button" class="btn ghost small" id="finAddConsultaBtn">+ Agregar clase de consulta</button>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-bar">Metodología de evaluación</div>
+          <div class="section-body">
+            <table class="grid" id="finMetodTable">
+                <thead><tr>
+                  <th style="width:70px;">N°</th>
+                  <th style="width:220px;">Modalidad</th>
+                  <th>Detalle</th>
+                  <th class="row-actions"></th>
+                </tr></thead>
+                <tbody id="finMetodBody"></tbody>
+              </table>
+            <button type="button" class="btn ghost small" id="finAddMetodBtn">+ Agregar instancia</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- /#formFinal -->
 
     <div class="doc-footer">
       <div class="save-msg" id="saveMsg"></div>
@@ -1684,6 +1863,14 @@
       <option>Curso Especial - Contrasemestre</option>
       <option>Curso Especial - Intensivo</option>
       <option>Seminario, Talleres y PPS</option>
+      <option value="__final__">— Mesas de final —</option>
+    </select>
+    <select id="filterSede">
+      <option value="">Todas las sedes</option>
+      <option value="laplata">La Plata</option>
+      <option value="brandsen">Brandsen</option>
+      <option value="saladillo">Saladillo</option>
+      <option value="tresarroyos">Tres Arroyos</option>
     </select>
     <select id="filterEstado">
       <option value="">Todos los estados</option>
@@ -1818,6 +2005,7 @@
   <div class="bloques">
     <button type="button" class="bloque-btn activo" data-bloque="cursadas">Cursadas</button>
     <button type="button" class="bloque-btn" data-bloque="finales">Finales</button>
+    <button type="button" class="bloque-btn" data-bloque="sedes">Cursadas para sedes</button>
   </div>
 
   <div class="eval-modo" id="saaVistasCursadas" style="flex-direction:row; align-items:center; gap:16px;">
@@ -1830,8 +2018,11 @@
 
   <div class="eval-modo" id="saaVistasFinales" style="display:none; flex-direction:row; align-items:center; gap:16px;">
     <span class="eval-modo-label">Ver:</span>
-    <label><input type="radio" name="finVista" value="tabla" checked> Mesas de finales</label>
-    <label><input type="radio" name="finVista" value="calendario"> Calendario de finales</label>
+    <label><input type="radio" name="finVista" value="laplata" checked> La Plata</label>
+    <label><input type="radio" name="finVista" value="cdatos"> Ciencia de Datos</label>
+    <label><input type="radio" name="finVista" value="brandsen"> Brandsen</label>
+    <label><input type="radio" name="finVista" value="saladillo"> Saladillo</label>
+    <label><input type="radio" name="finVista" value="tresarroyos"> Tres Arroyos</label>
   </div>
 
   <div id="finNavBar" class="fin-navbar" style="display:none;">
@@ -1904,6 +2095,12 @@
       <option value="TURISMO">Turismo</option>
       <option value="CIENCIA DE DATOS">Ciencia de Datos</option>
       <option value="__sin__">Sin departamento asignado</option>
+    </select>
+    <select id="saaFilterSede" style="display:none;">
+      <option value="">Todas las sedes</option>
+      <option value="brandsen">Brandsen</option>
+      <option value="saladillo">Saladillo</option>
+      <option value="tresarroyos">Tres Arroyos</option>
     </select>
     <select id="saaFilterTipo">
       <option value="">Todos los tipos</option>
@@ -2250,9 +2447,18 @@
       if(permitidas && permitidas.indexOf(a) < 0) return;
       opts.push('<option>' + esc(a) + '</option>');
     });
+    var optsFinal = opts.slice();   /* el de finales nunca lleva "Otra" */
     if(!esDocente){ opts.push('<option value="__otra__">➕ Otra (escribir el nombre)</option>'); }
     sel.innerHTML = opts.join("");
     if(valorPrevio){ sel.value = valorPrevio; }
+
+    /* mismo filtro para la propuesta de finales */
+    var selFin = document.getElementById("fin_asignatura");
+    if(selFin){
+      var previoFin = selFin.value;
+      selFin.innerHTML = optsFinal.join("");
+      if(previoFin){ selFin.value = previoFin; }
+    }
 
     /* Aviso y bloqueo cuando el docente todavía no tiene materias asignadas */
     var sinMaterias = esDocente && permitidas.length === 0;
@@ -2543,6 +2749,13 @@
     };
 
     /* En modo de prueba la lista blanca no aplica: el acceso ya lo dio el panel */
+    var PRUEBA_SEDES = null;
+    finalesSedesStorage.cargar = function(){ return Promise.resolve(PRUEBA_SEDES); };
+    finalesSedesStorage.guardar = function(s){
+      PRUEBA_SEDES = JSON.parse(JSON.stringify(s));
+      return Promise.resolve();
+    };
+
     var PRUEBA_HABILITADOS = [];
     habilitadosStorage.cargar = function(){ return Promise.resolve(PRUEBA_HABILITADOS.slice()); };
     habilitadosStorage.guardar = function(emails){
@@ -2690,6 +2903,24 @@
       if (!storageReady) return Promise.reject(new Error("La base de datos no está configurada todavía."));
       return db.collection("config").doc("habilitados").set({
         emails: emails,
+        actualizadoPor: usuarioActual,
+        actualizadoEn: new Date().toISOString()
+      });
+    }
+  };
+
+  /* Mesas de las sedes distintas de La Plata (config/finalesSedes) */
+  var finalesSedesStorage = {
+    cargar: function(){
+      if (!storageReady) return Promise.resolve(null);
+      return db.collection("config").doc("finalesSedes").get().then(function(snap){
+        return snap.exists ? (snap.data().sedes || null) : null;
+      });
+    },
+    guardar: function(sedes){
+      if (!storageReady) return Promise.reject(new Error("La base de datos no está configurada todavía."));
+      return db.collection("config").doc("finalesSedes").set({
+        sedes: sedes,
         actualizadoPor: usuarioActual,
         actualizadoEn: new Date().toISOString()
       });
@@ -24943,6 +25174,7 @@
     var buscada = normalizarNombre(asignatura);
     var cand = propuestasGuardadas.filter(function(p){
       return p.asignatura && normalizarNombre(p.asignatura) === buscada &&
+             (p.tipoPropuesta || "cursada") === "cursada" &&
              (permisos().editarTodas || esPropia(p));
     });
     if(cand.length > 0){
@@ -24961,6 +25193,12 @@
   function renderTemplateStrip(){
     var asignatura = getAsignatura();
     var strip = document.getElementById("templateStrip");
+
+    /* En "Cursadas para sedes" se arranca siempre de cero: todavía no hay
+       historial de años anteriores para estas sedes. Las propuestas que se
+       carguen igual quedan guardadas, así que más adelante se puede activar
+       esta ayuda quitando este bloque. */
+    if(TIPO_PROPUESTA === "sede"){ strip.style.display = "none"; return; }
     var textEl = document.getElementById("templateStripText");
     var optsEl = document.getElementById("templateStripOptions");
     optsEl.innerHTML = "";
@@ -25008,6 +25246,415 @@
       btn.addEventListener("click", function(){ applyTemplate(tpl); });
       optsEl.appendChild(btn);
     });
+  }
+
+  /* ==================== PROPUESTA DE FINALES ==================== */
+  var TIPO_PROPUESTA = "cursada";   /* "cursada" | "final" */
+
+  /* Sedes donde se toman mesas de final. Cada una tiene su propio calendario
+     de llamados: las dos de La Plata con los meses definidos, y las del
+     interior con una cantidad base que la cátedra puede ajustar. */
+  /* Sedes que carga el docente en su propuesta. Solo las de La Plata:
+     el resto (Brandsen, Saladillo, Tres Arroyos) las administra la
+     Secretaría de Asuntos Académicos desde su propio panel. */
+  var SEDES_FINALES = [
+    { id:"laplata", nombre:"La Plata — FCE",
+      detalle:"Contador Público · Lic. en Administración · Lic. en Economía · Lic. en Turismo · Tecnicatura en Cooperativismo",
+      llamados:["Febrero","Marzo","Mayo","Junio","Agosto","Septiembre","Octubre","Diciembre"] },
+    { id:"cdatos", nombre:"La Plata — Ciencia de Datos",
+      detalle:"Lic. en Ciencia de Datos en las Organizaciones",
+      llamados:["Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto",
+                "Septiembre","Octubre","Noviembre","Diciembre"] }
+  ];
+
+  function sedePorId(id){
+    for(var i=0;i<SEDES_FINALES.length;i++){ if(SEDES_FINALES[i].id === id) return SEDES_FINALES[i]; }
+    return null;
+  }
+  /* Nombres de los llamados de una sede (los de meses, o "Llamado N") */
+  function llamadosDe(sede){
+    if(Array.isArray(sede.llamados)) return sede.llamados.slice();
+    var out = [];
+    for(var i=1;i<=sede.llamados;i++){ out.push("Llamado " + i); }
+    return out;
+  }
+
+  /* finState.sedes: { idSede: [ {llamado, fecha, hora, observaciones}, … ] }
+     Solo figuran las sedes que el docente tildó. */
+  var finState = { sedes: {}, consultas: [], metod: [] };
+
+  function mesaVacia(llamado){
+    return { llamado: llamado || "", fecha:"", hora:"", observaciones:"" };
+  }
+  function mesasInicialesDe(idSede){
+    var s = sedePorId(idSede);
+    return s ? llamadosDe(s).map(function(l){ return mesaVacia(l); }) : [];
+  }
+  function consultaVacia(){
+    return { dia:"", horario:"", docente:"", modalidad:"Presencial", detalles:"" };
+  }
+  function metodVacia(){ return { modalidad:"", detalle:"" }; }
+
+  function finResetEstado(){
+    finState.sedes = {};
+    finState.consultas = [consultaVacia()];
+    finState.metod = [metodVacia()];
+  }
+
+  /* Día de la semana a partir de una fecha AAAA-MM-DD */
+  function diaDeLaFechaMesa(iso){
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(String(iso || ""))) return "";
+    var p = iso.split("-");
+    var d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    if(isNaN(d.getTime())) return "";
+    var n = NOMBRES_DIA[d.getDay()];
+    return n.charAt(0).toUpperCase() + n.slice(1);
+  }
+
+  /* Casillas para elegir las sedes */
+  function renderFinSedesCheck(){
+    var cont = document.getElementById("finSedesCheck");
+    cont.innerHTML = SEDES_FINALES.map(function(s){
+      var activa = !!finState.sedes[s.id];
+      return '<label class="sede-op' + (activa ? " activa" : "") + '">' +
+             '<input type="checkbox" data-sede="' + s.id + '"' + (activa ? " checked" : "") + '>' +
+             '<span><b>' + esc(s.nombre) + '</b><small>' + esc(s.detalle) + '</small></span>' +
+             '</label>';
+    }).join("");
+  }
+
+  /* Una tabla de mesas por cada sede elegida */
+  function renderFinMesas(){
+    renderFinSedesCheck();
+    var cont = document.getElementById("finSedesTablas");
+    var elegidas = SEDES_FINALES.filter(function(s){ return !!finState.sedes[s.id]; });
+    if(elegidas.length === 0){
+      cont.innerHTML = '<p class="section-note" style="margin-top:14px;">' +
+        'Elegí al menos una sede para cargar las fechas de las mesas.</p>';
+      return;
+    }
+    var html = "";
+    elegidas.forEach(function(s){
+      var mesas = finState.sedes[s.id];
+      var fijos = Array.isArray(s.llamados);
+      html += '<div class="sede-bloque">' +
+        '<div class="sede-bloque-head">' + esc(s.nombre) +
+        '<small>' + mesas.length + (mesas.length === 1 ? " mesa" : " mesas") + '</small></div>' +
+        '<table class="grid"><thead><tr>' +
+          '<th style="width:170px;">Llamado</th>' +
+          '<th style="width:150px;">Fecha</th>' +
+          '<th style="width:110px;">Día</th>' +
+          '<th style="width:110px;">Hora</th>' +
+          '<th>Observaciones</th>' +
+          '<th class="row-actions"></th>' +
+        '</tr></thead><tbody>';
+      mesas.forEach(function(m, i){
+        var celdaLlamado;
+        if(fijos){
+          celdaLlamado = '<select data-sede-tab="' + s.id + '" data-i="' + i + '" data-campo="llamado">' +
+            '<option value="">—</option>' +
+            s.llamados.map(function(l){
+              return '<option' + (l === m.llamado ? " selected" : "") + '>' + esc(l) + '</option>';
+            }).join("") + '</select>';
+        } else {
+          celdaLlamado = '<input type="text" data-sede-tab="' + s.id + '" data-i="' + i +
+            '" data-campo="llamado" value="' + esc(m.llamado) + '" placeholder="Llamado / mes">';
+        }
+        html += '<tr>' +
+          '<td>' + celdaLlamado + '</td>' +
+          '<td><input type="date" data-sede-tab="' + s.id + '" data-i="' + i + '" data-campo="fecha" value="' + esc(m.fecha) + '"></td>' +
+          '<td><span class="dia-calc">' + esc(diaDeLaFechaMesa(m.fecha) || "—") + '</span></td>' +
+          '<td><input type="text" data-sede-tab="' + s.id + '" data-i="' + i + '" data-campo="hora" value="' + esc(m.hora) + '" placeholder="9:00"></td>' +
+          '<td><input type="text" data-sede-tab="' + s.id + '" data-i="' + i + '" data-campo="observaciones" value="' + esc(m.observaciones) + '"></td>' +
+          '<td class="row-actions"><button type="button" class="row-del" data-del-mesa="' + s.id + '" data-i="' + i + '" title="Quitar">×</button></td>' +
+        '</tr>';
+      });
+      html += '</tbody></table>' +
+        '<button type="button" class="btn ghost small" data-add-mesa="' + s.id + '">+ Agregar mesa en ' + esc(s.nombre) + '</button>' +
+        '</div>';
+    });
+    cont.innerHTML = html;
+  }
+
+  function renderFinConsultas(){
+    var body = document.getElementById("finConsultasBody");
+    var dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+    var mods = ["Presencial","Virtual","Híbrida"];
+    var t = "";
+    finState.consultas.forEach(function(c, i){
+      t += '<tr>' +
+        '<td><select data-fin="consulta" data-i="' + i + '" data-campo="dia"><option value="">—</option>' +
+          dias.map(function(d){ return '<option' + (d === c.dia ? " selected" : "") + '>' + d + '</option>'; }).join("") +
+        '</select></td>' +
+        '<td><input type="text" data-fin="consulta" data-i="' + i + '" data-campo="horario" value="' + esc(c.horario) + '" placeholder="10 - 12"></td>' +
+        '<td><input type="text" data-fin="consulta" data-i="' + i + '" data-campo="docente" value="' + esc(c.docente) + '"></td>' +
+        '<td><select data-fin="consulta" data-i="' + i + '" data-campo="modalidad">' +
+          mods.map(function(m){ return '<option' + (m === c.modalidad ? " selected" : "") + '>' + m + '</option>'; }).join("") +
+        '</select></td>' +
+        '<td><input type="text" data-fin="consulta" data-i="' + i + '" data-campo="detalles" value="' + esc(c.detalles) + '" placeholder="Aula, enlace, aclaraciones…"></td>' +
+        '<td class="row-actions"><button type="button" class="row-del" data-del-fin="consulta" data-i="' + i + '" title="Quitar">×</button></td>' +
+      '</tr>';
+    });
+    body.innerHTML = t;
+  }
+
+  function renderFinMetod(){
+    var body = document.getElementById("finMetodBody");
+    var t = "";
+    finState.metod.forEach(function(m, i){
+      t += '<tr>' +
+        '<td style="text-align:center; font-weight:600;">' + (i + 1) + '</td>' +
+        '<td><input type="text" data-fin="metod" data-i="' + i + '" data-campo="modalidad" value="' + esc(m.modalidad) + '" placeholder="Escrito, oral…"></td>' +
+        '<td><input type="text" data-fin="metod" data-i="' + i + '" data-campo="detalle" value="' + esc(m.detalle) + '"></td>' +
+        '<td class="row-actions"><button type="button" class="row-del" data-del-fin="metod" data-i="' + i + '" title="Quitar">×</button></td>' +
+      '</tr>';
+    });
+    body.innerHTML = t;
+  }
+
+  function renderFinTodo(){ renderFinMesas(); renderFinConsultas(); renderFinMetod(); }
+
+  /* Un solo escucha para los tres cuadros */
+  document.getElementById("formFinal").addEventListener("input", function(e){
+    var el = e.target;
+    var i = Number(el.getAttribute("data-i"));
+    var campo = el.getAttribute("data-campo");
+
+    /* mesas: identificadas por sede */
+    var idSede = el.getAttribute("data-sede-tab");
+    if(idSede){
+      var mesas = finState.sedes[idSede];
+      if(!mesas || !mesas[i]) return;
+      mesas[i][campo] = el.value;
+      if(campo === "fecha"){
+        var celda = el.closest("tr").querySelector(".dia-calc");
+        if(celda){ celda.textContent = diaDeLaFechaMesa(el.value) || "—"; }
+      }
+      return;
+    }
+
+    var grupo = el.getAttribute("data-fin");
+    if(!grupo) return;
+    var lista = grupo === "consulta" ? finState.consultas : finState.metod;
+    if(!lista[i]) return;
+    lista[i][campo] = el.value;
+  });
+  document.getElementById("formFinal").addEventListener("change", function(e){
+    var el = e.target;
+
+    /* tildar o destildar una sede */
+    var idSedeCheck = el.getAttribute("data-sede");
+    if(idSedeCheck){
+      if(el.checked){
+        if(!finState.sedes[idSedeCheck]){ finState.sedes[idSedeCheck] = mesasInicialesDe(idSedeCheck); }
+      } else {
+        var tieneDatos = (finState.sedes[idSedeCheck] || []).some(function(m){
+          return m.fecha || m.hora || m.observaciones;
+        });
+        if(tieneDatos && !window.confirm("Ya cargaste fechas en esta sede. ¿Querés quitarla igual?")){
+          el.checked = true; return;
+        }
+        delete finState.sedes[idSedeCheck];
+      }
+      renderFinMesas();
+      return;
+    }
+
+    if(el.tagName !== "SELECT") return;
+    var i = Number(el.getAttribute("data-i"));
+    var idSede = el.getAttribute("data-sede-tab");
+    if(idSede){
+      var mesas = finState.sedes[idSede];
+      if(mesas && mesas[i]){ mesas[i][el.getAttribute("data-campo")] = el.value; }
+      return;
+    }
+    var grupo = el.getAttribute("data-fin");
+    if(!grupo) return;
+    var lista = grupo === "consulta" ? finState.consultas : finState.metod;
+    if(lista[i]){ lista[i][el.getAttribute("data-campo")] = el.value; }
+  });
+  document.getElementById("formFinal").addEventListener("click", function(e){
+    var addMesa = e.target.closest("[data-add-mesa]");
+    if(addMesa){
+      var idA = addMesa.getAttribute("data-add-mesa");
+      if(finState.sedes[idA]){ finState.sedes[idA].push(mesaVacia("")); renderFinMesas(); }
+      return;
+    }
+    var delMesa = e.target.closest("[data-del-mesa]");
+    if(delMesa){
+      var idD = delMesa.getAttribute("data-del-mesa");
+      if(finState.sedes[idD]){ finState.sedes[idD].splice(Number(delMesa.getAttribute("data-i")), 1); renderFinMesas(); }
+      return;
+    }
+    var btn = e.target.closest("[data-del-fin]");
+    if(!btn) return;
+    var grupo = btn.getAttribute("data-del-fin");
+    var i = Number(btn.getAttribute("data-i"));
+    if(grupo === "consulta"){ finState.consultas.splice(i,1); renderFinConsultas(); }
+    else { finState.metod.splice(i,1); renderFinMetod(); }
+  });
+  document.getElementById("finAddConsultaBtn").addEventListener("click", function(){
+    finState.consultas.push(consultaVacia()); renderFinConsultas();
+  });
+  document.getElementById("finAddMetodBtn").addEventListener("click", function(){
+    finState.metod.push(metodVacia()); renderFinMetod();
+  });
+
+  /* Carrera y plan se traen del catálogo al elegir la materia */
+  function finAutocompletar(){
+    var nombre = document.getElementById("fin_asignatura").value;
+    var info = CATALOGO_MATERIAS[normalizarNombre(nombre || "")];
+    var hint = document.getElementById("fin_catalogoHint");
+    var cCar = document.getElementById("fin_carreras");
+    var cPla = document.getElementById("fin_planes");
+    if(!info){
+      cCar.textContent = "—"; cPla.textContent = "—";
+      hint.style.display = nombre ? "block" : "none";
+      hint.textContent = nombre ? "Esta asignatura no figura en la base de planes de estudio." : "";
+      return;
+    }
+    cCar.textContent = (info.carreras || []).join(" · ") || "—";
+    cPla.textContent = (info.planes || []).join(" · ") || "—";
+    hint.style.display = "block";
+    hint.textContent = "Carrera y plan se completaron desde la base oficial de planes de estudio.";
+  }
+  document.getElementById("fin_asignatura").addEventListener("change", function(){
+    finAutocompletar(); renderFinStrip();
+  });
+
+  /* Última propuesta de finales guardada para esa materia */
+  function ultimaFinalDe(asignatura){
+    var buscada = normalizarNombre(asignatura);
+    var cand = propuestasGuardadas.filter(function(p){
+      return p.asignatura && normalizarNombre(p.asignatura) === buscada &&
+             (p.tipoPropuesta || "cursada") === "final" &&
+             (permisos().editarTodas || esPropia(p));
+    });
+    if(cand.length === 0) return null;
+    cand.sort(function(a,b){
+      return String(b.updatedAt || b.createdAt || "").localeCompare(String(a.updatedAt || a.createdAt || ""));
+    });
+    return cand[0];
+  }
+
+  function renderFinStrip(){
+    var strip = document.getElementById("finStrip");
+    var texto = document.getElementById("finStripText");
+    var opts  = document.getElementById("finStripOptions");
+    if(!strip) return;
+    opts.innerHTML = "";
+    var asignatura = document.getElementById("fin_asignatura").value;
+    var guardada = asignatura ? ultimaFinalDe(asignatura) : null;
+    if(!guardada){ strip.style.display = "none"; return; }
+    strip.style.display = "flex";
+    texto.textContent = "Ya hay una propuesta de mesas de final guardada para esta materia. " +
+      "Podés partir de ella y ajustar lo que necesites.";
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = "Última propuesta de finales" +
+      (guardada.updatedAt ? " · " + fmtDate(String(guardada.updatedAt).slice(0,10)) : "");
+    b.addEventListener("click", function(){ cargarFinalEnFormulario(guardada); editandoId = guardada.id; });
+    opts.appendChild(b);
+  }
+
+  finResetEstado();
+  renderFinTodo();
+
+  /* Cambio entre Cursada y Final */
+  var SEDES_CURSADA = { brandsen:"Brandsen", saladillo:"Saladillo", tresarroyos:"Tres Arroyos" };
+
+  function cambiarTipoPropuesta(tipo){
+    TIPO_PROPUESTA = tipo;
+    var esFinal = (tipo === "final");
+    var esSede  = (tipo === "sede");
+    document.getElementById("formCursada").style.display = esFinal ? "none" : "block";
+    document.getElementById("formFinal").style.display = esFinal ? "block" : "none";
+
+    /* "Cursadas para sedes" reutiliza el formulario de cursadas, pero solo con
+       Datos generales y Días y horarios: el resto de los bloques se oculta. */
+    document.getElementById("filaSede").style.display = esSede ? "flex" : "none";
+    ["secCronograma","secEvaluacion","bloqueEstatico"].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.style.display = esSede ? "none" : "";
+    });
+
+    document.getElementById("docTitulo").textContent = esFinal
+      ? "Presentación de propuesta de mesas de final"
+      : (esSede ? "Presentación de propuesta de cursada — sedes del interior"
+                : "Presentación de propuesta de asignatura");
+    Array.prototype.forEach.call(document.querySelectorAll("[data-tipo-prop]"), function(b){
+      b.classList.toggle("activo", b.getAttribute("data-tipo-prop") === tipo);
+    });
+    showMsg("saveMsg", "", false);
+    document.getElementById("saveMsg").textContent = "";
+    if(esFinal){ renderFinTodo(); } else { renderTemplateStrip(); }
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("[data-tipo-prop]"), function(b){
+    b.addEventListener("click", function(){ cambiarTipoPropuesta(b.getAttribute("data-tipo-prop")); });
+  });
+
+  function collectFinalData(){
+    return {
+      tipoPropuesta: "final",
+      asignatura: document.getElementById("fin_asignatura").value.trim(),
+      carreras: (function(){
+        var info = CATALOGO_MATERIAS[normalizarNombre(document.getElementById("fin_asignatura").value || "")];
+        return info ? (info.carreras || []).slice() : [];
+      })(),
+      planes: (function(){
+        var info = CATALOGO_MATERIAS[normalizarNombre(document.getElementById("fin_asignatura").value || "")];
+        return info ? (info.planes || []).slice() : [];
+      })(),
+      docente: document.getElementById("fin_docente").value.trim(),
+      email: document.getElementById("fin_email").value.trim(),
+      sedes: SEDES_FINALES.filter(function(s){ return !!finState.sedes[s.id]; })
+        .map(function(s){
+          return {
+            id: s.id,
+            nombre: s.nombre,
+            mesas: finState.sedes[s.id].filter(function(m){
+              return m.llamado || m.fecha || m.hora || m.observaciones;
+            }).map(function(m){
+              return { llamado:m.llamado, fecha:m.fecha, dia:diaDeLaFechaMesa(m.fecha),
+                       hora:m.hora, observaciones:m.observaciones };
+            })
+          };
+        }),
+      consultas: finState.consultas.filter(function(c){
+        return c.dia || c.horario || c.docente || c.detalles;
+      }),
+      metodEvaluacion: finState.metod.filter(function(m){
+        return m.modalidad || m.detalle;
+      }).map(function(m, i){ return { n:i+1, modalidad:m.modalidad, detalle:m.detalle }; })
+    };
+  }
+
+  function cargarFinalEnFormulario(p){
+    document.getElementById("fin_asignatura").value = p.asignatura || "";
+    document.getElementById("fin_docente").value = p.docente || "";
+    document.getElementById("fin_email").value = p.email || "";
+    finState.sedes = {};
+    (p.sedes || []).forEach(function(s){
+      if(!sedePorId(s.id)) return;
+      finState.sedes[s.id] = (s.mesas || []).map(function(m){
+        return {llamado:m.llamado||"", fecha:m.fecha||"", hora:m.hora||"", observaciones:m.observaciones||""};
+      });
+      if(finState.sedes[s.id].length === 0){ finState.sedes[s.id] = mesasInicialesDe(s.id); }
+    });
+    /* Compatibilidad con propuestas guardadas antes de dividir por sede */
+    if(!p.sedes && p.mesas && p.mesas.length){
+      finState.sedes.laplata = p.mesas.map(function(m){
+        return {llamado:m.llamado||"", fecha:m.fecha||"", hora:m.hora||"", observaciones:m.observaciones||""};
+      });
+    }
+    finState.consultas = (p.consultas && p.consultas.length)
+      ? p.consultas.map(function(c){ return {dia:c.dia||"", horario:c.horario||"", docente:c.docente||"", modalidad:c.modalidad||"Presencial", detalles:c.detalles||""}; })
+      : [consultaVacia()];
+    finState.metod = (p.metodEvaluacion && p.metodEvaluacion.length)
+      ? p.metodEvaluacion.map(function(m){ return {modalidad:m.modalidad||"", detalle:m.detalle||""}; })
+      : [metodVacia()];
+    finAutocompletar();
+    renderFinTodo();
   }
 
   /* Devuelve la asignatura elegida: del desplegable o la escrita a mano */
@@ -25100,12 +25747,26 @@
   /* ---------------- clear form ---------------- */
   document.getElementById("clearFormBtn").addEventListener("click", function(){
     if(!confirm("¿Limpiar todos los campos del formulario?")) return;
+    if(TIPO_PROPUESTA === "final"){
+      salirDeEdicion();
+      ["fin_asignatura","fin_docente","fin_email"].forEach(function(id){
+        document.getElementById(id).value = "";
+      });
+      document.getElementById("fin_catalogoHint").style.display = "none";
+      document.getElementById("fin_carreras").textContent = "—";
+      document.getElementById("fin_planes").textContent = "—";
+      finResetEstado(); renderFinTodo();
+      showMsg("saveMsg", "", false);
+      document.getElementById("saveMsg").textContent = "";
+      return;
+    }
     salirDeEdicion();
     ["f_asignatura","f_docente","f_email","f_fechaInicio","f_fechaFin","f_fundamentacion","f_metEnsenanza","f_metEvaluacion"].forEach(function(id){
       document.getElementById(id).value = "";
     });
     document.getElementById("f_tipoCurso").value = "";
     document.getElementById("f_semestre").value = "";
+    document.getElementById("f_sede").value = "";
     document.getElementById("catalogoHint").style.display = "none";
     document.getElementById("f_asignaturaOtra").value = "";
     toggleAsignaturaOtra();
@@ -25221,8 +25882,34 @@
     return faltan;
   }
 
+  /* Campos obligatorios de una propuesta de finales */
+  function camposFaltantesFinal(d){
+    var faltan = [];
+    if(!d.asignatura) faltan.push("Nombre de la asignatura");
+    if(!d.docente)    faltan.push("Docente responsable");
+    if(!d.email)      faltan.push("Email de contacto");
+    if(!d.sedes.length) faltan.push("al menos una sede con mesas de final");
+    else if(!d.sedes.some(function(s){ return s.mesas.some(function(m){ return m.fecha; }); })){
+      faltan.push("al menos una mesa con fecha cargada");
+    }
+    return faltan;
+  }
+
   document.getElementById("saveBtn").addEventListener("click", function(){
-    var data = collectFormData();
+    var esFinal = (TIPO_PROPUESTA === "final");
+    var esSede  = (TIPO_PROPUESTA === "sede");
+    var data = esFinal ? collectFinalData() : collectFormData();
+    if(!esFinal){
+      data.tipoPropuesta = esSede ? "cursada_sede" : "cursada";
+      if(esSede){
+        data.sede = document.getElementById("f_sede").value;
+        data.sedeNombre = SEDES_CURSADA[data.sede] || "";
+        /* estos bloques no se cargan en las sedes del interior */
+        data.cronograma = [];
+        data.evaluacion = [];
+        data.fundamentacion = ""; data.metEnsenanza = ""; data.metEvaluacion = "";
+      }
+    }
     var btn = document.getElementById("saveBtn");
 
     /* 0) La materia tiene que estar entre las asignadas a este docente.
@@ -25242,7 +25929,8 @@
     }
 
     /* 1) Campos obligatorios */
-    var faltan = camposFaltantes(data);
+    var faltan = esFinal ? camposFaltantesFinal(data) : camposFaltantes(data);
+    if(esSede && !data.sede){ faltan.unshift("Sede"); }
     if(faltan.length > 0){
       showMsg("saveMsg",
         "Falta completar " + (faltan.length === 1 ? "un campo obligatorio" : faltan.length + " campos obligatorios") +
@@ -25256,9 +25944,31 @@
     remoteStorage.list().then(function(items){
       var existente = null;
       var buscada = normalizarNombre(data.asignatura);
+
+      /* Si se venía editando una propuesta y después se cambió de asignatura,
+         esto ya es una propuesta distinta: se deja de editar la anterior para
+         no pisarla. (Un docente con dos materias podría sobrescribir una con la otra.) */
+      var tipoActual = esFinal ? "final" : (esSede ? "cursada_sede" : "cursada");
+      if(editandoId){
+        var enEdicion = null;
+        (items || []).forEach(function(p){ if(p && p.id === editandoId){ enEdicion = p; } });
+        if(enEdicion){
+          /* Deja de editarse la anterior si cambió la asignatura, el tipo de
+             propuesta (cursada / final / sede) o la sede: es otra propuesta. */
+          var distinta = normalizarNombre(enEdicion.asignatura) !== buscada
+            || (enEdicion.tipoPropuesta || "cursada") !== tipoActual
+            || (esSede && (enEdicion.sede || "") !== data.sede);
+          if(distinta){ editandoId = null; salirDeEdicion(); }
+        }
+      }
+
       (items || []).forEach(function(p){
         if(!p || !p.asignatura) return;
         if(editandoId && p.id === editandoId) return;   /* no se compara consigo misma */
+        /* Cursada y final son propuestas distintas de la misma materia */
+        if((p.tipoPropuesta || "cursada") !== tipoActual) return;
+        /* en las sedes, cada una lleva su propia propuesta de la misma materia */
+        if(esSede && (p.sede || "") !== data.sede) return;
         if(normalizarNombre(p.asignatura) === buscada){ existente = p; }
       });
 
@@ -25309,6 +26019,7 @@
 
       return remoteStorage.set(data.id, data).then(function(){
         btn.disabled = false; btn.textContent = "Guardar propuesta";
+        editandoId = data.id;   /* si vuelve a guardar, actualiza esta misma */
         showMsg("saveMsg",
           "✓ Propuesta cargada correctamente para «" + data.asignatura + "». Ya está disponible en el panel Formularios.", false);
         refrescarPropuestasGuardadas().then(renderTemplateStrip);
@@ -25349,11 +26060,17 @@
     var filtered = allProposals.filter(function(p){
       if(!permisos().verTodas && !esPropia(p)) return false;
       var matchesSearch = !search || (p.asignatura||"").toLowerCase().indexOf(search) > -1 || ((p.carreras||[]).join(" ")).toLowerCase().indexOf(search) > -1 || (p.docente||"").toLowerCase().indexOf(search) > -1;
-      var matchesTipo = !tipo || p.tipoCurso === tipo;
+      var tipoP = p.tipoPropuesta || "cursada";
+      var esPropFinal = tipoP === "final";
+      var matchesTipo = !tipo || (tipo === "__final__" ? esPropFinal : (!esPropFinal && p.tipoCurso === tipo));
+      /* filtro por sede: las propuestas sin sede son de La Plata */
+      var sedeFiltro = document.getElementById("filterSede").value;
+      var sedeDe = tipoP === "cursada_sede" ? (p.sede || "") : "laplata";
+      var matchesSede = !sedeFiltro || sedeDe === sedeFiltro;
       var matchesEstado = !estado || (p.estado||"pendiente") === estado;
       var carrera = document.getElementById("filterCarrera").value;
       var matchesCarrera = !carrera || (p.carreras || []).indexOf(carrera) > -1;
-      return matchesSearch && matchesTipo && matchesEstado && matchesCarrera;
+      return matchesSearch && matchesTipo && matchesEstado && matchesCarrera && matchesSede;
     });
 
     if(filtered.length === 0){
@@ -25374,7 +26091,18 @@
         String(p.updatedAt).slice(0,16) !== String(p.createdAt).slice(0,16);
       html += '<tr>' +
         '<td>' + esc(fullName(p)) + '</td>' +
-        '<td>' + esc(p.tipoCurso) + '</td>' +
+        '<td>' + (function(){
+            var t = p.tipoPropuesta || "cursada";
+            if(t === "final"){
+              return '<span class="chip" style="background:#E4EEF3; color:#1F5C73;">Mesas de final</span>';
+            }
+            if(t === "cursada_sede"){
+              return '<span class="chip" style="background:#F1E7D8; color:#7A4E12;">' +
+                     esc(p.sedeNombre || p.sede || "Sede") + '</span><br>' +
+                     '<span style="font-size:11.5px; color:var(--ink-soft);">' + esc(p.tipoCurso) + '</span>';
+            }
+            return esc(p.tipoCurso);
+          })() + '</td>' +
         '<td>' + esc(p.docente) + '</td>' +
         '<td class="col-carga" title="' + esc(detalleCarga(p)) + '">' +
           fmtSelloTiempo(p.createdAt) +
@@ -25556,6 +26284,16 @@
   function cargarEnFormulario(p){
     editandoId = p.id;
 
+    /* Una propuesta de mesas de final abre el formulario de finales */
+    if((p.tipoPropuesta || "cursada") === "final"){
+      cambiarTipoPropuesta("final");
+      cargarFinalEnFormulario(p);
+      return;
+    }
+    var esPropSede = (p.tipoPropuesta || "cursada") === "cursada_sede";
+    cambiarTipoPropuesta(esPropSede ? "sede" : "cursada");
+    document.getElementById("f_sede").value = esPropSede ? (p.sede || "") : "";
+
     /* Asignatura: si está en el desplegable la selecciona; si no, usa "Otra" */
     var sel = document.getElementById("f_asignatura");
     var existe = Array.prototype.some.call(sel.options, function(o){ return o.value === p.asignatura; });
@@ -25703,7 +26441,7 @@
 
   /* ---------------- bloque FINALES ---------------- */
   var saaBloque = "cursadas";
-  var finVista  = "tabla";
+  var finVista  = "laplata";
   var LLAMADOS_DISPONIBLES = [];
   var AJUSTES_FINALES = {};      /* mesaId → {fecha, hora, comentarios} */
   var finalesCargados = false;
@@ -25757,6 +26495,10 @@
     if(aj.fecha !== undefined) copia.fecha = aj.fecha;
     if(aj.hora !== undefined) copia.hora = aj.hora;
     if(aj.comentarios !== undefined) copia.comentarios = aj.comentarios;
+    if(aj.marca !== undefined) copia.marca = aj.marca;
+    if(aj.asignatura !== undefined) copia.asignatura = aj.asignatura;
+    if(aj.anio !== undefined) copia.anio = aj.anio;
+    if(aj.semestre !== undefined) copia.semestre = aj.semestre;
     copia.dia = diaDeLaSemana(copia.fecha) || copia.dia;
     copia.editada = true;
     return copia;
@@ -25788,7 +26530,196 @@
     });
   }
 
+  var NOMBRE_SEDE = { laplata:"La Plata", cdatos:"Ciencia de Datos",
+                      brandsen:"Brandsen", saladillo:"Saladillo", tresarroyos:"Tres Arroyos" };
+
+  /* Llamados de cada sede distinta de La Plata */
+  var LLAMADOS_SEDE = {
+    cdatos: ["Llamado 1 - Febrero","Llamado 2 - Marzo","Llamado 3 - Abril","Llamado 4 - Mayo",
+             "Llamado 5 - Junio","Llamado 6 - Julio","Llamado 7 - Agosto","Llamado 8 - Septiembre",
+             "Llamado 9 - Octubre","Llamado 10 - Noviembre","Llamado 11 - Diciembre"],
+    brandsen:    ["Llamado 1","Llamado 2","Llamado 3","Llamado 4","Llamado 5","Llamado 6"],
+    saladillo:   ["Llamado 1","Llamado 2","Llamado 3","Llamado 4","Llamado 5","Llamado 6"],
+    tresarroyos: ["Llamado 1","Llamado 2","Llamado 3","Llamado 4","Llamado 5","Llamado 6"]
+  };
+  var CAMPOS_SEDE = ["asignatura","anio","fecha","hora","modalidad","comentarios"];
+
+  /* Mesas editables de esas sedes. Arrancan con lo que trae el Excel y, una vez
+     que la Secretaría edita algo, la versión de la base manda. */
+  var MESAS_SEDES = {};
+  function inicializarMesasSedes(guardadas){
+    MESAS_SEDES = {};
+    Object.keys(LLAMADOS_SEDE).forEach(function(sede){
+      if(guardadas && Array.isArray(guardadas[sede])){
+        MESAS_SEDES[sede] = guardadas[sede].map(function(m){ return Object.assign({}, m); });
+      } else {
+        MESAS_SEDES[sede] = (MESAS_OTRAS_SEDES[sede] || []).map(function(m){ return Object.assign({}, m); });
+      }
+    });
+  }
+
+  /* Llamado que se está viendo en cada sede */
+  var LLAMADO_ACTUAL_SEDE = {};
+
+  /* Normaliza el llamado de una mesa al nombre de la lista de su sede */
+  function llamadoNormalizado(sede, valor){
+    var lista = LLAMADOS_SEDE[sede] || [];
+    var v = normalizarNombre(valor || "");
+    for(var i=0;i<lista.length;i++){
+      if(normalizarNombre(lista[i]) === v) return lista[i];
+    }
+    /* si solo coincide el número ("Llamado 3" contra "Llamado 3 - Abril") */
+    var num = (String(valor||"").match(/\d+/) || [])[0];
+    if(num){
+      for(var j=0;j<lista.length;j++){
+        if((lista[j].match(/\d+/) || [])[0] === num) return lista[j];
+      }
+    }
+    return lista[0] || "";
+  }
+
+  /* Llamado más cercano a hoy dentro de una sede */
+  function llamadoSugerido(sede){
+    var hoy = new Date().toISOString().slice(0,10);
+    var mesas = (MESAS_SEDES[sede] || []).filter(function(m){ return m.fecha; });
+    var futuras = mesas.filter(function(m){ return m.fecha >= hoy; })
+                       .sort(function(a,b){ return a.fecha.localeCompare(b.fecha); });
+    var elegida = futuras[0] || mesas.sort(function(a,b){ return b.fecha.localeCompare(a.fecha); })[0];
+    return elegida ? llamadoNormalizado(sede, elegida.llamado) : (LLAMADOS_SEDE[sede] || [])[0];
+  }
+
+  function guardarMesasSede(sede, el){
+    if(!puedeEditarFinales()){ alert("No tenés permisos para modificar las mesas de finales."); return; }
+    if(el){ el.classList.add("saa-guardando"); }
+    finalesSedesStorage.guardar(MESAS_SEDES).then(function(){
+      if(el){
+        el.classList.remove("saa-guardando");
+        el.classList.add("saa-guardado");
+        setTimeout(function(){ el.classList.remove("saa-guardado"); }, 1200);
+      }
+    }).catch(function(err){
+      if(el){ el.classList.remove("saa-guardando"); }
+      var msgErr = (err && err.message) || "error desconocido";
+      if(/insufficient permissions|permission-denied/i.test(msgErr)){
+        msgErr = "la base de datos rechazó el cambio. Si sos Secretaría, revisá que estén " +
+                 "publicadas las reglas más recientes (firestore.rules) en la consola de Firebase.";
+      }
+      alert("No se pudo guardar: " + msgErr);
+      renderFinales();
+    });
+  }
+
+  /* Tabla de una sede distinta de La Plata: navegación por llamado igual que
+     en La Plata y todas las celdas editables por la Secretaría. */
+  function renderSedeFinales(sede){
+    var wrap = document.getElementById("finTableWrap");
+    var lista = LLAMADOS_SEDE[sede] || [];
+    if(!LLAMADO_ACTUAL_SEDE[sede]){ LLAMADO_ACTUAL_SEDE[sede] = llamadoSugerido(sede); }
+    var actual = LLAMADO_ACTUAL_SEDE[sede];
+    var idx = lista.indexOf(actual);
+
+    /* barra de navegación, con el mismo aspecto que la de La Plata */
+    var nav = document.getElementById("finNavBar");
+    nav.style.display = "flex";
+    document.getElementById("finPrev").disabled = (idx <= 0);
+    document.getElementById("finNext").disabled = (idx >= lista.length - 1);
+    var selLl = document.getElementById("finLlamado");
+    selLl.innerHTML = lista.map(function(l){
+      return '<option' + (l === actual ? " selected" : "") + '>' + esc(l) + '</option>';
+    }).join("");
+
+    var q = (document.getElementById("finBuscar").value || "").toLowerCase();
+    var todas = MESAS_SEDES[sede] || [];
+    var delLlamado = todas.filter(function(m){ return llamadoNormalizado(sede, m.llamado) === actual; });
+    var filas = delLlamado.filter(function(m){
+      return !q || (m.asignatura || "").toLowerCase().indexOf(q) !== -1;
+    });
+
+    var editable = puedeEditarFinales();
+    var html = '<section class="cal-mes-bloque"><div class="cal-mes-head">' +
+      '<h2>' + esc(NOMBRE_SEDE[sede] || sede) + ' <em>' + esc(actual) + '</em></h2>' +
+      '<span class="cal-mes-count">' + filas.length + ' mesas</span></div>';
+
+    /* Las estadísticas van debajo del encabezado del bloque, para dejar
+       más aire arriba a la fila "Ver", la navegación y los filtros. */
+    html += '<div class="cal-top"><div class="cal-stats">' +
+      '<div class="cal-stat"><b>' + filas.length + '</b><span>mesas en este llamado</span></div>' +
+      '<div class="cal-stat"><b>' + todas.length + '</b><span>mesas en el año</span></div>' +
+      '<div class="cal-stat"><b>' + new Set(todas.map(function(m){ return m.asignatura; })).size +
+        '</b><span>asignaturas</span></div>' +
+      '<div class="cal-stat"><b>' + todas.filter(function(m){ return !m.fecha; }).length +
+        '</b><span>sin fecha</span></div>' +
+      '</div></div>';
+
+    if(filas.length === 0){
+      html += '<div class="empty">' +
+        (todas.length === 0
+          ? "Todavía no hay mesas cargadas para " + esc(NOMBRE_SEDE[sede] || sede) + "."
+          : "No hay mesas en este llamado.") +
+        '</div>';
+    } else {
+      html += '<div class="fin-scroll"><table class="admin saa-table tabla-fin"><thead><tr>' +
+        '<th style="min-width:420px;">Asignatura</th><th style="width:70px;">Año</th>' +
+        '<th style="width:150px;">Fecha</th>' +
+        '<th style="width:100px;">Día</th><th style="width:110px;">Hora</th>' +
+        '<th style="width:130px;">Modalidad</th>' +
+        '<th style="min-width:170px;">Comentarios</th>' +
+        (editable ? '<th style="width:44px;"></th>' : '') +
+      '</tr></thead><tbody>';
+
+      filas.sort(function(a,b){ return (a.fecha||"zzz").localeCompare(b.fecha||"zzz"); })
+        .forEach(function(m){
+          var i = todas.indexOf(m);
+          function campo(nombre, tipo, ancho){
+            if(!editable) return esc(m[nombre] || "—");
+            return '<input type="' + tipo + '" class="fin-input" data-sede-edit="' + sede +
+                   '" data-idx="' + i + '" data-campo="' + nombre + '" value="' + esc(m[nombre] || "") +
+                   '"' + (ancho ? ' style="width:' + ancho + ';"' : '') + '>';
+          }
+          var marca = m.marca || "sin";
+          var celdaAsig = '<div class="fin-celda-asig">' +
+            '<span class="fin-punto m-' + marca + '"' +
+              (editable ? ' data-marca-sede="' + sede + '" data-idx="' + i + '"' : '') +
+              ' title="Cargado en SIU / Mesa modificada / Pendiente de carga"></span>' +
+            (editable
+              ? '<input type="text" class="fin-input fin-asig" data-sede-edit="' + sede +
+                '" data-idx="' + i + '" data-campo="asignatura" value="' + esc(m.asignatura || "") + '">'
+              : '<span>' + esc(m.asignatura || "—") + '</span>') +
+            '</div>';
+          html += '<tr>' +
+            '<td class="fin-marca m-' + marca + '">' + celdaAsig + '</td>' +
+            '<td>' + campo("anio","text") + '</td>' +
+            '<td>' + campo("fecha","date") + '</td>' +
+            '<td>' + esc(m.fecha ? (diaDeLaFechaMesa(m.fecha) || "—") : (m.dia ? cap(m.dia) : "—")) + '</td>' +
+            '<td>' + campo("hora","text") + '</td>' +
+            '<td>' + campo("modalidad","text") + '</td>' +
+            '<td>' + campo("comentarios","text") + '</td>' +
+            (editable ? '<td><button type="button" class="row-del" data-sede-del="' + sede +
+                        '" data-idx="' + i + '" title="Quitar mesa">×</button></td>' : '') +
+          '</tr>';
+        });
+      html += '</tbody></table></div>';
+    }
+    if(editable){
+      html += '<button type="button" class="btn ghost small" data-sede-add="' + sede +
+              '" style="margin-top:10px;">+ Agregar mesa en ' + esc(actual) + '</button>';
+    }
+    html += '</section>';
+    wrap.innerHTML = html;
+  }
+
   function renderFinales(){
+    if(finVista !== "laplata"){ renderSedeFinales(finVista); return; }
+    var navBar = document.getElementById("finNavBar");
+    if(navBar) navBar.style.display = "flex";
+
+    /* Al volver de otra sede, el desplegable quedó con los llamados de esa sede:
+       se vacía para que poblarFiltrosFinales lo reconstruya con los de La Plata
+       y vuelva a posicionarse en el llamado más próximo a hoy. */
+    var selLlamado = document.getElementById("finLlamado");
+    if(LLAMADOS_DISPONIBLES.length && LLAMADOS_DISPONIBLES.indexOf(selLlamado.value) === -1){
+      selLlamado.innerHTML = "";
+    }
     poblarFiltrosFinales();
     var wrap = document.getElementById("finTableWrap");
 
@@ -25803,22 +26734,24 @@
     var fechas = filas.filter(function(m){ return m.fecha; }).map(function(m){ return m.fecha; }).sort();
     var sinFecha = filas.filter(function(m){ return !m.fecha; }).length;
 
-    var html = '<div class="cal-top"><div class="cal-stats">' +
+    /* Las estadísticas se arman acá pero se insertan debajo del encabezado
+       del primer bloque, para dejar más aire arriba a "Ver" y los filtros. */
+    var statsHtml = '<div class="cal-top"><div class="cal-stats">' +
       '<div class="cal-stat"><b>' + filas.length + '</b><span>mesas</span></div>' +
       '<div class="cal-stat"><b>' + Object.keys(porLlamado).length + '</b><span>llamados</span></div>' +
       '<div class="cal-stat"><b>' + new Set(filas.map(function(m){ return m.asignatura; })).size + '</b><span>asignaturas</span></div>' +
       '<div class="cal-stat"><b>' + sinFecha + '</b><span>sin fecha</span></div>' +
       '</div></div>';
+    var html = "";
+    var statsPuestas = false;
+    var editableLP = puedeEditarFinales();
+
 
     if(filas.length === 0){
-      wrap.innerHTML = html + '<div class="empty">No hay mesas que coincidan con los filtros.</div>';
+      wrap.innerHTML = statsHtml + '<div class="empty">No hay mesas que coincidan con los filtros.</div>';
         return;
     }
 
-    if(finVista === "calendario"){
-      wrap.innerHTML = html + calendarioFinalesHtml(filas);
-        return;
-    }
 
 
     Object.keys(porLlamado).sort(function(a,b){ return a-b; }).forEach(function(l){
@@ -25826,6 +26759,7 @@
       html += '<section class="cal-mes-bloque"><div class="cal-mes-head">' +
         '<h2>' + esc(info.nombre) + ' <em>' + esc(info.periodo) + '</em></h2>' +
         '<span class="cal-mes-count">' + porLlamado[l].length + ' mesas</span></div>';
+      if(!statsPuestas){ html += statsHtml; statsPuestas = true; }
 
       html += '<div class="fin-scroll"><table class="admin saa-table tabla-fin"><thead><tr>' +
         '<th class="f-asig">Asignatura</th><th class="f-carr">Carrera</th>' +
@@ -25858,12 +26792,27 @@
         var anioTxt = soloOrdinales(m.anio);
         var semTxt  = soloOrdinales(m.semestre);
 
+        function campoLP(nombre, valor, tipo){
+          if(!editableLP) return esc(valor || "—");
+          return '<input type="' + (tipo || "text") + '" class="fin-input" data-lp-edit="' + esc(m.id) +
+                 '" data-campo="' + nombre + '" value="' + esc(valor || "") + '">';
+        }
+        var marcaLP = m.marca || "sin";
         html += '<tr title="Departamento: ' + esc(m.departamento) + '">' +
-          '<td class="f-asig" title="' + esc(m.asignatura) + '">' + asignaturaEnLineas(m.asignatura) + '</td>' +
+          '<td class="f-asig fin-marca m-' + esc(marcaLP) + '" title="' + esc(m.asignatura) + '">' +
+            '<div class="fin-celda-asig">' +
+              '<span class="fin-punto m-' + esc(marcaLP) + '"' +
+                (editableLP ? ' data-marca-lp="' + esc(m.id) + '"' : '') +
+                ' title="Cargado en SIU / Mesa modificada / Pendiente de carga"></span>' +
+              (editableLP
+                ? '<input type="text" class="fin-input fin-asig" data-lp-edit="' + esc(m.id) +
+                  '" data-campo="asignatura" value="' + esc(m.asignatura || "") + '">'
+                : '<span>' + asignaturaEnLineas(m.asignatura) + '</span>') +
+            '</div></td>' +
           '<td class="f-carr">' + chipsCarr + '</td>' +
           '<td class="f-plan">' + textoPlan + '</td>' +
-          '<td class="f-anio">' + esc(anioTxt) + '</td>' +
-          '<td class="f-sem">' + esc(semTxt) + '</td>' +
+          '<td class="f-anio">' + campoLP("anio", anioTxt) + '</td>' +
+          '<td class="f-sem">' + campoLP("semestre", semTxt) + '</td>' +
           '<td class="f-fecha' + (m.editada ? ' fin-editada' : '') + '">' + celdaFechaFinal(m) + '</td>' +
           '<td class="f-dia">' + esc(cap(m.dia)) + '</td>' +
           '<td class="f-hora">' + celdaHoraFinal(m) + '</td>' +
@@ -25913,7 +26862,7 @@
     aj[campo] = valor;
 
     /* Si el valor vuelve al original en todos los campos, se descarta el ajuste */
-    var iguales = ["fecha","hora","comentarios"].every(function(c){
+    var iguales = ["fecha","hora","comentarios","marca","asignatura","anio","semestre"].every(function(c){
       return aj[c] === undefined || aj[c] === (base[c] || "");
     });
     if(iguales){ delete AJUSTES_FINALES[mid]; } else { AJUSTES_FINALES[mid] = aj; }
@@ -26025,6 +26974,8 @@
   /* Alterna entre los bloques Cursadas y Finales */
   function aplicarBloque(){
     var esFin = saaBloque === "finales";
+    var esSedes = saaBloque === "sedes";
+    document.getElementById("saaFilterSede").style.display = esSedes ? "" : "none";
     Array.prototype.forEach.call(document.querySelectorAll("[data-bloque]"), function(b){
       b.classList.toggle("activo", b.getAttribute("data-bloque") === saaBloque);
     });
@@ -26044,6 +26995,12 @@
         finalesCargados = true;
         finalesStorage.cargar().then(function(aj){
           AJUSTES_FINALES = aj || {};
+          if(typeof finalesSedesStorage !== "undefined"){
+            finalesSedesStorage.cargar().then(function(sedes){
+              inicializarMesasSedes(sedes);
+              if(document.getElementById("viewSaa").classList.contains("active")){ renderFinales(); }
+            }).catch(function(){ /* si falla, quedan los datos del Excel */ });
+          }
           renderFinales();
         }).catch(function(){ renderFinales(); });
       } else {
@@ -26063,18 +27020,111 @@
   });
   function moverLlamado(paso){
     var sel = document.getElementById("finLlamado");
+    if(finVista !== "laplata"){
+      var lista = LLAMADOS_SEDE[finVista] || [];
+      var k = lista.indexOf(LLAMADO_ACTUAL_SEDE[finVista]) + paso;
+      if(k < 0 || k >= lista.length) return;
+      LLAMADO_ACTUAL_SEDE[finVista] = lista[k];
+      renderFinales();
+      return;
+    }
     var i = LLAMADOS_DISPONIBLES.indexOf(sel.value);
     var j = i + paso;
     if(j < 0 || j >= LLAMADOS_DISPONIBLES.length) return;
     sel.value = LLAMADOS_DISPONIBLES[j];
     renderFinales();
   }
+  /* Edición de las mesas de las sedes distintas de La Plata */
+  document.getElementById("finTableWrap").addEventListener("change", function(e){
+    var el = e.target;
+
+    /* campos editables de La Plata */
+    var midLP = el.getAttribute("data-lp-edit");
+    if(midLP){
+      guardarAjusteFinal(midLP, el.getAttribute("data-campo"), el.value, el);
+      return;
+    }
+
+    var sede = el.getAttribute("data-sede-edit");
+    if(!sede) return;
+    var i = Number(el.getAttribute("data-idx"));
+    var campo = el.getAttribute("data-campo");
+    var mesa = (MESAS_SEDES[sede] || [])[i];
+    if(!mesa) return;
+    mesa[campo] = el.value;
+    if(campo === "fecha"){ mesa.dia = diaDeLaFechaMesa(el.value); }
+    guardarMesasSede(sede, el);
+    if(campo === "fecha"){ renderFinales(); }
+  });
+
+  document.getElementById("finTableWrap").addEventListener("click", function(e){
+    /* La Plata: la celda entera de la asignatura cicla la marca */
+    var puntoLP = e.target.closest("[data-marca-lp]");
+    if(puntoLP){
+      var mid = puntoLP.getAttribute("data-marca-lp");
+      var actLP = puntoLP.className.indexOf("m-verde") > -1 ? "verde"
+                : puntoLP.className.indexOf("m-amarillo") > -1 ? "amarillo" : "sin";
+      var sig = actLP === "sin" ? "verde" : (actLP === "verde" ? "amarillo" : "sin");
+      var tdLP = puntoLP.closest("td");
+      puntoLP.className = "fin-punto m-" + sig;
+      tdLP.classList.remove("m-sin","m-verde","m-amarillo");
+      tdLP.classList.add("m-" + sig);
+      /* "sin" se guarda como vacío para que el ajuste se descarte solo */
+      guardarAjusteFinal(mid, "marca", sig === "sin" ? "" : sig, tdLP);
+      return;
+    }
+
+    /* ciclo de la marca: pendiente → cargado en SIU → modificada → pendiente */
+    var punto = e.target.closest("[data-marca-sede]");
+    if(punto){
+      var sedeP = punto.getAttribute("data-marca-sede");
+      var iP = Number(punto.getAttribute("data-idx"));
+      var mesaP = (MESAS_SEDES[sedeP] || [])[iP];
+      if(!mesaP) return;
+      var act = mesaP.marca || "sin";
+      mesaP.marca = act === "sin" ? "verde" : (act === "verde" ? "amarillo" : "sin");
+      var td = punto.closest("td");
+      punto.className = "fin-punto m-" + mesaP.marca;
+      td.className = "fin-marca m-" + mesaP.marca;
+      guardarMesasSede(sedeP, td);
+      return;
+    }
+    var addBtn = e.target.closest("[data-sede-add]");
+    if(addBtn){
+      var s = addBtn.getAttribute("data-sede-add");
+      MESAS_SEDES[s] = MESAS_SEDES[s] || [];
+      MESAS_SEDES[s].push({ id: s + "_n" + Date.now(), sede: s,
+        llamado: LLAMADO_ACTUAL_SEDE[s], asignatura: "", anio: "", semestre: "",
+        fecha: "", hora: "", dia: "", modalidad: "", periodo: "", comentarios: "" });
+      guardarMesasSede(s, null);
+      renderFinales();
+      return;
+    }
+    var delBtn = e.target.closest("[data-sede-del]");
+    if(delBtn){
+      var sd = delBtn.getAttribute("data-sede-del");
+      var idx = Number(delBtn.getAttribute("data-idx"));
+      var m = (MESAS_SEDES[sd] || [])[idx];
+      if(!m) return;
+      if(!window.confirm("¿Quitar esta mesa" + (m.asignatura ? " de «" + m.asignatura + "»" : "") + "?")) return;
+      MESAS_SEDES[sd].splice(idx, 1);
+      guardarMesasSede(sd, null);
+      renderFinales();
+    }
+  });
+
   document.getElementById("finPrev").addEventListener("click", function(){ moverLlamado(-1); });
   document.getElementById("finNext").addEventListener("click", function(){ moverLlamado(1); });
 
   ["finBuscar","finLlamado","finCarrera","finDepto","finAnio","finSemestre","finDia"].forEach(function(id){
     var el = document.getElementById(id);
-    el.addEventListener(el.tagName === "SELECT" ? "change" : "input", renderFinales);
+    el.addEventListener(el.tagName === "SELECT" ? "change" : "input", function(){
+      /* en las sedes distintas de La Plata, el desplegable elige el llamado de esa sede */
+      if(id === "finLlamado" && finVista !== "laplata"){
+        LLAMADO_ACTUAL_SEDE[finVista] = el.value;
+      }
+      renderFinales();
+    });
   });
 
   /* ---------------- panel Administración de permisos ---------------- */
@@ -26410,7 +27460,17 @@
     var carrera = document.getElementById("saaFilterCarrera").value;
     var plan = document.getElementById("saaFilterPlan").value;
     var tipo = document.getElementById("saaFilterTipo").value;
+    var bloqueSedes = (saaBloque === "sedes");
+    var sedeSel = document.getElementById("saaFilterSede").value;
     return saaProposals.filter(function(p){
+      /* el bloque "Cursadas" muestra La Plata; el de sedes, las del interior */
+      var tipoP = p.tipoPropuesta || "cursada";
+      if(bloqueSedes){
+        if(tipoP !== "cursada_sede") return false;
+        if(sedeSel && (p.sede || "") !== sedeSel) return false;
+      } else {
+        if(tipoP !== "cursada") return false;
+      }
       var carreras = p.carreras || [];
       var planes = p.planes || [];
       var okSearch = !search || (p.asignatura||"").toLowerCase().indexOf(search) > -1;
@@ -26918,6 +27978,22 @@
       planes: planes
     };
   });
+
+  /* Mesas de las otras sedes, tomadas del Excel «Finales 2026 - FCE - UNLP».
+     Campos: llamado, año, semestre, asignatura, fecha, hora, día, modalidad, período. */
+  var MESAS_OTRAS_SEDES_DATA = {"cdatos":[["Llamado 3 - Abril","2°","Procesos de Negocio","2026-04-20","19:00","lunes",""],["Llamado 3 - Abril","1°","Matemática A","2026-04-21","10:00","martes",""],["Llamado 3 - Abril","1°","Matemática B","2026-04-21","10:00","martes",""],["Llamado 3 - Abril","2°","Matemática C","2026-04-21","10:00","martes",""],["Llamado 3 - Abril","2°","Contabilidad e interpretación de estados contables","2026-04-21","12:30:00","martes",""],["Llamado 3 - Abril","1°","Algoritmos y Programación I","2026-04-22","14:00","miercoles",""],["Llamado 3 - Abril","1°","Algoritmos y Programación II","2026-04-22","14:00","miercoles",""],["Llamado 3 - Abril","1°","Gestión de las Organizaciones","2026-04-23","8:00","jueves",""],["Llamado 3 - Abril","1°","Economía y Medición Económica","2026-04-23","8:00","jueves",""],["Llamado 3 - Abril","","Inglés (Prueba lecto-comprensión y traducción)","2026-04-23","8:00","jueves",""],["Llamado 3 - Abril","2°","Introducción a Base de Datos","2026-04-23","9:00","jueves",""],["Llamado 3 - Abril","2°","Base de Datos","2026-04-23","?","jueves",""],["Llamado 3 - Abril","2°","Matemática D","2026-04-24","17:00","viernes",""],["Llamado 4 - Mayo","2°","Procesos de Negocio","2026-06-01","19:00","lunes",""],["Llamado 4 - Mayo","1°","Matemática A","2026-05-26","10:00","martes",""],["Llamado 4 - Mayo","1°","Matemática B","2026-05-26","10:00","martes",""],["Llamado 4 - Mayo","2°","Matemática C","2026-05-26","10:00","martes",""],["Llamado 4 - Mayo","2°","Contabilidad e interpretación de estados contables","2026-05-26","12:30:00","martes",""],["Llamado 4 - Mayo","1°","Algoritmos y Programación I","2026-05-27","14:00","miercoles",""],["Llamado 4 - Mayo","1°","Algoritmos y Programación II","2026-05-27","14:00","miercoles",""],["Llamado 4 - Mayo","1°","Gestión de las Organizaciones","2026-05-28","8:00","jueves",""],["Llamado 4 - Mayo","1°","Economía y Medición Económica","2026-05-28","8:00","jueves",""],["Llamado 4 - Mayo","","Inglés (Prueba lecto-comprensión y traducción)","2026-05-28","8:00","jueves",""],["Llamado 4 - Mayo","2°","Introducción a Base de Datos","2026-05-28","9:00","jueves",""],["Llamado 4 - Mayo","2°","Base de Datos","2026-05-28","","jueves",""],["Llamado 4 - Mayo","2°","Matemática D","2026-05-29","17:00","viernes",""],["Llamado 5 - Junio","2°","Procesos de Negocio","2026-06-22","19:00","lunes",""],["Llamado 5 - Junio","1°","Matemática A","2026-06-23","10:00","martes",""],["Llamado 5 - Junio","1°","Matemática B","2026-06-23","10:00","martes",""],["Llamado 5 - Junio","2°","Matemática C","2026-06-23","10:00","martes",""],["Llamado 5 - Junio","2°","Contabilidad e interpretación de estados contables","2026-06-23","12:30:00","martes",""],["Llamado 5 - Junio","1°","Algoritmos y Programación I","2026-06-24","14:00","miercoles",""],["Llamado 5 - Junio","1°","Algoritmos y Programación II","2026-06-24","14:00","miercoles",""],["Llamado 5 - Junio","1°","Gestión de las Organizaciones","2026-06-25","8:00","jueves",""],["Llamado 5 - Junio","1°","Economía y Medición Económica","2026-06-25","8:00","jueves",""],["Llamado 5 - Junio","","Inglés (Prueba lecto-comprensión y traducción)","2026-06-25","8:00","jueves",""],["Llamado 5 - Junio","2°","Introducción a Base de Datos","2026-06-25","9:00","jueves",""],["Llamado 5 - Junio","2°","Base de Datos","2026-06-25","","jueves",""],["Llamado 5 - Junio","2°","Matemática D","2026-06-26","17:00","viernes",""],["Llamado 6 - Julio","2°","Procesos de Negocio","2026-07-13","19:00","lunes",""],["Llamado 6 - Julio","1°","Matemática A","2026-07-14","10:00","martes",""],["Llamado 6 - Julio","1°","Matemática B","2026-07-14","10:00","martes",""],["Llamado 6 - Julio","2°","Matemática C","2026-07-14","10:00","martes",""],["Llamado 6 - Julio","2°","Contabilidad e interpretación de estados contables","2026-07-14","12:30:00","martes",""],["Llamado 6 - Julio","1°","Algoritmos y Programación I","2026-07-15","14:00","miercoles",""],["Llamado 6 - Julio","1°","Algoritmos y Programación II","2026-07-15","14:00","miercoles",""],["Llamado 6 - Julio","1°","Gestión de las Organizaciones","2026-07-16","8:00","jueves",""],["Llamado 6 - Julio","1°","Economía y Medición Económica","2026-07-16","8:00","jueves",""],["Llamado 6 - Julio","","Inglés (Prueba lecto-comprensión y traducción)","2026-07-16","8:00","jueves",""],["Llamado 6 - Julio","2°","Introducción a Base de Datos","2026-07-16","9:00","jueves",""],["Llamado 6 - Julio","2°","Base de Datos","2026-07-16","","jueves",""],["Llamado 6 - Julio","2°","Matemática D","2026-07-17","17:00","viernes",""],["Llamado 7 - Agosto","2°","Procesos de Negocio","2026-08-24","19:00","lunes",""],["Llamado 7 - Agosto","1°","Matemática A","2026-08-18","10:00","martes",""],["Llamado 7 - Agosto","1°","Matemática B","2026-08-18","10:00","martes",""],["Llamado 7 - Agosto","2°","Matemática C","2026-08-18","10:00","martes",""],["Llamado 7 - Agosto","2°","Contabilidad e interpretación de estados contables","2026-08-18","12:30:00","martes",""],["Llamado 7 - Agosto","1°","Algoritmos y Programación I","2026-08-19","14:00","miercoles",""],["Llamado 7 - Agosto","1°","Algoritmos y Programación II","2026-08-19","14:00","miercoles",""],["Llamado 7 - Agosto","1°","Gestión de las Organizaciones","2026-08-20","8:00","jueves",""],["Llamado 7 - Agosto","1°","Economía y Medición Económica","2026-08-20","8:00","jueves",""],["Llamado 7 - Agosto","","Inglés (Prueba lecto-comprensión y traducción)","2026-08-20","8:00","jueves",""],["Llamado 7 - Agosto","2°","Introducción a Base de Datos","2026-08-20","9:00","jueves",""],["Llamado 7 - Agosto","2°","Base de Datos","2026-08-20","","jueves",""],["Llamado 7 - Agosto","2°","Matemática D","2026-08-21","17:00","viernes",""],["Llamado 7 - Agosto","3°","Fundamentos de Arquitectura de Computadoras, Sistemas Operativos y Redes","2026-08-18","08:30:00","martes",""],["Llamado 7 - Agosto","3°","Ingeniería de Software","2026-08-19","10:00","miércoles",""],["Llamado 8 - Septiembre","2°","Procesos de Negocio","2026-09-14","19:00","lunes",""],["Llamado 8 - Septiembre","1°","Matemática A","2026-09-15","10:00","martes",""],["Llamado 8 - Septiembre","1°","Matemática B","2026-09-15","10:00","martes",""],["Llamado 8 - Septiembre","2°","Matemática C","2026-09-15","10:00","martes",""],["Llamado 8 - Septiembre","2°","Contabilidad e interpretación de estados contables","2026-09-15","12:30:00","martes",""],["Llamado 8 - Septiembre","1°","Algoritmos y Programación I","2026-09-16","14:00","miercoles",""],["Llamado 8 - Septiembre","1°","Algoritmos y Programación II","2026-09-16","14:00","miercoles",""],["Llamado 8 - Septiembre","1°","Gestión de las Organizaciones","2026-09-17","8:00","jueves",""],["Llamado 8 - Septiembre","1°","Economía y Medición Económica","2026-09-17","8:00","jueves",""],["Llamado 8 - Septiembre","","Inglés (Prueba lecto-comprensión y traducción)","2026-09-17","8:00","jueves",""],["Llamado 8 - Septiembre","2°","Introducción a Base de Datos","2026-09-17","9:00","jueves",""],["Llamado 8 - Septiembre","2°","Base de Datos","2026-09-17","","jueves",""],["Llamado 8 - Septiembre","2°","Matemática D","2026-09-18","17:00","viernes",""],["Llamado 8 - Septiembre","3°","Fundamentos de Arquitectura de Computadoras, Sistemas Operativos y Redes","2026-09-15","08:30:00","martes",""],["Llamado 8 - Septiembre","3°","Ingeniería de Software","2026-09-16","10:00","miércoles",""],["Llamado 8 - Septiembre","3°","Gestión de personas y equipos","2026-09-14","19:00","lunes",""],["Llamado 8 - Septiembre","3°","Costos e información para la gestión","2026-09-16","18:00","miércoles",""],["Llamado 9 - Octubre","2°","Procesos de Negocio","2026-10-19","19:00","lunes",""],["Llamado 9 - Octubre","1°","Matemática A","2026-10-13","10:00","martes",""],["Llamado 9 - Octubre","1°","Matemática B","2026-10-13","10:00","martes",""],["Llamado 9 - Octubre","2°","Matemática C","2026-10-13","10:00","martes",""],["Llamado 9 - Octubre","2°","Contabilidad e interpretación de estados contables","2026-10-13","12:30:00","martes",""],["Llamado 9 - Octubre","1°","Algoritmos y Programación I","2026-10-14","14:00","miercoles",""],["Llamado 9 - Octubre","1°","Algoritmos y Programación II","2026-10-14","14:00","miercoles",""],["Llamado 9 - Octubre","1°","Gestión de las Organizaciones","2026-10-15","8:00","jueves",""],["Llamado 9 - Octubre","1°","Economía y Medición Económica","2026-10-15","8:00","jueves",""],["Llamado 9 - Octubre","","Inglés (Prueba lecto-comprensión y traducción)","2026-10-15","8:00","jueves",""],["Llamado 9 - Octubre","2°","Introducción a Base de Datos","2026-10-15","9:00","jueves",""],["Llamado 9 - Octubre","2°","Base de Datos","2026-10-15","","jueves",""],["Llamado 9 - Octubre","2°","Matemática D","2026-10-16","17:00","viernes",""],["Llamado 9 - Octubre","3°","Gestión de personas y equipos","2026-10-19","19:00","lunes",""],["Llamado 10 - Noviembre","2°","Procesos de Negocio","2026-11-09","19:00","lunes",""],["Llamado 10 - Noviembre","1°","Matemática A","2026-11-10","10:00","martes",""],["Llamado 10 - Noviembre","1°","Matemática B","2026-11-10","10:00","martes",""],["Llamado 10 - Noviembre","2°","Matemática C","2026-11-10","10:00","martes",""],["Llamado 10 - Noviembre","2°","Contabilidad e interpretación de estados contables","2026-11-10","12:30:00","martes",""],["Llamado 10 - Noviembre","1°","Algoritmos y Programación I","2026-11-11","14:00","miercoles",""],["Llamado 10 - Noviembre","1°","Algoritmos y Programación II","2026-11-11","14:00","miercoles",""],["Llamado 10 - Noviembre","1°","Gestión de las Organizaciones","2026-11-12","8:00","jueves",""],["Llamado 10 - Noviembre","1°","Economía y Medición Económica","2026-11-12","8:00","jueves",""],["Llamado 10 - Noviembre","","Inglés (Prueba lecto-comprensión y traducción)","2026-11-12","8:00","jueves",""],["Llamado 10 - Noviembre","2°","Introducción a Base de Datos","2026-11-12","9:00","jueves",""],["Llamado 10 - Noviembre","2°","Base de Datos","2026-11-12","","jueves",""],["Llamado 10 - Noviembre","2°","Matemática D","2026-11-13","17:00","viernes",""],["Llamado 10 - Noviembre","3°","Gestión de personas y equipos","2026-11-09","19:00","lunes",""],["Llamado 11 - Diciembre","2°","Procesos de Negocio","2026-12-14","19:00","lunes",""],["Llamado 11 - Diciembre","1°","Matemática A","2026-12-15","10:00","martes",""],["Llamado 11 - Diciembre","1°","Matemática B","2026-12-15","10:00","martes",""],["Llamado 11 - Diciembre","2°","Matemática C","2026-12-15","10:00","martes",""],["Llamado 11 - Diciembre","2°","Contabilidad e interpretación de estados contables","2026-12-15","12:30:00","martes",""],["Llamado 11 - Diciembre","1°","Algoritmos y Programación I","2026-12-16","14:00","miercoles",""],["Llamado 11 - Diciembre","1°","Algoritmos y Programación II","2026-12-16","14:00","miercoles",""],["Llamado 11 - Diciembre","1°","Gestión de las Organizaciones","2026-12-17","8:00","jueves",""],["Llamado 11 - Diciembre","1°","Economía y Medición Económica","2026-12-17","8:00","jueves",""],["Llamado 11 - Diciembre","","Inglés (Prueba lecto-comprensión y traducción)","2026-12-17","8:00","jueves",""],["Llamado 11 - Diciembre","2°","Introducción a Base de Datos","2026-12-17","9:00","jueves",""],["Llamado 11 - Diciembre","2°","Base de Datos","2026-12-17","","jueves",""],["Llamado 11 - Diciembre","2°","Matemática D","2026-12-18","17:00","viernes",""],["Llamado 11 - Diciembre","3°","Gestión de personas y equipos","2026-12-14","19:00","lunes",""]],"saladillo":[["Llamado 1","1º","Contabilidad I (Bases y Fundamentos) - Cát B","2026-02-23","15:00","","A confirmar"],["Llamado 1","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","2026-02-25","13:00","","Presencial"],["Llamado 1","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát A","2026-02-28","10:00","","A confirmar"],["Llamado 1","1º","Microeconomía I","2026-02-24","10:30:00","","Presencial"],["Llamado 1","1º","Matemática I (Análisis Matemático)","2026-02-25","10:00","","Presencial"],["Llamado 1","1º","Derecho Constitucional y Administrativo","2026-02-25","18:00","","A confirmar"],["Llamado 1","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","2026-03-18","13:00","","A confirmar"],["Llamado 1","1º","Matemática para Administradores","2026-02-25","10:00","","Presencial"],["Llamado 1","1º","Pensamiento Social y Científico","2026-02-25","","","A confirmar"],["Llamado 1","1º","Comportamiento Humano en las Organizaciones","2026-02-27","9:00","","A confirmar"],["Llamado 1","2º","Contabilidad II (Ajuste y Valuación)","2026-02-28","10:00","","A confirmar"],["Llamado 1","2º","Macroeconomía I","2026-02-25","8:00","","A confirmar"],["Llamado 1","2º","Historia Económica y Social I","2026-03-04","20:00","","Presencial"],["Llamado 1","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","2026-02-24","11:00","","Presencial"],["Llamado 1","2º","Derecho Privado","","","","A confirmar"],["Llamado 1","2º","Matemática II","2026-02-25","10:00","","Presencial"],["Llamado 1","2º","Finanzas Públicas","2026-02-24","8:00","","Virtual"],["Llamado 1","2º","Interpretación de los EECC","2026-02-28","10:00","","A confirmar"],["Llamado 1","3º","Contabilidad III (Estados Contables)","2026-02-28","10:00","","A confirmar"],["Llamado 1","3º","Administración IV (Producción)/ Producción","2026-03-02","15:00","","A confirmar"],["Llamado 1","3º","Estadística para los Negocios/ Estadística Aplicada","2026-02-24","14:00:00","","Presencial"],["Llamado 1","3º","Estructura Económica Societaria","2026-02-28","10:00","","A confirmar"],["Llamado 1","3º","Matemática para Decisiones Empresarias","2026-02-28","10:00","","A confirmar"],["Llamado 1","3º","Contabilidad V (Sistemas de Información Económica y Contable)/ Sistema de Información Contable de Apoyo a las Operaciones","2026-02-23","19:00","","A confirmar"],["Llamado 1","3º","Administración III (Comercialización) / Comercialización","","","","A confirmar"],["Llamado 1","4º","Teoría y Técnica Impositiva I","2026-02-23","18:00","","A confirmar"],["Llamado 1","4º","Finanzas de Empresas","2026-02-26","15:30:00","","A confirmar"],["Llamado 1","4º","Contabilidad IV (Hacienda Pública) / Contabilidad del Sector Público","2026-02-04","15:00","","A confirmar"],["Llamado 1","4º","Actuación Profesional Laboral y Previsional","2026-02-23","10:00","","A confirmar"],["Llamado 1","4º","Análisis e interpretación de los Estados Contables","2026-02-25","19:00","","A confirmar"],["Llamado 1","4º","Costos para la Gestión","2026-02-24","17:00","","A confirmar"],["Llamado 1","5º","Contabilidad VIII (Auditoría)/ Auditoria","","","","A confirmar"],["Llamado 1","5º","Organización y Práctica Profesional","","","","A confirmar"],["Llamado 1","4º","Análisis de Coyuntura y Previsión Económica - PLAN 6","","","",""],["Llamado 1","5º","Técnica y Legislación Tributaria - PLAN VI","","","","A confirmar"],["Llamado 1","3º","Finanzas Públicas II - PLAN 6","","","",""],["Llamado 1","5º","Actuación Judicial/ Actuación Profesional en la Justicia","2026-02-25","8:00","","A confirmar"],["Llamado 1","5º","Teoría y Técnica Impositiva II","2026-02-23","19:00","","A confirmar"],["Llamado 1","5º","Contabilidad IX (Contabilidad para la Toma de Decisiones) / Sistema de Información Contable para la Toma de Decisiones","2026-02-23","12:00","","A confirmar"],["Llamado 2","1º","Contabilidad I (Bases y Fundamentos) - Cát B","2026-03-19","","",""],["Llamado 2","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","2026-03-17","15:00","",""],["Llamado 2","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát A","2026-03-27","11:00","",""],["Llamado 2","1º","Microeconomía I","2026-03-16","10:30:00","",""],["Llamado 2","1º","Matemática I (Análisis Matemático)","2026-03-18","9:00","",""],["Llamado 2","1º","Derecho Constitucional y Administrativo","2026-03-25","18:00","",""],["Llamado 2","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","2026-03-18","13:00","",""],["Llamado 2","1º","Matemática para Administradores","2026-03-18","9:00","",""],["Llamado 2","1º","Pensamiento Social y Científico","","","",""],["Llamado 2","1º","Comportamiento Humano en las Organizaciones","2026-03-28","10:00","",""],["Llamado 2","2º","Contabilidad II (Ajuste y Valuación)","2026-03-25","14:00","",""],["Llamado 2","2º","Macroeconomía I","2026-03-26","18:00","",""],["Llamado 2","2º","Historia Económica y Social I","2026-03-27","16:00","",""],["Llamado 2","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","2026-03-17","11:00","",""],["Llamado 2","2º","Derecho Privado","2026-03-20","14:30:00","",""],["Llamado 2","2º","Matemática II","2026-03-18","9:00","",""],["Llamado 2","2º","Finanzas Públicas","2026-03-16","9:00","",""],["Llamado 2","2º","Interpretación de los EECC","2026-03-16","11:00","",""],["Llamado 2","3º","Contabilidad III (Estados Contables)","2026-03-25","14:00","",""],["Llamado 2","3º","Administración IV (Producción)/ Producción","","","",""],["Llamado 2","3º","Estadística para los Negocios/ Estadística Aplicada","2026-03-17","18:00","",""],["Llamado 2","3º","Estructura Económica Societaria","2026-03-26","11:00","",""],["Llamado 2","3º","Matemática para Decisiones Empresarias","2026-03-28","10:00","",""],["Llamado 2","3º","Contabilidad V (Sistemas de Información Económica y Contable)/ Sistema de Información Contable de Apoyo a las Operaciones","2026-03-19","13:00","",""],["Llamado 2","3º","Administración III (Comercialización) / Comercialización","2026-03-27","9:00","",""],["Llamado 2","4º","Teoría y Técnica Impositiva I","2026-03-14","9:00","",""],["Llamado 2","4º","Finanzas de Empresas","2026-03-19","15:30:00","",""],["Llamado 2","4º","Contabilidad IV (Hacienda Pública) / Contabilidad del Sector Público","2026-03-26","16:00","",""],["Llamado 2","4º","Actuación Profesional Laboral y Previsional","2026-03-16","10:00","",""],["Llamado 2","4º","Análisis e interpretación de los Estados Contables","2026-03-18","19:00","",""],["Llamado 2","4º","Costos para la Gestión","2026-03-25","16:00","",""],["Llamado 2","5º","Contabilidad VIII (Auditoría)/ Auditoria","","","",""],["Llamado 2","5º","Organización y Práctica Profesional","","","",""],["Llamado 2","4º","Análisis de Coyuntura y Previsión Económica - PLAN 6","","","",""],["Llamado 2","5º","Técnica y Legislación Tributaria - PLAN VI","","","",""],["Llamado 2","3º","Finanzas Públicas II - PLAN 6","","","",""],["Llamado 2","5º","Actuación Judicial/ Actuación Profesional en la Justicia","2026-03-27","11:30:00","",""],["Llamado 2","5º","Teoría y Técnica Impositiva II","2026-03-14","9:00","",""],["Llamado 2","5º","Contabilidad IX (Contabilidad para la Toma de Decisiones) / Sistema de Información Contable para la Toma de Decisiones","2026-03-16","12:00","",""],["Llamado 3","1º","Contabilidad I (Bases y Fundamentos) - Cát B","2026-05-28","12:00","",""],["Llamado 3","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","2026-05-26","15:00","",""],["Llamado 3","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát A","","","",""],["Llamado 3","1º","Microeconomía I","2026-06-04","10:00","",""],["Llamado 3","1º","Matemática I (Análisis Matemático)","2026-05-27","9:00","",""],["Llamado 3","1º","Derecho Constitucional y Administrativo","2026-06-04","18:30","",""],["Llamado 3","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","2026-06-03","13:00","",""],["Llamado 3","1º","Matemática para Administradores","2026-05-27","9:00","",""],["Llamado 3","1º","Pensamiento Social y Científico","","","",""],["Llamado 3","1º","Comportamiento Humano en las Organizaciones","2026-05-30","10:00","",""],["Llamado 3","2º","Contabilidad II (Ajuste y Valuación)","2026-06-03","17:00","",""],["Llamado 3","2º","Macroeconomía I","2026-05-30","14:00","",""],["Llamado 3","2º","Historia Económica y Social I","","","",""],["Llamado 3","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","2026-06-01","12:30","",""],["Llamado 3","2º","Derecho Privado","2026-05-29","15:00","",""],["Llamado 3","2º","Matemática II","2026-05-27","9:00","",""],["Llamado 3","2º","Finanzas Públicas","2026-06-05","8:30","",""],["Llamado 3","2º","Interpretación de los EECC","2026-06-08","14:00","",""],["Llamado 3","3º","Contabilidad III (Estados Contables)","2026-06-03","17:00","",""],["Llamado 3","3º","Administración IV (Producción)/ Producción","2026-05-30","11:00","",""],["Llamado 3","3º","Estadística para los Negocios/ Estadística Aplicada","2026-06-02","18:30","",""],["Llamado 3","3º","Estructura Económica Societaria","2026-06-04","12:00","",""],["Llamado 3","3º","Matemática para Decisiones Empresarias","2026-05-29","10:00","",""],["Llamado 3","3º","Contabilidad V (Sistemas de Información Económica y Contable)/ Sistema de Información Contable de Apoyo a las Operaciones","2026-06-04","18:00","",""],["Llamado 3","3º","Administración III (Comercialización) / Comercialización","2026-05-29","9:00","",""],["Llamado 3","4º","Teoría y Técnica Impositiva I","2026-06-06","9:00","",""],["Llamado 3","4º","Finanzas de Empresas","2026-05-27","15:30","",""],["Llamado 3","4º","Contabilidad IV (Hacienda Pública) / Contabilidad del Sector Público","2026-06-04","17:00","",""],["Llamado 3","4º","Actuación Profesional Laboral y Previsional","2026-06-05","15:30","",""],["Llamado 3","4º","Análisis e interpretación de los Estados Contables","","","",""],["Llamado 3","4º","Costos para la Gestión","2026-06-04","14:00","",""],["Llamado 3","5º","Contabilidad VIII (Auditoría)/ Auditoria","2026-06-05","18:00","",""],["Llamado 3","5º","Organización y Práctica Profesional","","","",""],["Llamado 3","4º","Análisis de Coyuntura y Previsión Económica - PLAN 6","","","",""],["Llamado 3","5º","Técnica y Legislación Tributaria - PLAN VI","","","",""],["Llamado 3","3º","Finanzas Públicas II - PLAN 6","","","",""],["Llamado 3","5º","Actuación Judicial/ Actuación Profesional en la Justicia","2026-06-04","8:00","",""],["Llamado 3","5º","Teoría y Técnica Impositiva II","2026-06-06","9:00","",""],["Llamado 3","5º","Contabilidad IX (Contabilidad para la Toma de Decisiones) / Sistema de Información Contable para la Toma de Decisiones","2026-06-01","14:00","",""],["Llamado 4","1º","Contabilidad I (Bases y Fundamentos) - Cát B","2026-08-27","11:00","",""],["Llamado 4","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","2026-08-18","13:00","",""],["Llamado 4","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát A","2026-08-21","11:00","",""],["Llamado 4","1º","Microeconomía I","2026-08-20","11:00","",""],["Llamado 4","1º","Matemática I (Análisis Matemático)","2026-08-25","9:00","",""],["Llamado 4","1º","Derecho Constitucional y Administrativo","2026-08-22","12:00","",""],["Llamado 4","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","2026-08-24","","",""],["Llamado 4","1º","Matemática para Administradores","2026-08-29","9:00","",""],["Llamado 4","1º","Pensamiento Social y Científico","2026-08-27","18:00","",""],["Llamado 4","1º","Comportamiento Humano en las Organizaciones","2026-08-22","8 libre 13 reg.","",""],["Llamado 4","2º","Contabilidad II (Ajuste y Valuación)","2026-08-19","12:00","",""],["Llamado 4","2º","Macroeconomía I","2026-08-21","13:00","",""],["Llamado 4","2º","Historia Económica y Social I","2026-08-28","18:00","",""],["Llamado 4","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","2026-08-24","12:30:00","",""],["Llamado 4","2º","Administración Estratégica","2026-08-26","10:00","",""],["Llamado 4","2º","Derecho Privado","2026-08-21","14:00","",""],["Llamado 4","2º","Matemática II","2026-08-25","12:00","",""],["Llamado 4","2º","Finanzas Públicas","2026-08-29","16:30:00","",""],["Llamado 4","2º","Interpretación de los EECC","2026-08-21","15:00","",""],["Llamado 4","3º","Contabilidad III (Estados Contables)","2026-08-19","12:00","",""],["Llamado 4","3º","Administración IV (Producción)/ Producción","2026-08-29","8:00","",""],["Llamado 4","3º","Estadística para los Negocios/ Estadística Aplicada","2026-08-20","14:00","",""],["Llamado 4","3º","Estructura Económica Societaria","2026-08-27","12:00","",""],["Llamado 4","3º","Matemática para Decisiones Empresarias","2026-09-12","10:00","",""],["Llamado 4","3º","Contabilidad V (Sistemas de Información Económica y Contable)/ Sistema de Información Contable de Apoyo a las Operaciones","2026-08-28","13:00","",""],["Llamado 4","3º","Administración III (Comercialización) / Comercialización","2026-08-21","9:00","",""],["Llamado 4","4º","Teoría y Técnica Impositiva I","2026-08-22","9:00","",""],["Llamado 4","4º","Finanzas de Empresas","2026-08-24","15:30:00","",""],["Llamado 4","4º","Contabilidad IV (Hacienda Pública) / Contabilidad del Sector Público","2026-08-20","15:00","",""],["Llamado 4","4º","Actuación Profesional Laboral y Previsional","2026-08-21","10:00","",""],["Llamado 4","4º","Análisis e interpretación de los Estados Contables","2026-08-22","13:00","",""],["Llamado 4","4º","Costos para la Gestión","2026-08-26","17:30:00","",""],["Llamado 4","5º","Contabilidad VIII (Auditoría)/ Auditoria","2026-08-28","17:00","",""],["Llamado 4","5º","Organización y Práctica Profesional","","","",""],["Llamado 4","4º","Análisis de Coyuntura y Previsión Económica - PLAN 6","","","",""],["Llamado 4","5º","Técnica y Legislación Tributaria - PLAN VI","","","",""],["Llamado 4","3º","Finanzas Públicas II - PLAN 6","","","",""],["Llamado 4","5º","Actuación Judicial/ Actuación Profesional en la Justicia","2026-08-25","08:30:00","",""],["Llamado 4","5º","Teoría y Técnica Impositiva II","2026-08-22","9:00","",""],["Llamado 4","5º","Contabilidad IX (Contabilidad para la Toma de Decisiones) / Sistema de Información Contable para la Toma de Decisiones","2026-08-24","12:00","",""],["Llamado 5","1º","Contabilidad I (Bases y Fundamentos) - Cát B","","","",""],["Llamado 5","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","","","",""],["Llamado 5","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát A","","","",""],["Llamado 5","1º","Microeconomía I","","","",""],["Llamado 5","1º","Matemática I (Análisis Matemático)","","","",""],["Llamado 5","1º","Derecho Constitucional y Administrativo","","","",""],["Llamado 5","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","","","",""],["Llamado 5","1º","Matemática para Administradores","","","",""],["Llamado 5","1º","Pensamiento Social y Científico","","","",""],["Llamado 5","1º","Comportamiento Humano en las Organizaciones","","","",""],["Llamado 5","2º","Contabilidad II (Ajuste y Valuación)","","","",""],["Llamado 5","2º","Macroeconomía I","","","",""],["Llamado 5","2º","Historia Económica y Social I","","","",""],["Llamado 5","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","","","",""],["Llamado 5","2º","Administración Estratégica","","","",""],["Llamado 5","2º","Derecho Privado","","","",""],["Llamado 5","2º","Matemática II","","","",""],["Llamado 5","2º","Finanzas Públicas","","","",""],["Llamado 5","2º","Interpretación de los EECC","","","",""],["Llamado 5","3º","Contabilidad III (Estados Contables)","","","",""],["Llamado 5","3º","Administración IV (Producción)/ Producción","","","",""],["Llamado 5","3º","Estadística para los Negocios/ Estadística Aplicada","","","",""],["Llamado 5","3º","Estructura Económica Societaria","","","",""],["Llamado 5","3º","Matemática para Decisiones Empresarias","","","",""],["Llamado 5","3º","Contabilidad V (Sistemas de Información Económica y Contable)/ Sistema de Información Contable de Apoyo a las Operaciones","","","",""],["Llamado 5","3º","Administración III (Comercialización) / Comercialización","","","",""],["Llamado 5","4º","Teoría y Técnica Impositiva I","","","",""],["Llamado 5","4º","Finanzas de Empresas","","","",""],["Llamado 5","4º","Contabilidad IV (Hacienda Pública) / Contabilidad del Sector Público","","","",""],["Llamado 5","4º","Actuación Profesional Laboral y Previsional","","","",""],["Llamado 5","4º","Análisis e interpretación de los Estados Contables","","","",""],["Llamado 5","4º","Costos para la Gestión","","","",""],["Llamado 5","5º","Contabilidad VIII (Auditoría)/ Auditoria","","","",""],["Llamado 5","5º","Organización y Práctica Profesional","","","",""],["Llamado 5","4º","Análisis de Coyuntura y Previsión Económica - PLAN 6","","","",""],["Llamado 5","5º","Técnica y Legislación Tributaria - PLAN VI","","","",""],["Llamado 5","3º","Finanzas Públicas II - PLAN 6","","","",""],["Llamado 5","5º","Actuación Judicial/ Actuación Profesional en la Justicia","","","",""],["Llamado 5","5º","Teoría y Técnica Impositiva II","","","",""],["Llamado 5","5º","Contabilidad IX (Contabilidad para la Toma de Decisiones) / Sistema de Información Contable para la Toma de Decisiones","","","",""],["Llamado 6","1º","Contabilidad I (Bases y Fundamentos) - Cát B","","","",""],["Llamado 6","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","","","",""],["Llamado 6","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát A","","","",""],["Llamado 6","1º","Microeconomía I","","","",""],["Llamado 6","1º","Matemática I (Análisis Matemático)","","","",""],["Llamado 6","1º","Derecho Constitucional y Administrativo","","","",""],["Llamado 6","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","","","",""],["Llamado 6","1º","Matemática para Administradores","","","",""],["Llamado 6","1º","Pensamiento Social y Científico","","","",""],["Llamado 6","1º","Comportamiento Humano en las Organizaciones","","","",""],["Llamado 6","2º","Contabilidad II (Ajuste y Valuación)","","","",""],["Llamado 6","2º","Macroeconomía I","","","",""],["Llamado 6","2º","Historia Económica y Social I","","","",""],["Llamado 6","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","","","",""],["Llamado 6","2º","Administración Estratégica","","","",""],["Llamado 6","2º","Derecho Privado","","","",""],["Llamado 6","2º","Matemática II","","","",""],["Llamado 6","2º","Finanzas Públicas","","","",""],["Llamado 6","2º","Interpretación de los EECC","","","",""],["Llamado 6","3º","Contabilidad III (Estados Contables)","","","",""],["Llamado 6","3º","Administración IV (Producción)/ Producción","","","",""],["Llamado 6","3º","Estadística para los Negocios/ Estadística Aplicada","","","",""],["Llamado 6","3º","Estructura Económica Societaria","","","",""],["Llamado 6","3º","Matemática para Decisiones Empresarias","","","",""],["Llamado 6","3º","Contabilidad V (Sistemas de Información Económica y Contable)/ Sistema de Información Contable de Apoyo a las Operaciones","","","",""],["Llamado 6","3º","Administración III (Comercialización) / Comercialización","","","",""],["Llamado 6","4º","Teoría y Técnica Impositiva I","","","",""],["Llamado 6","4º","Finanzas de Empresas","","","",""],["Llamado 6","4º","Contabilidad IV (Hacienda Pública) / Contabilidad del Sector Público","","","",""],["Llamado 6","4º","Actuación Profesional Laboral y Previsional","","","",""],["Llamado 6","4º","Análisis e interpretación de los Estados Contables","","","",""],["Llamado 6","4º","Costos para la Gestión","","","",""],["Llamado 6","5º","Contabilidad VIII (Auditoría)/ Auditoria","","","",""],["Llamado 6","5º","Organización y Práctica Profesional","","","",""],["Llamado 6","4º","Análisis de Coyuntura y Previsión Económica - PLAN 6","","","",""],["Llamado 6","5º","Técnica y Legislación Tributaria - PLAN VI","","","",""],["Llamado 6","3º","Finanzas Públicas II - PLAN 6","","","",""],["Llamado 6","5º","Actuación Judicial/ Actuación Profesional en la Justicia","","","",""],["Llamado 6","5º","Teoría y Técnica Impositiva II","","","",""],["Llamado 6","5º","Contabilidad IX (Contabilidad para la Toma de Decisiones) / Sistema de Información Contable para la Toma de Decisiones","","","",""]],"brandsen":[["Llamado 1","1º","Contabilidad I (Bases y Fundamentos) - Cát C","2026-02-24","12:00","","Virtual"],["Llamado 1","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","2026-02-28","9:00","","Presencial"],["Llamado 1","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát B","","","","Presencial"],["Llamado 1","1º","Microeconomía I","2026-02-24","16:00","","Presencial"],["Llamado 1","1º","Matemática I (Análisis Matemático)","","","","A confirmar"],["Llamado 1","1º","Derecho Constitucional y Administrativo","","","","A confirmar"],["Llamado 1","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","2026-02-27","17:00","","Virtual"],["Llamado 1","1º","Matemática para Administradores","","","","A confirmar"],["Llamado 1","1º","Pensamiento Social y Científico","","","","A confirmar"],["Llamado 1","1º","Comportamiento Humano en las Organizaciones","","","","A confirmar"],["Llamado 1","2º","Contabilidad II (Ajuste y Valuación)","2026-02-24","12:00","","Virtual"],["Llamado 1","2º","Macroeconomía I","","","","Presencial"],["Llamado 1","2º","Historia Económica y Social I","","","","A confirmar"],["Llamado 1","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","2026-02-20","10:00","","Virtual"],["Llamado 1","2º","Derecho Privado","","","","A confirmar"],["Llamado 1","2º","Matemática II","","","","A confirmar"],["Llamado 1","2º","Finanzas Públicas","","","","A confirmar"],["Llamado 1","2º","Interpretación de los Estados Contables","","","","A confirmar"],["Llamado 2","1º","Contabilidad I (Bases y Fundamentos) - Cát C","","","",""],["Llamado 2","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","","","",""],["Llamado 2","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát B","","","",""],["Llamado 2","1º","Microeconomía I","","","",""],["Llamado 2","1º","Matemática I (Análisis Matemático)","","","",""],["Llamado 2","1º","Derecho Constitucional y Administrativo","","","",""],["Llamado 2","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","","","",""],["Llamado 2","1º","Matemática para Administradores","","","",""],["Llamado 2","1º","Pensamiento Social y Científico","","","",""],["Llamado 2","1º","Comportamiento Humano en las Organizaciones","","","",""],["Llamado 2","2º","Contabilidad II (Ajuste y Valuación)","","","",""],["Llamado 2","2º","Macroeconomía I","","","",""],["Llamado 2","2º","Historia Económica y Social I","","","",""],["Llamado 2","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","","","",""],["Llamado 2","2º","Derecho Privado","","","",""],["Llamado 2","2º","Matemática II","","","",""],["Llamado 2","2º","Finanzas Públicas","","","",""],["Llamado 2","2º","Interpretación de los Estados Contables","","","",""],["Llamado 3","1º","Contabilidad I (Bases y Fundamentos) - Cát C","","","",""],["Llamado 3","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","","","",""],["Llamado 3","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát B","","","",""],["Llamado 3","1º","Microeconomía I","","","",""],["Llamado 3","1º","Matemática I (Análisis Matemático)","","","",""],["Llamado 3","1º","Derecho Constitucional y Administrativo","","","",""],["Llamado 3","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","","","",""],["Llamado 3","1º","Matemática para Administradores","","","",""],["Llamado 3","1º","Pensamiento Social y Científico","","","",""],["Llamado 3","1º","Comportamiento Humano en las Organizaciones","","","",""],["Llamado 3","2º","Contabilidad II (Ajuste y Valuación)","","","",""],["Llamado 3","2º","Macroeconomía I","","","",""],["Llamado 3","2º","Historia Económica y Social I","","","",""],["Llamado 3","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","","","",""],["Llamado 3","2º","Derecho Privado","","","",""],["Llamado 3","2º","Matemática II","","","",""],["Llamado 3","2º","Finanzas Públicas","","","",""],["Llamado 3","2º","Interpretación de los Estados Contables","","","",""],["Llamado 4","1º","Contabilidad I (Bases y Fundamentos) - Cát C","","","",""],["Llamado 4","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","","","",""],["Llamado 4","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát B","","","",""],["Llamado 4","1º","Microeconomía I","","","",""],["Llamado 4","1º","Matemática I (Análisis Matemático)","","","",""],["Llamado 4","1º","Derecho Constitucional y Administrativo","","","",""],["Llamado 4","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","","","",""],["Llamado 4","1º","Matemática para Administradores","","","",""],["Llamado 4","1º","Pensamiento Social y Científico","","","",""],["Llamado 4","1º","Comportamiento Humano en las Organizaciones","","","",""],["Llamado 4","2º","Contabilidad II (Ajuste y Valuación)","","","",""],["Llamado 4","2º","Macroeconomía I","","","",""],["Llamado 4","2º","Historia Económica y Social I","","","",""],["Llamado 4","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","","","",""],["Llamado 4","2º","Derecho Privado","","","",""],["Llamado 4","2º","Matemática II","","","",""],["Llamado 4","2º","Finanzas Públicas","","","",""],["Llamado 4","2º","Interpretación de los Estados Contables","","","",""],["Llamado 5","1º","Contabilidad I (Bases y Fundamentos) - Cát C","","","",""],["Llamado 5","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","","","",""],["Llamado 5","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát B","","","",""],["Llamado 5","1º","Microeconomía I","","","",""],["Llamado 5","1º","Matemática I (Análisis Matemático)","","","",""],["Llamado 5","1º","Derecho Constitucional y Administrativo","","","",""],["Llamado 5","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","","","",""],["Llamado 5","1º","Matemática para Administradores","","","",""],["Llamado 5","1º","Pensamiento Social y Científico","","","",""],["Llamado 5","1º","Comportamiento Humano en las Organizaciones","","","",""],["Llamado 5","2º","Contabilidad II (Ajuste y Valuación)","","","",""],["Llamado 5","2º","Macroeconomía I","","","",""],["Llamado 5","2º","Historia Económica y Social I","","","",""],["Llamado 5","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","","","",""],["Llamado 5","2º","Derecho Privado","","","",""],["Llamado 5","2º","Matemática II","","","",""],["Llamado 5","2º","Finanzas Públicas","","","",""],["Llamado 5","2º","Interpretación de los Estados Contables","","","",""],["Llamado 6","1º","Contabilidad I (Bases y Fundamentos) - Cát C","","","",""],["Llamado 6","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","","","",""],["Llamado 6","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát B","","","",""],["Llamado 6","1º","Microeconomía I","","","",""],["Llamado 6","1º","Matemática I (Análisis Matemático)","","","",""],["Llamado 6","1º","Derecho Constitucional y Administrativo","","","",""],["Llamado 6","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","","","",""],["Llamado 6","1º","Matemática para Administradores","","","",""],["Llamado 6","1º","Pensamiento Social y Científico","","","",""],["Llamado 6","1º","Comportamiento Humano en las Organizaciones","","","",""],["Llamado 6","2º","Contabilidad II (Ajuste y Valuación)","","","",""],["Llamado 6","2º","Macroeconomía I","","","",""],["Llamado 6","2º","Historia Económica y Social I","","","",""],["Llamado 6","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","","","",""],["Llamado 6","2º","Derecho Privado","","","",""],["Llamado 6","2º","Matemática II","","","",""],["Llamado 6","2º","Finanzas Públicas","","","",""],["Llamado 6","2º","Interpretación de los Estados Contables","","","",""]],"tresarroyos":[["Llamado 1","1º","Contabilidad I (Bases y Fundamentos) - Cát A","","","",""],["Llamado 1","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","","","",""],["Llamado 1","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát B","","","",""],["Llamado 1","1º","Microeconomía I","","","",""],["Llamado 1","1º","Matemática I (Análisis Matemático)","","","",""],["Llamado 1","1º","Derecho Constitucional y Administrativo","","","",""],["Llamado 1","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","","","",""],["Llamado 1","1º","Matemática para Administradores","","","",""],["Llamado 1","1º","Comportamiento Humano en las Organizaciones","","","",""],["Llamado 1","1º","Pensamiento Social y Científico","","","",""],["Llamado 1","2º","Interpretación de los Estados Contables","","","",""],["Llamado 1","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","","","",""],["Llamado 1","2º","Macroeconomía I","","","",""],["Llamado 1","2º","Historia Económica y Social I","","","",""],["Llamado 1","2º","Matemática II","","","",""],["Llamado 1","2º","Finanzas Públicas","","","",""],["Llamado 1","3º","Administración III (Planeamiento y Control Organizacional)","","","",""],["Llamado 1","3º","Administración Pública","","","",""],["Llamado 1","3º","Estadística Aplicada","","","",""],["Llamado 1","3º","Derecho Empresario","","","",""],["Llamado 1","3º","Matemática para Decisiones Empresarias","","","",""],["Llamado 1","3º","Administración de la Producción","","","",""],["Llamado 1","4°","Diseño de sistemas de información","","","",""],["Llamado 1","4°","Marketing estrategico","","","",""],["Llamado 1","4°","Trabajo y sociedad","","","",""],["Llamado 1","4°","Psicosociología organizacional","","","",""],["Llamado 1","4°","Finanzas de empresas","","","",""],["Llamado 1","4º","Costos para la Gestión","","","",""],["Llamado 1","5º","Gestión y Desarrollo de las Personas en las Organizaciones","","","",""],["Llamado 1","5°","Tecnología Informática y Sistemas de Información para la Dirección","","","",""],["Llamado 1","5°","Marketing Táctico y Operativo","","","",""],["Llamado 1","5°","Negocios Internacionales","","","",""],["Llamado 1","5°","Tópicos Avanzados en Finanzas","","","",""],["Llamado 1","5°","Dirección General","","","",""],["Llamado 2","1º","Contabilidad I (Bases y Fundamentos) - Cát A","","","",""],["Llamado 2","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","","","",""],["Llamado 2","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát B","","","",""],["Llamado 2","1º","Microeconomía I","","","",""],["Llamado 2","1º","Matemática I (Análisis Matemático)","","","",""],["Llamado 2","1º","Derecho Constitucional y Administrativo","","","",""],["Llamado 2","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","","","",""],["Llamado 2","1º","Matemática para Administradores","","","",""],["Llamado 2","1º","Comportamiento Humano en las Organizaciones","","","",""],["Llamado 2","1º","Pensamiento Social y Científico","","","",""],["Llamado 2","2º","Interpretación de los Estados Contables","","","",""],["Llamado 2","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","","","",""],["Llamado 2","2º","Macroeconomía I","","","",""],["Llamado 2","2º","Historia Económica y Social I","","","",""],["Llamado 2","2º","Matemática II","","","",""],["Llamado 2","2º","Finanzas Públicas","","","",""],["Llamado 2","3º","Administración III (Planeamiento y Control Organizacional)","","","",""],["Llamado 2","3º","Administración Pública","","","",""],["Llamado 2","3º","Estadística Aplicada","","","",""],["Llamado 2","3º","Derecho Empresario","","","",""],["Llamado 2","3º","Matemática para Decisiones Empresarias","","","",""],["Llamado 2","3º","Administración de la Producción","","","",""],["Llamado 2","4°","Diseño de sistemas de información","","","",""],["Llamado 2","4°","Marketing estrategico","","","",""],["Llamado 2","4°","Trabajo y sociedad","","","",""],["Llamado 2","4°","Psicosociología organizacional","","","",""],["Llamado 2","4°","Finanzas de empresas","","","",""],["Llamado 2","4º","Costos para la Gestión","","","",""],["Llamado 2","5º","Gestión y Desarrollo de las Personas en las Organizaciones","","","",""],["Llamado 2","5°","Tecnología Informática y Sistemas de Información para la Dirección","","","",""],["Llamado 2","5°","Marketing Táctico y Operativo","","","",""],["Llamado 2","5°","Negocios Internacionales","","","",""],["Llamado 2","5°","Tópicos Avanzados en Finanzas","","","",""],["Llamado 2","5°","Dirección General","","","",""],["Llamado 3","1º","Contabilidad I (Bases y Fundamentos) - Cát A","","","",""],["Llamado 3","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","","","",""],["Llamado 3","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát B","","","",""],["Llamado 3","1º","Microeconomía I","","","",""],["Llamado 3","1º","Matemática I (Análisis Matemático)","","","",""],["Llamado 3","1º","Derecho Constitucional y Administrativo","","","",""],["Llamado 3","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","","","",""],["Llamado 3","1º","Matemática para Administradores","","","",""],["Llamado 3","1º","Comportamiento Humano en las Organizaciones","","","",""],["Llamado 3","1º","Pensamiento Social y Científico","","","",""],["Llamado 3","2º","Interpretación de los Estados Contables","","","",""],["Llamado 3","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","","","",""],["Llamado 3","2º","Macroeconomía I","","","",""],["Llamado 3","2º","Historia Económica y Social I","","","",""],["Llamado 3","2º","Matemática II","","","",""],["Llamado 3","2º","Finanzas Públicas","","","",""],["Llamado 3","3º","Administración III (Planeamiento y Control Organizacional)","","","",""],["Llamado 3","3º","Administración Pública","","","",""],["Llamado 3","3º","Estadística Aplicada","","","",""],["Llamado 3","3º","Derecho Empresario","","","",""],["Llamado 3","3º","Matemática para Decisiones Empresarias","","","",""],["Llamado 3","3º","Administración de la Producción","","","",""],["Llamado 3","4°","Diseño de sistemas de información","","","",""],["Llamado 3","4°","Marketing estrategico","","","",""],["Llamado 3","4°","Trabajo y sociedad","","","",""],["Llamado 3","4°","Psicosociología organizacional","","","",""],["Llamado 3","4°","Finanzas de empresas","","","",""],["Llamado 3","4º","Costos para la Gestión","","","",""],["Llamado 3","5º","Gestión y Desarrollo de las Personas en las Organizaciones","","","",""],["Llamado 3","5°","Tecnología Informática y Sistemas de Información para la Dirección","","","",""],["Llamado 3","5°","Marketing Táctico y Operativo","","","",""],["Llamado 3","5°","Negocios Internacionales","","","",""],["Llamado 3","5°","Tópicos Avanzados en Finanzas","","","",""],["Llamado 3","5°","Dirección General","","","",""],["Llamado 4","1º","Contabilidad I (Bases y Fundamentos) - Cát A","","","",""],["Llamado 4","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","","","",""],["Llamado 4","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát B","","","",""],["Llamado 4","1º","Microeconomía I","","","",""],["Llamado 4","1º","Matemática I (Análisis Matemático)","","","",""],["Llamado 4","1º","Derecho Constitucional y Administrativo","","","",""],["Llamado 4","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","","","",""],["Llamado 4","1º","Matemática para Administradores","","","",""],["Llamado 4","1º","Comportamiento Humano en las Organizaciones","","","",""],["Llamado 4","1º","Pensamiento Social y Científico","","","",""],["Llamado 4","2º","Interpretación de los Estados Contables","","","",""],["Llamado 4","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","","","",""],["Llamado 4","2º","Macroeconomía I","","","",""],["Llamado 4","2º","Historia Económica y Social I","","","",""],["Llamado 4","2º","Matemática II","","","",""],["Llamado 4","2º","Finanzas Públicas","","","",""],["Llamado 4","3º","Administración III (Planeamiento y Control Organizacional)","","","",""],["Llamado 4","3º","Administración Pública","","","",""],["Llamado 4","3º","Estadística Aplicada","","","",""],["Llamado 4","3º","Derecho Empresario","","","",""],["Llamado 4","3º","Matemática para Decisiones Empresarias","","","",""],["Llamado 4","3º","Administración de la Producción","","","",""],["Llamado 4","4°","Diseño de sistemas de información","","","",""],["Llamado 4","4°","Marketing estrategico","","","",""],["Llamado 4","4°","Trabajo y sociedad","","","",""],["Llamado 4","4°","Psicosociología organizacional","","","",""],["Llamado 4","4°","Finanzas de empresas","","","",""],["Llamado 4","4º","Costos para la Gestión","","","",""],["Llamado 4","5º","Gestión y Desarrollo de las Personas en las Organizaciones","","","",""],["Llamado 4","5°","Tecnología Informática y Sistemas de Información para la Dirección","","","",""],["Llamado 4","5°","Marketing Táctico y Operativo","","","",""],["Llamado 4","5°","Negocios Internacionales","","","",""],["Llamado 4","5°","Tópicos Avanzados en Finanzas","","","",""],["Llamado 4","5°","Dirección General","","","",""],["Llamado 5","1º","Contabilidad I (Bases y Fundamentos) - Cát A","","","",""],["Llamado 5","1º","Introducción a la Economía y Estructura Económica Argentina - Cát C","","","",""],["Llamado 5","1º","Administración I (Introducción a la Adm. y al Estudio de las Org.) - Cát B","","","",""],["Llamado 5","1º","Microeconomía I","","","",""],["Llamado 5","1º","Matemática I (Análisis Matemático)","","","",""],["Llamado 5","1º","Derecho Constitucional y Administrativo","","","",""],["Llamado 5","1º","Introducción a las Ciencias Sociales y al Conocimiento Científico","","","",""],["Llamado 5","1º","Matemática para Administradores","","","",""],["Llamado 5","1º","Comportamiento Humano en las Organizaciones","","","",""],["Llamado 5","1º","Pensamiento Social y Científico","","","",""],["Llamado 5","2º","Interpretación de los Estados Contables","","","",""],["Llamado 5","2º","Administración II (Técnicas Adm. y Gestión Organizacional) / Administración Estratégica","","","",""],["Llamado 5","2º","Macroeconomía I","","","",""],["Llamado 5","2º","Historia Económica y Social I","","","",""],["Llamado 5","2º","Matemática II","","","",""],["Llamado 5","2º","Finanzas Públicas","","","",""],["Llamado 5","3º","Administración III (Planeamiento y Control Organizacional)","","","",""],["Llamado 5","3º","Administración Pública","","","",""],["Llamado 5","3º","Estadística Aplicada","","","",""],["Llamado 5","3º","Derecho Empresario","","","",""],["Llamado 5","3º","Matemática para Decisiones Empresarias","","","",""],["Llamado 5","3º","Administración de la Producción","","","",""],["Llamado 5","4°","Diseño de sistemas de información","","","",""],["Llamado 5","4°","Marketing estrategico","","","",""],["Llamado 5","4°","Trabajo y sociedad","","","",""],["Llamado 5","4°","Psicosociología organizacional","","","",""],["Llamado 5","4°","Finanzas de empresas","","","",""],["Llamado 5","4º","Costos para la Gestión","","","",""],["Llamado 5","5º","Gestión y Desarrollo de las Personas en las Organizaciones","","","",""],["Llamado 5","5°","Tecnología Informática y Sistemas de Información para la Dirección","","","",""],["Llamado 5","5°","Marketing Táctico y Operativo","","","",""],["Llamado 5","5°","Negocios Internacionales","","","",""],["Llamado 5","5°","Tópicos Avanzados en Finanzas","","","",""],["Llamado 5","5°","Dirección General","","","",""]]};
+
+  var MESAS_OTRAS_SEDES = {};
+  Object.keys(MESAS_OTRAS_SEDES_DATA).forEach(function(sede){
+    MESAS_OTRAS_SEDES[sede] = MESAS_OTRAS_SEDES_DATA[sede].map(function(f, i){
+      return { id: sede + "_" + i, sede: sede, llamado: f[0], anio: f[1],
+               asignatura: f[2], fecha: f[3], hora: f[4], dia: f[5],
+               modalidad: f[6], comentarios: "" };
+    });
+  });
+
+  /* ya se puede sembrar la copia editable con los datos del Excel */
+  inicializarMesasSedes(null);
 
   /* ================= CONTROL DE RESTRICCIONES DE FECHAS =================
      Reglas verificadas:
@@ -27711,6 +28787,8 @@
   document.getElementById("refreshBtn").addEventListener("click", loadAdminData);
   document.getElementById("searchInput").addEventListener("input", renderAdminTable);
   document.getElementById("filterTipo").addEventListener("change", renderAdminTable);
+  document.getElementById("filterSede").addEventListener("change", renderAdminTable);
+  document.getElementById("saaFilterSede").addEventListener("change", function(){ renderSaaTable(); });
   document.getElementById("filterCarrera").addEventListener("change", renderAdminTable);
   document.getElementById("filterEstado").addEventListener("change", renderAdminTable);
 
@@ -27723,7 +28801,11 @@
     if(!p) return;
     currentProposal = p;
     document.getElementById("modalTitle").textContent = fullName(p);
-    document.getElementById("modalSubtitle").textContent = p.tipoCurso + " · " + p.docente + (p.carreras && p.carreras.length ? " · " + p.carreras.join(", ") : "") + (p.email ? " · " + p.email : "");
+    var esPropFinal = (p.tipoPropuesta || "cursada") === "final";
+    document.getElementById("modalSubtitle").textContent =
+      (esPropFinal ? "Mesas de final" : p.tipoCurso) + " · " + p.docente +
+      (p.carreras && p.carreras.length ? " · " + p.carreras.join(", ") : "") +
+      (p.email ? " · " + p.email : "");
     document.getElementById("modalEstadoSelect").value = p.estado || "pendiente";
     var P = permisos();
     document.getElementById("modalEditBtn").style.display = puedeEditar(p) ? "inline-block" : "none";
@@ -27738,6 +28820,58 @@
     if(p.updatedAt && String(p.updatedAt).slice(0,16) !== String(p.createdAt||"").slice(0,16)){
       html += '<div class="kv"><b>Última modificación</b><span>' + esc(textoSelloTiempo(p.updatedAt)) +
         (p.editadoPor ? ' · ' + esc(p.editadoPor) : '') + '</span></div>';
+    }
+
+    /* Detalle de una propuesta de mesas de final */
+    if(esPropFinal){
+      html += '<h3>Vigencia</h3>';
+      html += '<div class="kv"><b>Carrera(s)</b><span>' + esc((p.carreras||[]).join(", ") || "—") + '</span></div>';
+      html += '<div class="kv"><b>Plan(es) de estudio</b><span>' + esc((p.planes||[]).join(", ") || "—") + '</span></div>';
+
+      html += '<h3>Cronograma de mesas de final</h3>';
+      var sedesP = p.sedes;
+      /* propuestas guardadas antes de dividir por sede */
+      if(!sedesP && (p.mesas||[]).length){ sedesP = [{ id:"laplata", nombre:"La Plata", mesas:p.mesas }]; }
+      if(!sedesP || sedesP.length === 0){ html += '<p>Sin mesas cargadas.</p>'; }
+      else {
+        sedesP.forEach(function(s){
+          html += '<p style="margin:12px 0 2px;"><b>' + esc(s.nombre || s.id) + '</b></p>';
+          if(!(s.mesas||[]).length){ html += '<p style="font-size:13px;">Sin mesas cargadas.</p>'; return; }
+          html += '<table class="mini"><thead><tr><th>Llamado</th><th>Fecha</th><th>Día</th><th>Hora</th><th>Observaciones</th></tr></thead><tbody>';
+          s.mesas.forEach(function(m){
+            html += '<tr><td>' + esc(m.llamado || "—") + '</td><td>' + fmtDate(m.fecha) + '</td>' +
+                    '<td>' + esc(m.dia || "—") + '</td><td>' + esc(m.hora || "—") + '</td>' +
+                    '<td>' + esc(m.observaciones || "") + '</td></tr>';
+          });
+          html += '</tbody></table>';
+        });
+      }
+
+      html += '<h3>Clases de consulta</h3>';
+      if((p.consultas||[]).length === 0){ html += '<p>Sin clases de consulta cargadas.</p>'; }
+      else {
+        html += '<table class="mini"><thead><tr><th>Día</th><th>Horario</th><th>Docente</th><th>Modalidad</th><th>Detalles</th></tr></thead><tbody>';
+        p.consultas.forEach(function(c){
+          html += '<tr><td>' + esc(c.dia || "—") + '</td><td>' + esc(c.horario || "—") + '</td>' +
+                  '<td>' + esc(c.docente || "—") + '</td><td>' + esc(c.modalidad || "—") + '</td>' +
+                  '<td>' + esc(c.detalles || "") + '</td></tr>';
+        });
+        html += '</tbody></table>';
+      }
+
+      html += '<h3>Metodología de evaluación</h3>';
+      if((p.metodEvaluacion||[]).length === 0){ html += '<p>Sin instancias cargadas.</p>'; }
+      else {
+        html += '<table class="mini"><thead><tr><th style="width:50px;">N°</th><th>Modalidad</th><th>Detalle</th></tr></thead><tbody>';
+        p.metodEvaluacion.forEach(function(m, i){
+          html += '<tr><td>' + (m.n || i+1) + '</td><td>' + esc(m.modalidad || "—") + '</td>' +
+                  '<td>' + esc(m.detalle || "") + '</td></tr>';
+        });
+        html += '</tbody></table>';
+      }
+      body.innerHTML = html;
+      overlay.classList.add("active");
+      return;
     }
 
     html += '<h3>Vigencia</h3>';
