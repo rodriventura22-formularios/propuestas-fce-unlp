@@ -63,6 +63,21 @@
   .gate-card h1{margin:0; font-size:20px; font-weight:600; color:var(--ink);}
   .gate-sub{margin:2px 0 18px; color:var(--ink-soft); font-size:13.5px;}
   .gate-text{margin:0 0 18px; font-size:13.5px; color:var(--ink); line-height:1.5;}
+  /* Campos de los cuadros del formulario de finales: ocupan toda la celda,
+     igual que el desplegable de la columna Mesa. */
+  #formFinal table.grid td input,
+  #formFinal table.grid td select{
+    width:100%; box-sizing:border-box; padding:7px 9px; font-size:13px;
+  }
+  #formFinal table.grid td{padding:5px 6px; vertical-align:middle;}
+
+  /* etiqueta de sede en la columna Asignatura del panel de Secretaría */
+  .chip-sede{
+    display:inline-block; margin:0 0 5px; padding:2px 9px; border-radius:999px;
+    background:#F1E7D8; color:#7A4E12; border:1px solid #DFC9A8;
+    font-size:11px; font-weight:700; letter-spacing:.2px; line-height:1.55;
+  }
+
   /* selección de sedes en la propuesta de finales */
   .sedes-check{display:flex; flex-wrap:wrap; gap:9px; margin:12px 0 4px;}
   .sede-op{display:flex; align-items:flex-start; gap:8px; padding:9px 13px; border:1.5px solid var(--line);
@@ -1371,6 +1386,7 @@
                   <option value="brandsen">Brandsen</option>
                   <option value="saladillo">Saladillo</option>
                   <option value="tresarroyos">Tres Arroyos</option>
+                  <option value="dolores">Dolores</option>
                 </select>
               </div>
             </div>
@@ -1380,22 +1396,19 @@
             <select id="f_asignatura">
               <option value="">Seleccionar…</option>
               <option>Actuación del Técnico en Cooperativas</option>
-              <option>Actuación Judicial</option>
               <option>Actuación Profesional en la Justicia</option>
               <option>Actuación Profesional Laboral y Previsional</option>
               <option>Administración de la Producción</option>
               <option>Administración de Recursos Humanos en Turismo</option>
-              <option>Administración Estratégica</option>
               <option>Administración I (Introducción a la Administración y al Estudio de las Organizaciones) - Cátedra A</option>
               <option>Administración I (Introducción a la Administración y al Estudio de las Organizaciones) - Cátedra B</option>
               <option>Administración I (Introducción a la Administración y al Estudio de las Organizaciones) - Cátedra C</option>
-              <option>Administración II (Técnicas Administrativas y Gestión Organizacional)</option>
+              <option>Administración II / Administración Estratégica</option>
               <option>Administración III (Planeamiento y Control Organizacional)</option>
-              <option>Administración Pública</option>
+              <option>Administración Pública / Gestión Pública</option>
               <option>Análisis e interpretación de los Estados Contables</option>
               <option>Análisis y evaluación económico-financiera en el sector turístico</option>
               <option>Auditoria</option>
-              <option>Cálculo Financiero</option>
               <option>Comercialización</option>
               <option>Comercio Internacional</option>
               <option>Comportamiento Estratégico</option>
@@ -1432,9 +1445,7 @@
               <option>Economía de los Ciclos y las Crisis</option>
               <option>Economía del Sector Público</option>
               <option>Economía del Turismo I (Enfoque Micro)</option>
-              <option>Economía del turismo I (Enfoque microeconómico)</option>
               <option>Economía del Turismo II (Enfoque Macro)</option>
-              <option>Economía del turismo II (Enfoque macroeconómico)</option>
               <option>Economía Espacial y Ambiental</option>
               <option>Economía Internacional</option>
               <option>Economía Laboral</option>
@@ -1443,7 +1454,6 @@
               <option>Estadística</option>
               <option>Estadística Aplicada</option>
               <option>Estadística para Economistas</option>
-              <option>Estadística para Economistas I</option>
               <option>Estadística para Economistas II</option>
               <option>Estado y política pública en turismo</option>
               <option>Estrategia de tecnología y gestion de proyectos</option>
@@ -1459,13 +1469,12 @@
               <option>Gestión Cooperativa I</option>
               <option>Gestión Cooperativa II</option>
               <option>Gestión de la información y tecnologías</option>
-              <option>Gestion de las organizaciones</option>
+              <option>Gestion de las organizaciones (CDO)</option>
               <option>Gestión de las organizaciones turísticas</option>
               <option>Gestión de las personas en el sector turístico</option>
               <option>Gestión de las Personas en las Organizaciones I</option>
               <option>Gestion de personas y equipos</option>
               <option>Gestión del patrimonio turístico</option>
-              <option>Gestión Pública</option>
               <option>Gestión y Desarrollo de las Personas en las Organizaciones</option>
               <option>Historia del pensamiento Económico</option>
               <option>Historia Económica Mundial y Argentina</option>
@@ -1488,7 +1497,7 @@
               <option>Macroeconomía I</option>
               <option>Macroeconomía II</option>
               <option>Marketing Estratégico</option>
-              <option>Marketing estrategico y operativo</option>
+              <option>Marketing Estratégico y Operativo (CDO)</option>
               <option>Marketing Táctico y Operativo</option>
               <option>Marketing Turístico</option>
               <option>Matemática I</option>
@@ -1496,11 +1505,9 @@
               <option>Matemática II (Análisis Matemático)</option>
               <option>Matemática Inicial y Técnicas de Estudio y Comunicación</option>
               <option>Matemática para Administradores</option>
-              <option>Matemática para Decisiones Empresarias</option>
+              <option>Matemática para Decisiones Empresarias / Cálculo Financiero</option>
               <option>Matemática para Economistas I</option>
               <option>Matemática para Economistas II</option>
-              <option>Materia Optativa</option>
-              <option>Materia/s optativa/s</option>
               <option>Mercado de Capitales</option>
               <option>Métodos cuantitativos I (Enfoque matemático)</option>
               <option>Métodos cuantitativos II (Enfoque estadístico)</option>
@@ -1511,7 +1518,6 @@
               <option>Negocios Internacionales</option>
               <option>Nociones Generales de economia</option>
               <option>Operaciones</option>
-              <option>Optativa</option>
               <option>Organización Industrial</option>
               <option>Organización Profesional</option>
               <option>Organización y Gestión de Empresas Turísticas</option>
@@ -1525,8 +1531,6 @@
               <option>Políticas Turísticas</option>
               <option>Portugués I</option>
               <option>Portugués II</option>
-              <option>Práctica Profesional Supervisada</option>
-              <option>Práctica Profesional Supervisada (PPS)</option>
               <option>Procesos de negocio</option>
               <option>Producción</option>
               <option>Psicosociología del Tiempo Libre</option>
@@ -1577,6 +1581,7 @@
             <div class="multiselect" id="ms_carrera">
               <button type="button" class="ms-toggle placeholder" id="ms_carrera_toggle">Seleccionar carrera(s)</button>
               <div class="ms-panel" id="ms_carrera_panel"></div>
+              <p class="section-note" id="avisoCarrerasSede" style="display:none; margin:6px 0 0;"></p>
             </div>
           </div>
           <div class="field" style="flex:1 1 200px;">
@@ -1769,11 +1774,13 @@
         </div>
 
         <div class="section">
-          <div class="section-bar">Cronograma de mesas de final</div>
+          <div class="section-bar">Día y horario de las mesas de final</div>
           <div class="section-body">
-            <p class="section-note">Marcá el calendario que corresponde a esta asignatura. El día de la semana
-              se calcula solo a partir de la fecha. Las mesas de Brandsen, Saladillo y Tres Arroyos las carga
-              la Secretaría de Asuntos Académicos.</p>
+            <p class="section-note">Elegí el calendario que corresponde a esta asignatura —es uno u
+              otro, no los dos— e indicá <b>un día y un horario</b>: se aplican a todos los llamados del
+              año, porque las semanas de mesas las fija el calendario académico. Si sos responsable de
+              materias en ambos calendarios, cargá una propuesta por cada una. Las mesas de Brandsen,
+              Saladillo y Tres Arroyos las carga la Secretaría de Asuntos Académicos.</p>
             <div id="finSedesCheck" class="sedes-check"></div>
             <div id="finSedesTablas"></div>
           </div>
@@ -1784,10 +1791,11 @@
           <div class="section-body">
             <table class="grid" id="finConsultasTable">
                 <thead><tr>
-                  <th style="width:130px;">Día</th>
-                  <th style="width:130px;">Horario</th>
-                  <th style="width:200px;">Docente</th>
-                  <th style="width:140px;">Modalidad</th>
+                  <th style="width:190px;">Mesa</th>
+                  <th style="width:120px;">Día</th>
+                  <th style="width:120px;">Horario</th>
+                  <th style="width:180px;">Docente</th>
+                  <th style="width:130px;">Modalidad</th>
                   <th>Detalles</th>
                   <th class="row-actions"></th>
                 </tr></thead>
@@ -1809,7 +1817,7 @@
                 </tr></thead>
                 <tbody id="finMetodBody"></tbody>
               </table>
-            <button type="button" class="btn ghost small" id="finAddMetodBtn">+ Agregar instancia</button>
+            <button type="button" class="btn ghost small" id="finAddMetodBtn">+ Agregar metodología</button>
           </div>
         </div>
       </div>
@@ -1871,6 +1879,7 @@
       <option value="brandsen">Brandsen</option>
       <option value="saladillo">Saladillo</option>
       <option value="tresarroyos">Tres Arroyos</option>
+      <option value="dolores">Dolores</option>
     </select>
     <select id="filterEstado">
       <option value="">Todos los estados</option>
@@ -1930,9 +1939,21 @@
         <option value="staff">Dirección de Enseñanza</option>
       </select>
     </div>
+    <div class="field" style="flex:1 1 250px;" id="permDeptoCampo">
+      <label>Departamento <span class="req">*</span></label>
+      <select id="permDepto">
+        <option value="">Seleccionar departamento…</option>
+      </select>
+    </div>
     <button class="btn" id="permAddBtn">Asignar rol</button>
   </div>
   <div class="save-msg" id="permMsg" style="margin-bottom:14px;"></div>
+
+  <div class="setup-banner" id="permAvisoLectura" style="display:none; background:#EFF5F7; border-color:#B8D4DE; color:#1F5C73;">
+    <b>Vista de consulta</b>
+    Podés ver los roles y a qué departamento pertenece cada cuenta. Para modificarlos,
+    pedíselo a una de las cuentas maestras.
+  </div>
 
   <div id="permTableWrap"></div>
 
@@ -2003,9 +2024,16 @@
   <div id="saaStats" class="saa-stats"></div>
 
   <div class="bloques">
-    <button type="button" class="bloque-btn activo" data-bloque="cursadas">Cursadas</button>
+    <button type="button" class="bloque-btn activo" data-bloque="cursadas">Cursadas - La Plata</button>
+    <button type="button" class="bloque-btn" data-bloque="sedes">Cursadas - Sedes Regionales</button>
     <button type="button" class="bloque-btn" data-bloque="finales">Finales</button>
-    <button type="button" class="bloque-btn" data-bloque="sedes">Cursadas para sedes</button>
+  </div>
+
+  <div class="setup-banner" id="saaAvisoDocente" style="display:none; background:#EFF5F7; border-color:#B8D4DE; color:#1F5C73;">
+    <b>Vista de consulta</b>
+    Acá ves cómo quedaron cargadas <b>tus</b> propuestas: los días y horarios de cursada,
+    el cronograma de parciales con la comparación contra la fecha ideal, y tus mesas de final.
+    Es solo para consultar; para modificar algo, entrá a «Cargar propuesta».
   </div>
 
   <div class="eval-modo" id="saaVistasCursadas" style="flex-direction:row; align-items:center; gap:16px;">
@@ -2101,6 +2129,7 @@
       <option value="brandsen">Brandsen</option>
       <option value="saladillo">Saladillo</option>
       <option value="tresarroyos">Tres Arroyos</option>
+      <option value="dolores">Dolores</option>
     </select>
     <select id="saaFilterTipo">
       <option value="">Todos los tipos</option>
@@ -2279,6 +2308,32 @@
      sobre las listas fijas de arriba. */
   var ROLES_ASIGNADOS = {};
 
+  /* Departamento de cada cuenta con rol "Departamento" (correo → departamento).
+     Define qué propuestas puede ver en Cursadas - La Plata y en Finales. */
+  var DEPTO_CUENTA = {};
+  var DEPARTAMENTOS = ["ADMINISTRACIÓN","CONTABILIDAD","ECONOMÍA","TURISMO",
+                       "COMPLEMENTARIAS","CIENCIA DE DATOS"];
+  var DEPARTAMENTO_NOMBRE = {
+    "ADMINISTRACIÓN":   "Departamento de Cs. Administrativas",
+    "CONTABILIDAD":     "Departamento de Contabilidad",
+    "ECONOMÍA":         "Departamento de Economía",
+    "TURISMO":          "Departamento de Turismo",
+    "COMPLEMENTARIAS":  "Departamento de Cs. Complementarias",
+    "CIENCIA DE DATOS": "Departamento de Ciencia de Datos"
+  };
+  function departamentoDeCuenta(email){
+    return DEPTO_CUENTA[(email || "").toLowerCase()] || "";
+  }
+  /* Departamento de quien está usando la aplicación.
+     "" = sin restricción (Secretaría, Docente, Dirección de Enseñanza).
+     Una cuenta con rol Departamento pero sin departamento asignado no ve
+     ninguna propuesta: hay que asignárselo desde el panel de permisos. */
+  var SIN_DEPARTAMENTO = "__sin_departamento__";
+  function miDepartamento(){
+    if(rolUsuario() !== "departamento") return "";
+    return departamentoDeCuenta(usuarioActual) || SIN_DEPARTAMENTO;
+  }
+
   function esMaestro(){
     if(MODO_PRUEBA){ return MODO_PRUEBA_ROL === "secretaria"; }
     return esEmailMaestro(usuarioActual);
@@ -2309,13 +2364,19 @@
       nombre: ROLES_NOMBRE[rol],
       verCargar:     rol === "secretaria" || rol === "departamento" || rol === "docente",
       verFormularios:rol === "secretaria" || rol === "departamento" || rol === "docente",
-      verSecretaria: rol === "secretaria" || rol === "departamento" || rol === "staff",
+      /* El docente entra al panel, pero solo de lectura y acotado a lo suyo */
+      verSecretaria: rol === "secretaria" || rol === "departamento" || rol === "staff" || rol === "docente",
       verTodas:      rol === "secretaria" || rol === "departamento" || rol === "staff",
+      /* Vista reducida: solo días y horarios, sin cronogramas ni faltantes */
+      saaSoloLectura: rol === "docente",
       editarTodas:   rol === "secretaria",
       eliminar:      rol === "secretaria",
       cambiarEstado: rol === "secretaria",
       columnas:      COLUMNAS_EDITABLES[rol] || [],
-      verPermisos:   esMaestro(),
+      /* Secretaría entra al panel solo a consultar: cambiar roles y
+         departamentos queda reservado a las cuentas maestras. */
+      verPermisos:    esMaestro() || rol === "secretaria",
+      editarPermisos: esMaestro(),
       /* Los docentes acceden al cronograma acotado a su propia propuesta */
       verCronograma: rol === "docente",
       /* Dirección de Enseñanza no accede al cronograma de evaluaciones */
@@ -2329,6 +2390,46 @@
   /* Muestra u oculta las secciones según el rol del usuario */
   function aplicarPermisos(){
     var P = permisos();
+
+    /* El panel de permisos: Secretaría lo consulta, las maestras lo editan */
+    var avisoPerm = document.getElementById("permAvisoLectura");
+    if(avisoPerm){ avisoPerm.style.display = (P.verPermisos && !P.editarPermisos) ? "block" : "none"; }
+    ["permEmail","permRol","permDepto","permAddBtn","habEmails","habAddBtn"].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.disabled = P.verPermisos && !P.editarPermisos;
+    });
+
+    /* Al docente se le muestra el panel de Secretaría en modo consulta:
+       solo "Días y horarios", y únicamente sus propias propuestas. */
+    var soloLectura = !!P.saaSoloLectura;
+    /* Al docente se le ocultan las vistas de control de Secretaría, pero sí
+       conserva "Cronograma de parciales": ahí compara sus fechas con la ideal. */
+    ["saaVistaCalLabel","saaVistaFaltaLabel"].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.style.display = soloLectura ? "none" : "";
+    });
+    var avisoSaa = document.getElementById("saaAvisoDocente");
+    if(avisoSaa){
+      if(miDepartamento() === SIN_DEPARTAMENTO){
+        avisoSaa.style.display = "block";
+        avisoSaa.innerHTML = "<b>Falta asignar tu departamento</b>" +
+          "Tu cuenta tiene rol Departamento pero todavía no está asociada a ninguno, " +
+          "así que no se muestran propuestas. Pedile a la Secretaría de Asuntos Académicos " +
+          "que te asigne el departamento en «Administración de permisos».";
+      } else if(soloLectura){
+        avisoSaa.style.display = "block";
+        avisoSaa.innerHTML = "<b>Vista de consulta</b>" +
+          "Acá ves cómo quedaron cargadas <b>tus</b> propuestas: los días y horarios de cursada, " +
+          "el cronograma de parciales con la comparación contra la fecha ideal, y tus mesas de final. " +
+          "Es solo para consultar; para modificar algo, entrá a «Cargar propuesta».";
+      } else {
+        avisoSaa.style.display = "none";
+      }
+    }
+    if(soloLectura){
+      var rh = document.querySelector('input[name="saaVista"][value="horarios"]');
+      if(rh && !rh.checked){ rh.checked = true; saaVista = "horarios"; }
+    }
     var btnReset = document.getElementById("resetTodasBtn");
     if(btnReset){ btnReset.style.display = P.eliminar ? "inline-block" : "none"; }
     var pares = [["tabFormBtn","viewForm",P.verCargar],
@@ -2356,7 +2457,9 @@
     /* Cronograma de evaluación dentro del panel de Secretaría */
     var lblEval = document.getElementById("saaVistaEvalLabel");
     var lblCal = document.getElementById("saaVistaCalLabel");
-    if(lblCal){ lblCal.style.display = P.verEvaluaciones ? "" : "none"; }
+    /* El calendario es una herramienta de control de Secretaría; el cronograma
+       de parciales sí lo ve el docente, acotado a sus propias propuestas. */
+    if(lblCal){ lblCal.style.display = (P.verEvaluaciones && !P.saaSoloLectura) ? "" : "none"; }
     if(lblEval){
       lblEval.style.display = P.verEvaluaciones ? "" : "none";
       if(!P.verEvaluaciones){
@@ -2721,6 +2824,9 @@
       return Promise.resolve();
     };
 
+    /* En modo de prueba, la cuenta de Departamento se muestra asociada a
+       Contabilidad, para que se vea cómo filtra sus materias. */
+    DEPTO_CUENTA = { "departamento.prueba@modo-prueba.local": "CONTABILIDAD" };
     rolesStorage.cargar = function(){ return Promise.resolve(JSON.parse(JSON.stringify(PRUEBA_ROLES_ASIG))); };
     rolesStorage.guardar = function(asignaciones){
       PRUEBA_ROLES_ASIG = JSON.parse(JSON.stringify(asignaciones));
@@ -2950,13 +3056,18 @@
     cargar: function(){
       if (!storageReady) return Promise.resolve({});
       return db.collection("config").doc("roles").get().then(function(snap){
-        return snap.exists ? (snap.data().asignaciones || {}) : {};
+        if(!snap.exists) return {};
+        var d = snap.data();
+        /* el departamento de cada cuenta viaja en el mismo documento */
+        DEPTO_CUENTA = d.departamentos || {};
+        return d.asignaciones || {};
       });
     },
     guardar: function(asignaciones){
       if (!storageReady) return Promise.reject(new Error("La base de datos no está configurada todavía."));
       return db.collection("config").doc("roles").set({
         asignaciones: asignaciones,
+        departamentos: DEPTO_CUENTA,
         actualizadoPor: usuarioActual,
         actualizadoEn: new Date().toISOString()
       });
@@ -3687,12 +3798,17 @@
   },
   {
     "id": "administracion_ii",
-    "asignatura": "Administración II (Técnicas Administrativas y Gestión Organizacional)",
-    "catedraLabel": "Prof. Silvia Rossi y equipo",
+    "asignatura": "Administración II / Administración Estratégica",
+    "catedraLabel": "Plan VII · como «Administración II» — 2° Semestre 2026",
     "carreras": [
-      "Lic. en Administración"
+      "Lic. en Administración",
+      "Tecnicatura en Cooperativismo",
+      "Contador Público"
     ],
-    "planes": [],
+    "planes": [
+      "VIII",
+      "VII"
+    ],
     "tipoCurso": "Curso Regular - CPR",
     "fechaInicio": "2026-08-10",
     "fechaFin": "2026-12-03",
@@ -3968,7 +4084,8 @@
       }
     ],
     "metEnsenanza": "La cursada se estructura en clases teóricas y prácticas presenciales. La parte teórica se orienta al desarrollo conceptual de los contenidos a través de exposiciones, análisis de lecturas seleccionadas y discusión colectiva. La parte práctica prioriza el análisis de casos reales y simulados, el desarrollo de trabajos grupales y la resolución de problemas organizacionales, materializados en una guía de trabajos prácticos elaborada por la cátedra. Se promueve un enfoque participativo, con integración constante entre teoría y práctica, utilizando recursos audiovisuales y bibliografía actualizada, además de clases virtuales de consulta y repaso.",
-    "metEvaluacion": "La evaluación se desarrolla de forma continua y formativa: evaluaciones escritas individuales (parciales), análisis de casos grupales, presentaciones orales y actividades prácticas en clase. Para la aprobación de la cursada los estudiantes deben acreditar el 70% de asistencia a las clases teóricas, aprobar las evaluaciones parciales (en 1ª o 2ª instancia) con nota igual o superior a 4, y presentar y aprobar los trabajos prácticos solicitados.\n\nPara la promoción de la cursada deben obtener una nota media igual o superior a 7 puntos (incluyendo ambas instancias, el recuperatorio general y demás evaluaciones), acreditar el 70% de asistencia a clases teóricas y prácticas, y presentar y aprobar los trabajos prácticos solicitados. Hay 2 parciales y su/s respectivo/s recuperatorios, más 1 recuperatorio general (en el que se puede recuperar uno o ambos parciales)."
+    "metEvaluacion": "La evaluación se desarrolla de forma continua y formativa: evaluaciones escritas individuales (parciales), análisis de casos grupales, presentaciones orales y actividades prácticas en clase. Para la aprobación de la cursada los estudiantes deben acreditar el 70% de asistencia a las clases teóricas, aprobar las evaluaciones parciales (en 1ª o 2ª instancia) con nota igual o superior a 4, y presentar y aprobar los trabajos prácticos solicitados.\n\nPara la promoción de la cursada deben obtener una nota media igual o superior a 7 puntos (incluyendo ambas instancias, el recuperatorio general y demás evaluaciones), acreditar el 70% de asistencia a clases teóricas y prácticas, y presentar y aprobar los trabajos prácticos solicitados. Hay 2 parciales y su/s respectivo/s recuperatorios, más 1 recuperatorio general (en el que se puede recuperar uno o ambos parciales).",
+    "semestre": "2° Semestre"
   },
   {
     "id": "analisis_interpretacion_1_3",
@@ -5576,12 +5693,15 @@
   },
   {
     "id": "economia_turismo_i",
-    "asignatura": "Economía del turismo I (Enfoque microeconómico)",
+    "asignatura": "Economía del Turismo I (Enfoque Micro)",
     "catedraLabel": "Prof. Velasco / Oneto / Ruiz del Castillo / Duguine",
     "carreras": [
       "Lic. en Turismo"
     ],
-    "planes": [],
+    "planes": [
+      "II",
+      "III"
+    ],
     "tipoCurso": "Curso Regular - CPR",
     "fechaInicio": "2026-08-10",
     "fechaFin": "2026-12-09",
@@ -5729,12 +5849,15 @@
   },
   {
     "id": "economia_turismo_ii",
-    "asignatura": "Economía del turismo II (Enfoque macroeconómico)",
+    "asignatura": "Economía del Turismo II (Enfoque Macro)",
     "catedraLabel": "Prof. Puig / Pereyra / Bellingi",
     "carreras": [
       "Lic. en Turismo"
     ],
-    "planes": [],
+    "planes": [
+      "II",
+      "III"
+    ],
     "tipoCurso": "Curso Regular - CPR",
     "fechaInicio": "2026-08-10",
     "fechaFin": "2026-12-11",
@@ -5830,8 +5953,8 @@
   },
   {
     "id": "gestion_publica",
-    "asignatura": "Gestión Pública",
-    "catedraLabel": "Prof. Canosa / Sotiru / Bellomo Sanchez / Galinelli",
+    "asignatura": "Administración Pública / Gestión Pública",
+    "catedraLabel": "Plan VIII · como «Gestión Pública» — 2° Semestre 2026",
     "carreras": [
       "Lic. en Administración"
     ],
@@ -6011,7 +6134,8 @@
       }
     ],
     "metEnsenanza": "Se prevén diferentes modalidades de trabajo teórico-práctico adaptadas a los contenidos de cada clase: análisis y reflexión sobre situaciones reales, presentación de políticas públicas específicas, recursos audiovisuales y exposición de profesionales invitados. Se trabaja con textos escritos, documentos institucionales, recortes periodísticos, fotos y films, privilegiando producciones grupales, la presentación de conclusiones oral y escrita, y actividades como lecturas de ponencias, análisis de casos reales, mapas conceptuales, tutorías y una actividad final integradora.",
-    "metEvaluacion": "El curso teórico-práctico se aprueba cumpliendo: asistencia mínima del 70% a las clases prácticas, aprobación de los trabajos prácticos exigidos, aprobación de las pruebas parciales (o sus recuperatorios) y aprobación de la actividad final integradora (con defensa oral). Quienes obtengan un promedio de 7 o más acceden a la promoción sin examen final (Art. 37° del Régimen Académico 2025). Se combinan instancias de evaluación diagnóstica, formativa y sumativa con instrumentos orales, escritos y observacionales, más un sistema de autoevaluación a mitad de la cursada."
+    "metEvaluacion": "El curso teórico-práctico se aprueba cumpliendo: asistencia mínima del 70% a las clases prácticas, aprobación de los trabajos prácticos exigidos, aprobación de las pruebas parciales (o sus recuperatorios) y aprobación de la actividad final integradora (con defensa oral). Quienes obtengan un promedio de 7 o más acceden a la promoción sin examen final (Art. 37° del Régimen Académico 2025). Se combinan instancias de evaluación diagnóstica, formativa y sumativa con instrumentos orales, escritos y observacionales, más un sistema de autoevaluación a mitad de la cursada.",
+    "semestre": "2° Semestre"
   },
   {
     "id": "matematica_ii",
@@ -6364,7 +6488,7 @@
   },
   {
     "id": "matematica_decisiones_calculo_financiero",
-    "asignatura": "Cálculo Financiero",
+    "asignatura": "Matemática para Decisiones Empresarias / Cálculo Financiero",
     "catedraLabel": "Prof. Guichandut / Maiocchi / Turrín / Gusmerotti — Plan VII: \"Matemática para Decisiones Empresarias\"",
     "carreras": [
       "Contador Público"
@@ -8016,7 +8140,7 @@
   {
     "id": "estadistica_aplicada",
     "asignatura": "Estadística Aplicada",
-    "catedraLabel": "Prof. Cesar / Suarez / Zoloa / Dowbley y equipo",
+    "catedraLabel": "Estadística Aplicada - 2° Semestre 2026",
     "carreras": [
       "Lic. en Administración"
     ],
@@ -8272,16 +8396,20 @@
       }
     ],
     "metEnsenanza": "Cursos presenciales. Las clases de teoría son teórico-prácticas magistrales: las explicaciones se acompañan de ejemplos que ilustran conceptos y métodos, distintos de los ejercicios de las clases prácticas, enfocados en modelización, análisis e interpretación. En las clases prácticas se desarrollan 5-6 ejercicios en el pizarrón y luego los alumnos resuelven el resto con consultas eventuales, buscando autonomía. Se prioriza información estadística real (INDEC, empresas) y se usa AU24, Excel (Análisis de Datos y Solver) y apps como GeoGebra.",
-    "metEvaluacion": "Parciales teórico-prácticos escritos, todos los cursos rindiendo simultáneamente el sábado de la semana de parciales según calendario académico. Para la promoción se requiere promedio simple igual o superior a 7 y 70% de asistencia. Con un mínimo de 4 puntos en cualquier instancia se da por aprobada esa instancia (sin recuperatorio). Quien no promocione pero obtenga al menos 4 puntos en cada instancia, aprueba la cursada y puede rendir examen final."
+    "metEvaluacion": "Parciales teórico-prácticos escritos, todos los cursos rindiendo simultáneamente el sábado de la semana de parciales según calendario académico. Para la promoción se requiere promedio simple igual o superior a 7 y 70% de asistencia. Con un mínimo de 4 puntos en cualquier instancia se da por aprobada esa instancia (sin recuperatorio). Quien no promocione pero obtenga al menos 4 puntos en cada instancia, aprueba la cursada y puede rendir examen final.",
+    "semestre": "2° Semestre"
   },
   {
     "id": "estadistica_economistas_i",
-    "asignatura": "Estadística para Economistas I",
+    "asignatura": "Estadística para Economistas",
     "catedraLabel": "Prof. Burdisso / Ferrario / Suarez y equipo",
     "carreras": [
       "Lic. en Economía"
     ],
-    "planes": [],
+    "planes": [
+      "VIII",
+      "VII"
+    ],
     "tipoCurso": "Curso Regular - CPR",
     "fechaInicio": "2026-08-10",
     "fechaFin": "2026-12-09",
@@ -18462,8 +18590,8 @@
   },
   {
     "id": "ae_1s",
-    "asignatura": "Administración Estratégica",
-    "catedraLabel": "Curso Regular · 1er Semestre",
+    "asignatura": "Administración II / Administración Estratégica",
+    "catedraLabel": "Plan VIII · como «Administración Estratégica» · 1° Semestre 2026",
     "carreras": [
       "Lic. en Administración"
     ],
@@ -18900,12 +19028,13 @@
   },
   {
     "id": "adp_1s",
-    "asignatura": "Administración Pública",
-    "catedraLabel": "Curso Regular · 1er Semestre",
+    "asignatura": "Administración Pública / Gestión Pública",
+    "catedraLabel": "Plan VII · como «Administración Pública» · 1° Semestre 2026",
     "carreras": [
       "Lic. en Administración"
     ],
     "planes": [
+      "VIII",
       "VII"
     ],
     "semestre": "1° Semestre",
@@ -20342,7 +20471,7 @@
   {
     "id": "ea_1s",
     "asignatura": "Estadística Aplicada",
-    "catedraLabel": "Curso Regular · 1er Semestre",
+    "catedraLabel": "Estadística Aplicada - 1° Semestre 2026",
     "carreras": [
       "Contador Público",
       "Lic. en Administración"
@@ -22126,20 +22255,6 @@
    5
   ]
  },
- "actuacion judicial": {
-  "carreras": [
-   "Contador Público"
-  ],
-  "planes": [
-   "VI"
-  ],
-  "semestres": [
-   2
-  ],
-  "anios": [
-   5
-  ]
- },
  "organizacion profesional": {
   "carreras": [
    "Contador Público"
@@ -22380,21 +22495,6 @@
    3
   ]
  },
- "matematica para decisiones empresarias": {
-  "carreras": [
-   "Contador Público",
-   "Lic. en Administración"
-  ],
-  "planes": [
-   "VII"
-  ],
-  "semestres": [
-   2
-  ],
-  "anios": [
-   3
-  ]
- },
  "sistema de informacion contable de apoyo a las operaciones": {
   "carreras": [
    "Contador Público"
@@ -22528,7 +22628,8 @@
    "Contador Público"
   ],
   "planes": [
-   "VII"
+   "VII",
+   "VI"
   ],
   "semestres": [
    2
@@ -22564,16 +22665,6 @@
   "anios": [
    5
   ]
- },
- "practica profesional supervisada": {
-  "carreras": [
-   "Contador Público"
-  ],
-  "planes": [
-   "VII"
-  ],
-  "semestres": [],
-  "anios": []
  },
  "comportamiento humano en las organizaciones": {
   "carreras": [
@@ -22623,37 +22714,7 @@
    2
   ]
  },
- "administracion ii (tecnicas administrativas y gestion organizacional)": {
-  "carreras": [
-   "Lic. en Administración",
-   "Tecnicatura en Cooperativismo",
-   "Contador Público"
-  ],
-  "planes": [
-   "VII"
-  ],
-  "semestres": [
-   2
-  ],
-  "anios": [
-   2
-  ]
- },
  "administracion iii (planeamiento y control organizacional)": {
-  "carreras": [
-   "Lic. en Administración"
-  ],
-  "planes": [
-   "VII"
-  ],
-  "semestres": [
-   1
-  ],
-  "anios": [
-   3
-  ]
- },
- "administracion publica": {
   "carreras": [
    "Lic. en Administración"
   ],
@@ -22886,34 +22947,6 @@
    1
   ]
  },
- "administracion estrategica": {
-  "carreras": [
-   "Lic. en Administración"
-  ],
-  "planes": [
-   "VIII"
-  ],
-  "semestres": [
-   1
-  ],
-  "anios": [
-   2
-  ]
- },
- "gestion publica": {
-  "carreras": [
-   "Lic. en Administración"
-  ],
-  "planes": [
-   "VIII"
-  ],
-  "semestres": [
-   2
-  ],
-  "anios": [
-   2
-  ]
- },
  "costos para la gestion (la)": {
   "carreras": [
    "Lic. en Administración"
@@ -22940,21 +22973,6 @@
   ],
   "anios": [
    2
-  ]
- },
- "calculo financiero": {
-  "carreras": [
-   "Lic. en Administración",
-   "Lic. en Economía"
-  ],
-  "planes": [
-   "VIII"
-  ],
-  "semestres": [
-   1
-  ],
-  "anios": [
-   3
   ]
  },
  "gestion de las personas en las organizaciones i": {
@@ -23009,20 +23027,6 @@
   ],
   "semestres": [
    1
-  ],
-  "anios": [
-   2
-  ]
- },
- "estadistica para economistas i": {
-  "carreras": [
-   "Lic. en Economía"
-  ],
-  "planes": [
-   "VII"
-  ],
-  "semestres": [
-   2
   ],
   "anios": [
    2
@@ -23422,7 +23426,8 @@
    "Lic. en Economía"
   ],
   "planes": [
-   "VIII"
+   "VIII",
+   "VII"
   ],
   "semestres": [
    2
@@ -23460,20 +23465,6 @@
   ]
  },
  "mercado de capitales": {
-  "carreras": [
-   "Lic. en Economía"
-  ],
-  "planes": [
-   "VIII"
-  ],
-  "semestres": [
-   2
-  ],
-  "anios": [
-   3
-  ]
- },
- "materia optativa": {
   "carreras": [
    "Lic. en Economía"
   ],
@@ -23535,13 +23526,16 @@
    "Lic. en Turismo"
   ],
   "planes": [
-   "II"
+   "II",
+   "III"
   ],
   "semestres": [
-   2
+   2,
+   1
   ],
   "anios": [
-   1
+   1,
+   2
   ]
  },
  "contabilidad aplicada al sector turistico": {
@@ -23621,13 +23615,16 @@
    "Lic. en Turismo"
   ],
   "planes": [
-   "II"
+   "II",
+   "III"
   ],
   "semestres": [
-   2
+   2,
+   1
   ],
   "anios": [
-   2
+   2,
+   3
   ]
  },
  "organizacion y gestion de empresas turisticas": {
@@ -23889,20 +23886,6 @@
    2
   ]
  },
- "economia del turismo i (enfoque microeconomico)": {
-  "carreras": [
-   "Lic. en Turismo"
-  ],
-  "planes": [
-   "III"
-  ],
-  "semestres": [
-   1
-  ],
-  "anios": [
-   2
-  ]
- },
  "metodos cuantitativos ii (enfoque estadistico)": {
   "carreras": [
    "Lic. en Turismo"
@@ -23946,20 +23929,6 @@
   ]
  },
  "gestion del patrimonio turistico": {
-  "carreras": [
-   "Lic. en Turismo"
-  ],
-  "planes": [
-   "III"
-  ],
-  "semestres": [
-   1
-  ],
-  "anios": [
-   3
-  ]
- },
- "economia del turismo ii (enfoque macroeconomico)": {
   "carreras": [
    "Lic. en Turismo"
   ],
@@ -24113,16 +24082,6 @@
    4
   ]
  },
- "materia/s optativa/s": {
-  "carreras": [
-   "Lic. en Turismo"
-  ],
-  "planes": [
-   "III"
-  ],
-  "semestres": [],
-  "anios": []
- },
  "doctrina e historia del cooperativismo": {
   "carreras": [
    "Tecnicatura en Cooperativismo"
@@ -24219,36 +24178,6 @@
   ],
   "anios": [
    3
-  ]
- },
- "practica profesional supervisada (pps)": {
-  "carreras": [
-   "Tecnicatura en Cooperativismo",
-   "Ciencia de Datos en Organizaciones"
-  ],
-  "planes": [
-   "I",
-   "VII"
-  ],
-  "semestres": [
-   2
-  ],
-  "anios": [
-   3
-  ]
- },
- "gestion de las organizaciones": {
-  "carreras": [
-   "Ciencia de Datos en Organizaciones"
-  ],
-  "planes": [
-   "I"
-  ],
-  "semestres": [
-   1
-  ],
-  "anios": [
-   1
   ]
  },
  "nociones generales de economia": {
@@ -24348,30 +24277,6 @@
   "anios": [
    4
   ]
- },
- "marketing estrategico y operativo": {
-  "carreras": [
-   "Ciencia de Datos en Organizaciones"
-  ],
-  "planes": [
-   "I"
-  ],
-  "semestres": [
-   1
-  ],
-  "anios": [
-   4
-  ]
- },
- "optativa": {
-  "carreras": [
-   "Ciencia de Datos en Organizaciones"
-  ],
-  "planes": [
-   "I"
-  ],
-  "semestres": [],
-  "anios": []
  },
  "seminario: gestion hospitalaria. el singular caso de gestion de organizaciones de salud": {
   "carreras": [
@@ -24707,12 +24612,93 @@
   "anios": [
    1
   ]
+ },
+ "gestion de las organizaciones (cdo)": {
+  "carreras": [
+   "Ciencia de Datos en Organizaciones"
+  ],
+  "planes": [
+   "I"
+  ],
+  "semestres": [
+   1
+  ],
+  "anios": [
+   1
+  ]
+ },
+ "marketing estrategico y operativo (cdo)": {
+  "carreras": [
+   "Ciencia de Datos en Organizaciones"
+  ],
+  "planes": [
+   "I"
+  ],
+  "semestres": [
+   1
+  ],
+  "anios": [
+   4
+  ]
+ },
+ "administracion publica / gestion publica": {
+  "carreras": [
+   "Lic. en Administración"
+  ],
+  "planes": [
+   "VIII",
+   "VII"
+  ],
+  "semestres": [
+   2,
+   1
+  ],
+  "anios": [
+   2,
+   3
+  ]
+ },
+ "matematica para decisiones empresarias / calculo financiero": {
+  "carreras": [
+   "Lic. en Administración",
+   "Lic. en Economía",
+   "Contador Público"
+  ],
+  "planes": [
+   "VIII",
+   "VII"
+  ],
+  "semestres": [
+   1,
+   2
+  ],
+  "anios": [
+   3
+  ]
+ },
+ "administracion ii / administracion estrategica": {
+  "carreras": [
+   "Lic. en Administración",
+   "Tecnicatura en Cooperativismo",
+   "Contador Público"
+  ],
+  "planes": [
+   "VIII",
+   "VII"
+  ],
+  "semestres": [
+   1,
+   2
+  ],
+  "anios": [
+   2
+  ]
  }
 };
 
   /* Departamento de cada materia, deducido del listado oficial de mesas de finales
      y completado con la carrera cuando es unívoco. */
-  var DEPTO_POR_MATERIA = {"actuacion del tecnico en cooperativas":"ADMINISTRACIÓN","actuacion profesional en la justicia":"CONTABILIDAD","actuacion profesional laboral y previsional":"CONTABILIDAD","administracion de la produccion":"ADMINISTRACIÓN","administracion de recursos humanos en turismo":"TURISMO","administracion estrategica":"ADMINISTRACIÓN","administracion ii (tecnicas administrativas y gestion organizacional)":"ADMINISTRACIÓN","administracion publica":"ADMINISTRACIÓN","analisis e interpretacion de los estados contables":"CONTABILIDAD","analisis y evaluacion economico-financiera en el sector turistico":"TURISMO","auditoria":"CONTABILIDAD","calculo financiero":"COMPLEMENTARIAS","comercializacion":"ADMINISTRACIÓN","comercio internacional":"ECONOMÍA","comportamiento estrategico":"ECONOMÍA","comportamiento humano en las organizaciones":"ADMINISTRACIÓN","contabilidad aplicada al sector turistico":"TURISMO","contabilidad del sector publico":"CONTABILIDAD","contabilidad e interpretacion de los estados contables":"CIENCIA DE DATOS","contabilidad ii (ajuste y valuacion)":"CONTABILIDAD","costos e informacion para la gestion":"CIENCIA DE DATOS","costos para la gestion":"CONTABILIDAD","crecimiento economico, turismo y medio ambiente":"TURISMO","derecho constitucional y administrativo":"COMPLEMENTARIAS","derecho cooperativo":"COMPLEMENTARIAS","derecho empresario":"ADMINISTRACIÓN","derecho privado":"COMPLEMENTARIAS","derecho y turismo":"TURISMO","desarrollo economico":"ECONOMÍA","desarrollo economico ambiental en turismo":"TURISMO","dinamicas sociohistoricas y agenda del turismo":"TURISMO","direccion general":"ADMINISTRACIÓN","diseno de sistemas de informacion":"ADMINISTRACIÓN","diseno y evaluacion de politicas turisticas":"TURISMO","doctrina e historia del cooperativismo":"ADMINISTRACIÓN","econometria i":"ECONOMÍA","economia de la empresa y de la organizacion industrial":"ECONOMÍA","economia de las instituciones y el comportamiento":"ECONOMÍA","economia de los ciclos y las crisis":"ECONOMÍA","economia del sector publico":"ECONOMÍA","economia del turismo i (enfoque micro)":"TURISMO","economia del turismo i (enfoque microeconomico)":"TURISMO","economia del turismo ii (enfoque macro)":"TURISMO","economia del turismo ii (enfoque macroeconomico)":"TURISMO","economia espacial y ambiental":"ECONOMÍA","economia laboral":"ECONOMÍA","economia y regulacion de los servicios publicos":"ECONOMÍA","elementos del derecho publico y privado":"ADMINISTRACIÓN","estadistica":"TURISMO","estadistica aplicada":"COMPLEMENTARIAS","estadistica para economistas":"COMPLEMENTARIAS","estadistica para economistas i":"COMPLEMENTARIAS","estadistica para economistas ii":"ECONOMÍA","estado y politica publica en turismo":"TURISMO","estrategia de tecnologia y gestion de proyectos":"CIENCIA DE DATOS","estrategia y direccion general en el sector turistico":"TURISMO","estructura economica societaria":"CONTABILIDAD","estructura social argentina":"ECONOMÍA","finanzas de empresas":"ADMINISTRACIÓN","finanzas de la empresa":"ECONOMÍA","finanzas publicas":"ECONOMÍA","formulacion y evaluacion de proyectos turisticos":"TURISMO","geografia turistica mundial":"TURISMO","gestion cooperativa":"ADMINISTRACIÓN","gestion cooperativa i":"ADMINISTRACIÓN","gestion cooperativa ii":"ADMINISTRACIÓN","gestion de la informacion y tecnologias":"TURISMO","gestion de las organizaciones":"CIENCIA DE DATOS","gestion de las organizaciones turisticas":"TURISMO","gestion de las personas en el sector turistico":"TURISMO","gestion de personas y equipos":"CIENCIA DE DATOS","gestion del patrimonio turistico":"TURISMO","gestion publica":"ADMINISTRACIÓN","gestion y desarrollo de las personas en las organizaciones":"ADMINISTRACIÓN","historia del pensamiento economico":"ECONOMÍA","historia economica y social i":"COMPLEMENTARIAS","historia economica y social ii":"COMPLEMENTARIAS","historia y agenda geopolitica":"TURISMO","ingles i":"TURISMO","ingles ii":"TURISMO","interpretacion de los estados contables":"ADMINISTRACIÓN","introduccion a las ciencias sociales y al conocimiento cientifico":"COMPLEMENTARIAS","introduccion al turismo":"TURISMO","investigacion en turismo":"TURISMO","laboratorio de datos":"ECONOMÍA","legislacion turistica":"TURISMO","macroeconomia ii":"ECONOMÍA","marketing estrategico":"ADMINISTRACIÓN","marketing estrategico y operativo":"CIENCIA DE DATOS","marketing tactico y operativo":"ADMINISTRACIÓN","marketing turistico":"TURISMO","matematica i":"COMPLEMENTARIAS","matematica ii":"COMPLEMENTARIAS","matematica ii (analisis matematico)":"TURISMO","matematica para administradores":"ADMINISTRACIÓN","matematica para economistas i":"ECONOMÍA","matematica para economistas ii":"ECONOMÍA","mercado de capitales":"ECONOMÍA","metodos cuantitativos i (enfoque matematico)":"TURISMO","metodos cuantitativos ii (enfoque estadistico)":"TURISMO","microeconomia i":"ECONOMÍA","modelos cooperativos":"ADMINISTRACIÓN","modelos cooperativos y su desarrollo en la republica argentina":"ADMINISTRACIÓN","negocios internacionales":"ADMINISTRACIÓN","nociones generales de economia":"CIENCIA DE DATOS","organizacion industrial":"ECONOMÍA","organizacion y gestion de empresas turisticas":"TURISMO","organizacion y practica profesional":"CONTABILIDAD","patrimonio turistico argentino":"TURISMO","pensamiento social y cientifico":"ADMINISTRACIÓN","politica economica":"ECONOMÍA","politica economica i":"ECONOMÍA","politica economica ii":"ECONOMÍA","politicas turisticas":"TURISMO","portugues i":"TURISMO","portugues ii":"TURISMO","procesos de negocio":"CIENCIA DE DATOS","produccion":"ADMINISTRACIÓN","psicosociologia del tiempo libre":"TURISMO","psicosociologia organizacional":"ADMINISTRACIÓN","servicios turisticos":"TURISMO","sistema de informacion contable de apoyo a las operaciones":"CONTABILIDAD","sistema de informacion contable para la toma de decisiones":"CONTABILIDAD","sociologia del turismo":"TURISMO","sociologia y educacion cooperativa":"COMPLEMENTARIAS","tecnologia informatica y sistemas de informacion para la direccion":"ADMINISTRACIÓN","tecnologias para la gestion":"CIENCIA DE DATOS","teoria y tecnica impositiva i":"CONTABILIDAD","teoria y tecnica impositiva ii":"CONTABILIDAD","territorio turistico argentino":"TURISMO","territorio turistico mundial":"TURISMO","topicos avanzados en finanzas":"ADMINISTRACIÓN","trabajo y sociedad":"ADMINISTRACIÓN","costos para la gestion (la)":"CONTABILIDAD","gestion de las personas en las organizaciones i":"ADMINISTRACIÓN","gestion de las personas en las organizaciones ii":"ADMINISTRACIÓN","marketing operativo":"ADMINISTRACIÓN","operaciones":"ADMINISTRACIÓN","planeamiento y control organizacional":"ADMINISTRACIÓN","estrategia tecnologica y gestion de proyectos it":"ADMINISTRACIÓN","inteligencia de negocios y analisis de datos":"ADMINISTRACIÓN","moneda, credito y bancos":"ECONOMÍA","historia economica mundial y argentina":"COMPLEMENTARIAS","matematica inicial y tecnicas de estudio y comunicacion":"COMPLEMENTARIAS","introduccion a los estudios universitarios":"COMPLEMENTARIAS","seminario: gestion hospitalaria. el singular caso de gestion de organizaciones de salud":"ADMINISTRACIÓN","seminario: mercados de instrumentos financieros. herramientas de analisis e insercion profesional":"ADMINISTRACIÓN","seminario: organizaciones habitables. repensar la gestion con perspectiva de genero":"ADMINISTRACIÓN","seminario: inversiones y financiamiento en el mercado de capitales":"COMPLEMENTARIAS","seminario: aplicacion practica profesional en el sector publico nacional, provincial y municipal":"CONTABILIDAD","seminario: control interno y gestion del riesgo empresarial":"CONTABILIDAD","seminario: practica laboral y de la seguridad social":"CONTABILIDAD","taller pps: impuestos y planificacion fiscal aplicados a actividades especificas":"CONTABILIDAD","seminario: financiamiento cooperativo, solidario y sostenible":"ADMINISTRACIÓN","seminario: economia de la salud aplicada":"ECONOMÍA","seminario: datos en turismo. herramientas para el analisis":"TURISMO","seminario: potencialidades de desarrollo en turismo y gastronomia":"TURISMO","seminario: tecnologias y gestion de la informacion en turismo":"TURISMO","seminario: turismo y relaciones internacionales":"TURISMO","seminario: metodologia de la investigacion":"TURISMO","seminario de tesis final":"TURISMO","contabilidad ix (contabilidad para la toma de decisiones)":"CONTABILIDAD","tecnica y legislacion tributaria":"CONTABILIDAD","actuacion judicial":"CONTABILIDAD","organizacion profesional":"CONTABILIDAD","macroeconomia i":"ECONOMÍA","contabilidad iii (estados contables)":"CONTABILIDAD","matematica para decisiones empresarias":"COMPLEMENTARIAS","historia economica y social argentina y latinoamericana":"COMPLEMENTARIAS","administracion iii (planeamiento y control organizacional)":"ADMINISTRACIÓN","microeconomia ii":"ECONOMÍA","economia internacional":"ECONOMÍA","econometria ii":"ECONOMÍA","finanzas internacionales":"ECONOMÍA","taller de trabajo final de carrera":"TURISMO","materia/s optativa/s":"TURISMO","optativa":"CIENCIA DE DATOS","economia de la empresa y la organizacion industrial":"ECONOMÍA","contabilidad i (bases y fundamentos) - catedra a":"CONTABILIDAD","contabilidad i (bases y fundamentos) - catedra b":"CONTABILIDAD","contabilidad i (bases y fundamentos) - catedra c":"CONTABILIDAD","administracion i (introduccion a la administracion y al estudio de las organizaciones) - catedra a":"ADMINISTRACIÓN","administracion i (introduccion a la administracion y al estudio de las organizaciones) - catedra b":"ADMINISTRACIÓN","administracion i (introduccion a la administracion y al estudio de las organizaciones) - catedra c":"ADMINISTRACIÓN","introduccion a la economia y estructura economica argentina - catedra a":"ECONOMÍA","introduccion a la economia y estructura economica argentina - catedra b":"ECONOMÍA","introduccion a la economia y estructura economica argentina - catedra c":"ECONOMÍA"};
+  var DEPTO_POR_MATERIA = {"actuacion del tecnico en cooperativas":"ADMINISTRACIÓN","actuacion profesional en la justicia":"CONTABILIDAD","actuacion profesional laboral y previsional":"CONTABILIDAD","administracion de la produccion":"ADMINISTRACIÓN","administracion de recursos humanos en turismo":"TURISMO","analisis e interpretacion de los estados contables":"CONTABILIDAD","analisis y evaluacion economico-financiera en el sector turistico":"TURISMO","auditoria":"CONTABILIDAD","comercializacion":"ADMINISTRACIÓN","comercio internacional":"ECONOMÍA","comportamiento estrategico":"ECONOMÍA","comportamiento humano en las organizaciones":"ADMINISTRACIÓN","contabilidad aplicada al sector turistico":"TURISMO","contabilidad del sector publico":"CONTABILIDAD","contabilidad e interpretacion de los estados contables":"CIENCIA DE DATOS","contabilidad ii (ajuste y valuacion)":"CONTABILIDAD","costos e informacion para la gestion":"CIENCIA DE DATOS","costos para la gestion":"CONTABILIDAD","crecimiento economico, turismo y medio ambiente":"TURISMO","derecho constitucional y administrativo":"COMPLEMENTARIAS","derecho cooperativo":"COMPLEMENTARIAS","derecho empresario":"ADMINISTRACIÓN","derecho privado":"COMPLEMENTARIAS","derecho y turismo":"TURISMO","desarrollo economico":"ECONOMÍA","desarrollo economico ambiental en turismo":"TURISMO","dinamicas sociohistoricas y agenda del turismo":"TURISMO","direccion general":"ADMINISTRACIÓN","diseno de sistemas de informacion":"ADMINISTRACIÓN","diseno y evaluacion de politicas turisticas":"TURISMO","doctrina e historia del cooperativismo":"ADMINISTRACIÓN","econometria i":"ECONOMÍA","economia de la empresa y de la organizacion industrial":"ECONOMÍA","economia de las instituciones y el comportamiento":"ECONOMÍA","economia de los ciclos y las crisis":"ECONOMÍA","economia del sector publico":"ECONOMÍA","economia del turismo i (enfoque micro)":"TURISMO","economia del turismo ii (enfoque macro)":"TURISMO","economia espacial y ambiental":"ECONOMÍA","economia laboral":"ECONOMÍA","economia y regulacion de los servicios publicos":"ECONOMÍA","elementos del derecho publico y privado":"ADMINISTRACIÓN","estadistica":"TURISMO","estadistica aplicada":"COMPLEMENTARIAS","estadistica para economistas":"COMPLEMENTARIAS","estadistica para economistas ii":"ECONOMÍA","estado y politica publica en turismo":"TURISMO","estrategia de tecnologia y gestion de proyectos":"CIENCIA DE DATOS","estrategia y direccion general en el sector turistico":"TURISMO","estructura economica societaria":"CONTABILIDAD","estructura social argentina":"ECONOMÍA","finanzas de empresas":"ADMINISTRACIÓN","finanzas de la empresa":"ECONOMÍA","finanzas publicas":"ECONOMÍA","formulacion y evaluacion de proyectos turisticos":"TURISMO","geografia turistica mundial":"TURISMO","gestion cooperativa":"ADMINISTRACIÓN","gestion cooperativa i":"ADMINISTRACIÓN","gestion cooperativa ii":"ADMINISTRACIÓN","gestion de la informacion y tecnologias":"TURISMO","gestion de las organizaciones turisticas":"TURISMO","gestion de las personas en el sector turistico":"TURISMO","gestion de personas y equipos":"CIENCIA DE DATOS","gestion del patrimonio turistico":"TURISMO","gestion y desarrollo de las personas en las organizaciones":"ADMINISTRACIÓN","historia del pensamiento economico":"ECONOMÍA","historia economica y social i":"COMPLEMENTARIAS","historia economica y social ii":"COMPLEMENTARIAS","historia y agenda geopolitica":"TURISMO","ingles i":"TURISMO","ingles ii":"TURISMO","interpretacion de los estados contables":"ADMINISTRACIÓN","introduccion a las ciencias sociales y al conocimiento cientifico":"COMPLEMENTARIAS","introduccion al turismo":"TURISMO","investigacion en turismo":"TURISMO","laboratorio de datos":"ECONOMÍA","legislacion turistica":"TURISMO","macroeconomia ii":"ECONOMÍA","marketing estrategico":"ADMINISTRACIÓN","marketing tactico y operativo":"ADMINISTRACIÓN","marketing turistico":"TURISMO","matematica i":"COMPLEMENTARIAS","matematica ii":"COMPLEMENTARIAS","matematica ii (analisis matematico)":"TURISMO","matematica para administradores":"ADMINISTRACIÓN","matematica para economistas i":"ECONOMÍA","matematica para economistas ii":"ECONOMÍA","mercado de capitales":"ECONOMÍA","metodos cuantitativos i (enfoque matematico)":"TURISMO","metodos cuantitativos ii (enfoque estadistico)":"TURISMO","microeconomia i":"ECONOMÍA","modelos cooperativos":"ADMINISTRACIÓN","modelos cooperativos y su desarrollo en la republica argentina":"ADMINISTRACIÓN","negocios internacionales":"ADMINISTRACIÓN","nociones generales de economia":"CIENCIA DE DATOS","organizacion industrial":"ECONOMÍA","organizacion y gestion de empresas turisticas":"TURISMO","organizacion y practica profesional":"CONTABILIDAD","patrimonio turistico argentino":"TURISMO","pensamiento social y cientifico":"ADMINISTRACIÓN","politica economica":"ECONOMÍA","politica economica i":"ECONOMÍA","politica economica ii":"ECONOMÍA","politicas turisticas":"TURISMO","portugues i":"TURISMO","portugues ii":"TURISMO","procesos de negocio":"CIENCIA DE DATOS","produccion":"ADMINISTRACIÓN","psicosociologia del tiempo libre":"TURISMO","psicosociologia organizacional":"ADMINISTRACIÓN","servicios turisticos":"TURISMO","sistema de informacion contable de apoyo a las operaciones":"CONTABILIDAD","sistema de informacion contable para la toma de decisiones":"CONTABILIDAD","sociologia del turismo":"TURISMO","sociologia y educacion cooperativa":"COMPLEMENTARIAS","tecnologia informatica y sistemas de informacion para la direccion":"ADMINISTRACIÓN","tecnologias para la gestion":"CIENCIA DE DATOS","teoria y tecnica impositiva i":"CONTABILIDAD","teoria y tecnica impositiva ii":"CONTABILIDAD","territorio turistico argentino":"TURISMO","territorio turistico mundial":"TURISMO","topicos avanzados en finanzas":"ADMINISTRACIÓN","trabajo y sociedad":"ADMINISTRACIÓN","costos para la gestion (la)":"CONTABILIDAD","gestion de las personas en las organizaciones i":"ADMINISTRACIÓN","gestion de las personas en las organizaciones ii":"ADMINISTRACIÓN","marketing operativo":"ADMINISTRACIÓN","operaciones":"ADMINISTRACIÓN","planeamiento y control organizacional":"ADMINISTRACIÓN","estrategia tecnologica y gestion de proyectos it":"ADMINISTRACIÓN","inteligencia de negocios y analisis de datos":"ADMINISTRACIÓN","moneda, credito y bancos":"ECONOMÍA","historia economica mundial y argentina":"COMPLEMENTARIAS","matematica inicial y tecnicas de estudio y comunicacion":"COMPLEMENTARIAS","introduccion a los estudios universitarios":"COMPLEMENTARIAS","seminario: gestion hospitalaria. el singular caso de gestion de organizaciones de salud":"ADMINISTRACIÓN","seminario: mercados de instrumentos financieros. herramientas de analisis e insercion profesional":"ADMINISTRACIÓN","seminario: organizaciones habitables. repensar la gestion con perspectiva de genero":"ADMINISTRACIÓN","seminario: inversiones y financiamiento en el mercado de capitales":"COMPLEMENTARIAS","seminario: aplicacion practica profesional en el sector publico nacional, provincial y municipal":"CONTABILIDAD","seminario: control interno y gestion del riesgo empresarial":"CONTABILIDAD","seminario: practica laboral y de la seguridad social":"CONTABILIDAD","taller pps: impuestos y planificacion fiscal aplicados a actividades especificas":"CONTABILIDAD","seminario: financiamiento cooperativo, solidario y sostenible":"ADMINISTRACIÓN","seminario: economia de la salud aplicada":"ECONOMÍA","seminario: datos en turismo. herramientas para el analisis":"TURISMO","seminario: potencialidades de desarrollo en turismo y gastronomia":"TURISMO","seminario: tecnologias y gestion de la informacion en turismo":"TURISMO","seminario: turismo y relaciones internacionales":"TURISMO","seminario: metodologia de la investigacion":"TURISMO","seminario de tesis final":"TURISMO","contabilidad ix (contabilidad para la toma de decisiones)":"CONTABILIDAD","tecnica y legislacion tributaria":"CONTABILIDAD","organizacion profesional":"CONTABILIDAD","macroeconomia i":"ECONOMÍA","contabilidad iii (estados contables)":"CONTABILIDAD","historia economica y social argentina y latinoamericana":"COMPLEMENTARIAS","administracion iii (planeamiento y control organizacional)":"ADMINISTRACIÓN","microeconomia ii":"ECONOMÍA","economia internacional":"ECONOMÍA","econometria ii":"ECONOMÍA","finanzas internacionales":"ECONOMÍA","taller de trabajo final de carrera":"TURISMO","economia de la empresa y la organizacion industrial":"ECONOMÍA","contabilidad i (bases y fundamentos) - catedra a":"CONTABILIDAD","contabilidad i (bases y fundamentos) - catedra b":"CONTABILIDAD","contabilidad i (bases y fundamentos) - catedra c":"CONTABILIDAD","administracion i (introduccion a la administracion y al estudio de las organizaciones) - catedra a":"ADMINISTRACIÓN","administracion i (introduccion a la administracion y al estudio de las organizaciones) - catedra b":"ADMINISTRACIÓN","administracion i (introduccion a la administracion y al estudio de las organizaciones) - catedra c":"ADMINISTRACIÓN","introduccion a la economia y estructura economica argentina - catedra a":"ECONOMÍA","introduccion a la economia y estructura economica argentina - catedra b":"ECONOMÍA","introduccion a la economia y estructura economica argentina - catedra c":"ECONOMÍA","gestion de las organizaciones (cdo)":"CIENCIA DE DATOS","marketing estrategico y operativo (cdo)":"CIENCIA DE DATOS","administracion publica / gestion publica":"ADMINISTRACIÓN","matematica para decisiones empresarias / calculo financiero":"COMPLEMENTARIAS","administracion ii / administracion estrategica":"ADMINISTRACIÓN"};
 
   /* Los departamentos vienen en mayúsculas desde la planilla oficial */
   function deptoBonito(d){
@@ -24721,8 +24707,29 @@
             .replace(/\bde\b/g, "de").replace(/\bdatos\b/g, "Datos");
   }
 
+  /* Departamento de una materia. Las materias unificadas llevan los dos
+     nombres ("Administración II / Administración Estratégica"), así que una
+     propuesta guardada con el nombre viejo también tiene que encontrarse. */
+  var DEPTO_POR_ALIAS = null;
+  function indiceDeAlias(){
+    if(DEPTO_POR_ALIAS) return DEPTO_POR_ALIAS;
+    DEPTO_POR_ALIAS = {};
+    Object.keys(DEPTO_POR_MATERIA).forEach(function(k){
+      DEPTO_POR_ALIAS[k] = DEPTO_POR_MATERIA[k];
+      k.split("/").forEach(function(parte){
+        var p = normalizarNombre(parte);
+        if(p && !DEPTO_POR_ALIAS[p]){ DEPTO_POR_ALIAS[p] = DEPTO_POR_MATERIA[k]; }
+      });
+    });
+    return DEPTO_POR_ALIAS;
+  }
+  function departamentoDeAsignatura(nombre){
+    var k = normalizarNombre(nombre || "");
+    if(!k) return "";
+    return DEPTO_POR_MATERIA[k] || indiceDeAlias()[k] || "";
+  }
   function departamentoDe(p){
-    return DEPTO_POR_MATERIA[normalizarNombre(p && p.asignatura ? p.asignatura : "")] || "";
+    return departamentoDeAsignatura(p && p.asignatura ? p.asignatura : "");
   }
 
   var MODALIDAD_OPTIONS = ["Teoría","Práctica","Teórico - Práctica"];
@@ -25283,15 +25290,49 @@
      Solo figuran las sedes que el docente tildó. */
   var finState = { sedes: {}, consultas: [], metod: [] };
 
-  function mesaVacia(llamado){
-    return { llamado: llamado || "", fecha:"", hora:"", observaciones:"" };
-  }
-  function mesasInicialesDe(idSede){
-    var s = sedePorId(idSede);
-    return s ? llamadosDe(s).map(function(l){ return mesaVacia(l); }) : [];
+  function sedeVacia(){ return { dia:"", hora:"", observaciones:"" }; }
+
+  /* El campo de reloj solo acepta HH:MM. Las horas guardadas antes podían
+     venir como "9:00" o "9", así que se normalizan al cargarlas. */
+  function horaParaReloj(v){
+    var s = String(v == null ? "" : v).trim();
+    if(!s) return "";
+    var m = s.match(/^(\d{1,2})(?::(\d{1,2}))?/);
+    if(!m) return "";
+    var hh = Math.min(23, parseInt(m[1], 10));
+    var mm = m[2] ? Math.min(59, parseInt(m[2], 10)) : 0;
+    return (hh < 10 ? "0" : "") + hh + ":" + (mm < 10 ? "0" : "") + mm;
   }
   function consultaVacia(){
-    return { dia:"", horario:"", docente:"", modalidad:"Presencial", detalles:"" };
+    return { mesa:"", dia:"", horario:"", docente:"", modalidad:"Presencial", detalles:"" };
+  }
+
+  /* Llamados de la sede elegida, para identificar a qué mesa corresponde
+     cada clase de consulta */
+  function llamadosDeLaSedeElegida(){
+    var id = Object.keys(finState.sedes)[0];
+    var s = id ? sedePorId(id) : null;
+    return s ? llamadosDe(s) : [];
+  }
+
+  /* Las clases de consulta arrancan con una fila por llamado, en orden.
+     Si ya había algo cargado para un llamado, se conserva. */
+  function generarConsultasPorLlamado(){
+    var llamados = llamadosDeLaSedeElegida();
+    if(llamados.length === 0){
+      finState.consultas = [consultaVacia()];
+      return;
+    }
+    var previas = finState.consultas || [];
+    var sueltas = previas.filter(function(c){
+      return llamados.indexOf(c.mesa) === -1 &&
+             (c.dia || c.horario || c.docente || c.detalles);
+    });
+    finState.consultas = llamados.map(function(l){
+      var ya = previas.filter(function(c){ return c.mesa === l; })[0];
+      if(ya) return ya;
+      var c = consultaVacia(); c.mesa = l; return c;
+    }).concat(sueltas);
   }
   function metodVacia(){ return { modalidad:"", detalle:"" }; }
 
@@ -25316,64 +25357,77 @@
     var cont = document.getElementById("finSedesCheck");
     cont.innerHTML = SEDES_FINALES.map(function(s){
       var activa = !!finState.sedes[s.id];
+      /* Una materia se dicta en una sede o en la otra, nunca en las dos */
       return '<label class="sede-op' + (activa ? " activa" : "") + '">' +
-             '<input type="checkbox" data-sede="' + s.id + '"' + (activa ? " checked" : "") + '>' +
+             '<input type="radio" name="finSedeSel" data-sede="' + s.id + '"' + (activa ? " checked" : "") + '>' +
              '<span><b>' + esc(s.nombre) + '</b><small>' + esc(s.detalle) + '</small></span>' +
              '</label>';
     }).join("");
   }
 
-  /* Una tabla de mesas por cada sede elegida */
+  /* Por cada sede elegida: un día y un horario que valen para todos los
+     llamados del año. Las semanas exactas las fija el calendario académico,
+     que la Secretaría carga cuando se aprueba. */
+  function textoAvisoSede(s){
+    var d = finState.sedes[s.id] || {};
+    var ll = llamadosDe(s);
+    if(d.dia && d.hora){
+      return 'Todas las mesas de esta sede quedan los <b>' + esc(d.dia.toLowerCase()) +
+             '</b> a las <b>' + esc(d.hora) + '</b> — ' + ll.length + ' llamados: ' +
+             esc(ll.join(" · ")) + '.';
+    }
+    return 'Elegí el día y el horario: se aplican a los ' + ll.length +
+           ' llamados del año (' + esc(ll.join(" · ")) + ').';
+  }
+
   function renderFinMesas(){
     renderFinSedesCheck();
     var cont = document.getElementById("finSedesTablas");
     var elegidas = SEDES_FINALES.filter(function(s){ return !!finState.sedes[s.id]; });
     if(elegidas.length === 0){
       cont.innerHTML = '<p class="section-note" style="margin-top:14px;">' +
-        'Elegí al menos una sede para cargar las fechas de las mesas.</p>';
+        'Elegí al menos una sede para indicar el día y el horario de las mesas.</p>';
       return;
     }
+    var dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
     var html = "";
     elegidas.forEach(function(s){
-      var mesas = finState.sedes[s.id];
-      var fijos = Array.isArray(s.llamados);
+      var d = finState.sedes[s.id];
+      var llamados = llamadosDe(s);
       html += '<div class="sede-bloque">' +
         '<div class="sede-bloque-head">' + esc(s.nombre) +
-        '<small>' + mesas.length + (mesas.length === 1 ? " mesa" : " mesas") + '</small></div>' +
-        '<table class="grid"><thead><tr>' +
-          '<th style="width:170px;">Llamado</th>' +
-          '<th style="width:150px;">Fecha</th>' +
-          '<th style="width:110px;">Día</th>' +
-          '<th style="width:110px;">Hora</th>' +
-          '<th>Observaciones</th>' +
-          '<th class="row-actions"></th>' +
-        '</tr></thead><tbody>';
-      mesas.forEach(function(m, i){
-        var celdaLlamado;
-        if(fijos){
-          celdaLlamado = '<select data-sede-tab="' + s.id + '" data-i="' + i + '" data-campo="llamado">' +
-            '<option value="">—</option>' +
-            s.llamados.map(function(l){
-              return '<option' + (l === m.llamado ? " selected" : "") + '>' + esc(l) + '</option>';
-            }).join("") + '</select>';
-        } else {
-          celdaLlamado = '<input type="text" data-sede-tab="' + s.id + '" data-i="' + i +
-            '" data-campo="llamado" value="' + esc(m.llamado) + '" placeholder="Llamado / mes">';
-        }
-        html += '<tr>' +
-          '<td>' + celdaLlamado + '</td>' +
-          '<td><input type="date" data-sede-tab="' + s.id + '" data-i="' + i + '" data-campo="fecha" value="' + esc(m.fecha) + '"></td>' +
-          '<td><span class="dia-calc">' + esc(diaDeLaFechaMesa(m.fecha) || "—") + '</span></td>' +
-          '<td><input type="text" data-sede-tab="' + s.id + '" data-i="' + i + '" data-campo="hora" value="' + esc(m.hora) + '" placeholder="9:00"></td>' +
-          '<td><input type="text" data-sede-tab="' + s.id + '" data-i="' + i + '" data-campo="observaciones" value="' + esc(m.observaciones) + '"></td>' +
-          '<td class="row-actions"><button type="button" class="row-del" data-del-mesa="' + s.id + '" data-i="' + i + '" title="Quitar">×</button></td>' +
-        '</tr>';
-      });
-      html += '</tbody></table>' +
-        '<button type="button" class="btn ghost small" data-add-mesa="' + s.id + '">+ Agregar mesa en ' + esc(s.nombre) + '</button>' +
+        '<small>' + llamados.length + ' llamados en el año</small></div>' +
+        '<div class="field-row">' +
+          '<div class="field" style="flex:1 1 200px;">' +
+            '<label>Día de la semana <span class="req">*</span></label>' +
+            '<select data-sede-dh="' + s.id + '" data-campo="dia">' +
+              '<option value="">Seleccionar…</option>' +
+              dias.map(function(x){
+                return '<option' + (x === d.dia ? " selected" : "") + '>' + x + '</option>';
+              }).join("") +
+            '</select>' +
+          '</div>' +
+          '<div class="field" style="flex:1 1 160px;">' +
+            '<label>Horario <span class="req">*</span></label>' +
+            '<input type="time" data-sede-dh="' + s.id + '" data-campo="hora" value="' + esc(horaParaReloj(d.hora)) + '">' +
+          '</div>' +
+          '<div class="field" style="flex:2 1 260px;">' +
+            '<label>Observaciones</label>' +
+            '<input type="text" data-sede-dh="' + s.id + '" data-campo="observaciones" value="' +
+              esc(d.observaciones) + '" placeholder="Aclaraciones para la Secretaría">' +
+          '</div>' +
+        '</div>' +
+        '<p class="section-note" data-aviso-sede="' + s.id + '" style="margin-top:2px;">' +
+          textoAvisoSede(s) + '</p>' +
         '</div>';
     });
     cont.innerHTML = html;
+  }
+
+  function actualizarAvisoSede(idSede){
+    var s = sedePorId(idSede);
+    var p = document.querySelector('[data-aviso-sede="' + idSede + '"]');
+    if(s && p){ p.innerHTML = textoAvisoSede(s); }
   }
 
   function renderFinConsultas(){
@@ -25381,12 +25435,19 @@
     var dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
     var mods = ["Presencial","Virtual","Híbrida"];
     var t = "";
+    var llamadosSede = llamadosDeLaSedeElegida();
     finState.consultas.forEach(function(c, i){
       t += '<tr>' +
+        '<td><select data-fin="consulta" data-i="' + i + '" data-campo="mesa">' +
+          '<option value="">Sin mesa asignada</option>' +
+          llamadosSede.map(function(l){
+            return '<option' + (l === c.mesa ? " selected" : "") + '>' + esc(l) + '</option>';
+          }).join("") +
+        '</select></td>' +
         '<td><select data-fin="consulta" data-i="' + i + '" data-campo="dia"><option value="">—</option>' +
           dias.map(function(d){ return '<option' + (d === c.dia ? " selected" : "") + '>' + d + '</option>'; }).join("") +
         '</select></td>' +
-        '<td><input type="text" data-fin="consulta" data-i="' + i + '" data-campo="horario" value="' + esc(c.horario) + '" placeholder="10 - 12"></td>' +
+        '<td><input type="time" data-fin="consulta" data-i="' + i + '" data-campo="horario" value="' + esc(horaParaReloj(c.horario)) + '"></td>' +
         '<td><input type="text" data-fin="consulta" data-i="' + i + '" data-campo="docente" value="' + esc(c.docente) + '"></td>' +
         '<td><select data-fin="consulta" data-i="' + i + '" data-campo="modalidad">' +
           mods.map(function(m){ return '<option' + (m === c.modalidad ? " selected" : "") + '>' + m + '</option>'; }).join("") +
@@ -25420,16 +25481,11 @@
     var i = Number(el.getAttribute("data-i"));
     var campo = el.getAttribute("data-campo");
 
-    /* mesas: identificadas por sede */
-    var idSede = el.getAttribute("data-sede-tab");
+    /* día y horario de una sede */
+    var idSede = el.getAttribute("data-sede-dh");
     if(idSede){
-      var mesas = finState.sedes[idSede];
-      if(!mesas || !mesas[i]) return;
-      mesas[i][campo] = el.value;
-      if(campo === "fecha"){
-        var celda = el.closest("tr").querySelector(".dia-calc");
-        if(celda){ celda.textContent = diaDeLaFechaMesa(el.value) || "—"; }
-      }
+      if(finState.sedes[idSede]){ finState.sedes[idSede][campo] = el.value; }
+      actualizarAvisoSede(idSede);
       return;
     }
 
@@ -25445,47 +25501,41 @@
     /* tildar o destildar una sede */
     var idSedeCheck = el.getAttribute("data-sede");
     if(idSedeCheck){
-      if(el.checked){
-        if(!finState.sedes[idSedeCheck]){ finState.sedes[idSedeCheck] = mesasInicialesDe(idSedeCheck); }
-      } else {
-        var tieneDatos = (finState.sedes[idSedeCheck] || []).some(function(m){
-          return m.fecha || m.hora || m.observaciones;
-        });
-        if(tieneDatos && !window.confirm("Ya cargaste fechas en esta sede. ¿Querés quitarla igual?")){
-          el.checked = true; return;
+      /* Selección única: la sede elegida reemplaza a la anterior */
+      var previa = Object.keys(finState.sedes)[0];
+      if(previa && previa !== idSedeCheck){
+        var d0 = finState.sedes[previa] || {};
+        if((d0.dia || d0.hora || d0.observaciones) &&
+           !window.confirm("Ya cargaste el día y el horario para " +
+             ((sedePorId(previa) || {}).nombre || previa) +
+             ".\n\n¿Cambiar de sede? Se van a perder esos datos.")){
+          renderFinMesas();
+          return;
         }
-        delete finState.sedes[idSedeCheck];
       }
+      finState.sedes = {};
+      finState.sedes[idSedeCheck] = sedeVacia();
+      /* se rearma el cronograma de consultas con los llamados de esta sede */
+      generarConsultasPorLlamado();
       renderFinMesas();
+      renderFinConsultas();
       return;
     }
 
-    if(el.tagName !== "SELECT") return;
-    var i = Number(el.getAttribute("data-i"));
-    var idSede = el.getAttribute("data-sede-tab");
-    if(idSede){
-      var mesas = finState.sedes[idSede];
-      if(mesas && mesas[i]){ mesas[i][el.getAttribute("data-campo")] = el.value; }
+    var idSedeDh = el.getAttribute("data-sede-dh");
+    if(idSedeDh){
+      if(finState.sedes[idSedeDh]){ finState.sedes[idSedeDh][el.getAttribute("data-campo")] = el.value; }
+      actualizarAvisoSede(idSedeDh);
       return;
     }
+    if(el.tagName !== "SELECT") return;
+    var i = Number(el.getAttribute("data-i"));
     var grupo = el.getAttribute("data-fin");
     if(!grupo) return;
     var lista = grupo === "consulta" ? finState.consultas : finState.metod;
     if(lista[i]){ lista[i][el.getAttribute("data-campo")] = el.value; }
   });
   document.getElementById("formFinal").addEventListener("click", function(e){
-    var addMesa = e.target.closest("[data-add-mesa]");
-    if(addMesa){
-      var idA = addMesa.getAttribute("data-add-mesa");
-      if(finState.sedes[idA]){ finState.sedes[idA].push(mesaVacia("")); renderFinMesas(); }
-      return;
-    }
-    var delMesa = e.target.closest("[data-del-mesa]");
-    if(delMesa){
-      var idD = delMesa.getAttribute("data-del-mesa");
-      if(finState.sedes[idD]){ finState.sedes[idD].splice(Number(delMesa.getAttribute("data-i")), 1); renderFinMesas(); }
-      return;
-    }
     var btn = e.target.closest("[data-del-fin]");
     if(!btn) return;
     var grupo = btn.getAttribute("data-del-fin");
@@ -25561,7 +25611,46 @@
   renderFinTodo();
 
   /* Cambio entre Cursada y Final */
-  var SEDES_CURSADA = { brandsen:"Brandsen", saladillo:"Saladillo", tresarroyos:"Tres Arroyos" };
+  /* Sedes del interior y las carreras que se dictan en cada una */
+  var SEDES_CURSADA = {
+    brandsen:    "Brandsen",
+    saladillo:   "Saladillo",
+    tresarroyos: "Tres Arroyos",
+    dolores:     "Dolores"
+  };
+  var CARRERAS_POR_SEDE = {
+    brandsen:    ["Contador Público", "Lic. en Administración"],
+    saladillo:   ["Contador Público", "Lic. en Administración"],
+    tresarroyos: ["Lic. en Administración"],
+    dolores:     ["Lic. en Turismo"]
+  };
+
+  /* Carreras que se pueden elegir según el modo y la sede */
+  function carrerasDisponibles(){
+    if(TIPO_PROPUESTA !== "sede") return CARRERA_OPTIONS;
+    var sede = document.getElementById("f_sede").value;
+    return CARRERAS_POR_SEDE[sede] || [];
+  }
+
+  /* Rearma el desplegable de carreras y descarta las que no correspondan */
+  function refrescarCarrerasPorSede(){
+    var permitidas = carrerasDisponibles();
+    state.carreras = (state.carreras || []).filter(function(c){ return permitidas.indexOf(c) > -1; });
+    renderMultiSelect("carrera", permitidas, state.carreras);
+    var aviso = document.getElementById("avisoCarrerasSede");
+    if(aviso){
+      var sede = document.getElementById("f_sede").value;
+      if(TIPO_PROPUESTA === "sede" && !sede){
+        aviso.style.display = "block";
+        aviso.textContent = "Elegí primero la sede para ver las carreras que se dictan ahí.";
+      } else if(TIPO_PROPUESTA === "sede"){
+        aviso.style.display = "block";
+        aviso.textContent = "En " + (SEDES_CURSADA[sede] || sede) + " se dicta: " + permitidas.join(" · ") + ".";
+      } else {
+        aviso.style.display = "none";
+      }
+    }
+  }
 
   function cambiarTipoPropuesta(tipo){
     TIPO_PROPUESTA = tipo;
@@ -25587,8 +25676,16 @@
     });
     showMsg("saveMsg", "", false);
     document.getElementById("saveMsg").textContent = "";
-    if(esFinal){ renderFinTodo(); } else { renderTemplateStrip(); }
+    if(esFinal){ renderFinTodo(); } else { renderTemplateStrip(); refrescarCarrerasPorSede(); }
   }
+
+  document.getElementById("f_sede").addEventListener("change", function(){
+    /* Al elegir la sede se vuelve a leer el catálogo de la materia: así, si la
+       materia se había elegido antes que la sede, las carreras se recuperan y
+       recién ahí se recortan a las que se dictan en esa sede. */
+    if(getAsignatura()){ autocompletarDesdeCatalogo(); }
+    refrescarCarrerasPorSede();
+  });
   Array.prototype.forEach.call(document.querySelectorAll("[data-tipo-prop]"), function(b){
     b.addEventListener("click", function(){ cambiarTipoPropuesta(b.getAttribute("data-tipo-prop")); });
   });
@@ -25607,21 +25704,16 @@
       })(),
       docente: document.getElementById("fin_docente").value.trim(),
       email: document.getElementById("fin_email").value.trim(),
+      /* Día y horario valen para todos los llamados del año de esa sede.
+         Las fechas exactas las define después el calendario académico. */
       sedes: SEDES_FINALES.filter(function(s){ return !!finState.sedes[s.id]; })
         .map(function(s){
-          return {
-            id: s.id,
-            nombre: s.nombre,
-            mesas: finState.sedes[s.id].filter(function(m){
-              return m.llamado || m.fecha || m.hora || m.observaciones;
-            }).map(function(m){
-              return { llamado:m.llamado, fecha:m.fecha, dia:diaDeLaFechaMesa(m.fecha),
-                       hora:m.hora, observaciones:m.observaciones };
-            })
-          };
+          var d = finState.sedes[s.id];
+          return { id:s.id, nombre:s.nombre, dia:d.dia, hora:d.hora,
+                   observaciones:d.observaciones, llamados: llamadosDe(s) };
         }),
       consultas: finState.consultas.filter(function(c){
-        return c.dia || c.horario || c.docente || c.detalles;
+        return c.mesa || c.dia || c.horario || c.docente || c.detalles;
       }),
       metodEvaluacion: finState.metod.filter(function(m){
         return m.modalidad || m.detalle;
@@ -25636,19 +25728,26 @@
     finState.sedes = {};
     (p.sedes || []).forEach(function(s){
       if(!sedePorId(s.id)) return;
-      finState.sedes[s.id] = (s.mesas || []).map(function(m){
-        return {llamado:m.llamado||"", fecha:m.fecha||"", hora:m.hora||"", observaciones:m.observaciones||""};
-      });
-      if(finState.sedes[s.id].length === 0){ finState.sedes[s.id] = mesasInicialesDe(s.id); }
+      if(s.dia !== undefined || s.hora !== undefined){
+        finState.sedes[s.id] = { dia:s.dia||"", hora:horaParaReloj(s.hora), observaciones:s.observaciones||"" };
+      } else {
+        /* propuestas guardadas cuando se cargaba fecha por fecha: se toma
+           el día y la hora de la primera mesa que los tenga */
+        var ref = (s.mesas || []).filter(function(m){ return m.hora || m.dia || m.fecha; })[0] || {};
+        finState.sedes[s.id] = {
+          dia: ref.dia || diaDeLaFechaMesa(ref.fecha || "") || "",
+          hora: horaParaReloj(ref.hora),
+          observaciones: ref.observaciones || ""
+        };
+      }
     });
-    /* Compatibilidad con propuestas guardadas antes de dividir por sede */
     if(!p.sedes && p.mesas && p.mesas.length){
-      finState.sedes.laplata = p.mesas.map(function(m){
-        return {llamado:m.llamado||"", fecha:m.fecha||"", hora:m.hora||"", observaciones:m.observaciones||""};
-      });
+      var r0 = p.mesas.filter(function(m){ return m.hora || m.fecha; })[0] || {};
+      finState.sedes.laplata = { dia: r0.dia || diaDeLaFechaMesa(r0.fecha || "") || "",
+                                 hora: horaParaReloj(r0.hora), observaciones: r0.observaciones || "" };
     }
     finState.consultas = (p.consultas && p.consultas.length)
-      ? p.consultas.map(function(c){ return {dia:c.dia||"", horario:c.horario||"", docente:c.docente||"", modalidad:c.modalidad||"Presencial", detalles:c.detalles||""}; })
+      ? p.consultas.map(function(c){ return {mesa:c.mesa||"", dia:c.dia||"", horario:horaParaReloj(c.horario), docente:c.docente||"", modalidad:c.modalidad||"Presencial", detalles:c.detalles||""}; })
       : [consultaVacia()];
     finState.metod = (p.metodEvaluacion && p.metodEvaluacion.length)
       ? p.metodEvaluacion.map(function(m){ return {modalidad:m.modalidad||"", detalle:m.detalle||""}; })
@@ -25684,7 +25783,7 @@
          los valores de la materia elegida antes. */
       state.carreras = [];
       state.planes = [];
-      renderMultiSelect("carrera", CARRERA_OPTIONS, state.carreras);
+      refrescarCarrerasPorSede();
       renderMultiSelect("plan", PLAN_OPTIONS, state.planes);
       document.getElementById("f_semestre").value = "";
       aviso.style.display = "none";
@@ -25693,7 +25792,8 @@
 
     state.carreras = (info.carreras || []).slice();
     state.planes   = (info.planes   || []).slice();
-    renderMultiSelect("carrera", CARRERA_OPTIONS, state.carreras);
+    /* en las sedes del interior solo quedan las carreras que allí se dictan */
+    refrescarCarrerasPorSede();
     renderMultiSelect("plan", PLAN_OPTIONS, state.planes);
 
     var sems = info.semestres || [];
@@ -25888,9 +25988,11 @@
     if(!d.asignatura) faltan.push("Nombre de la asignatura");
     if(!d.docente)    faltan.push("Docente responsable");
     if(!d.email)      faltan.push("Email de contacto");
-    if(!d.sedes.length) faltan.push("al menos una sede con mesas de final");
-    else if(!d.sedes.some(function(s){ return s.mesas.some(function(m){ return m.fecha; }); })){
-      faltan.push("al menos una mesa con fecha cargada");
+    if(!d.sedes.length) faltan.push("el calendario de mesas (FCE o Ciencia de Datos)");
+    else {
+      var incompletas = d.sedes.filter(function(s){ return !s.dia || !s.hora; })
+                               .map(function(s){ return s.nombre; });
+      if(incompletas.length){ faltan.push("día y horario de " + incompletas.join(" y ")); }
     }
     return faltan;
   }
@@ -26510,13 +26612,27 @@
     return d ? NOMBRES_DIA[d.getDay()] : "";
   }
 
+  /* Un docente solo ve las mesas de las asignaturas que tiene asignadas */
+  function mesaVisible(asignatura){
+    if(permisos().verTodas) return true;
+    var mias = materiasDe(usuarioActual).map(normalizarNombre);
+    if(mias.length === 0) return false;
+    var a = normalizarNombre(asignatura || "");
+    return mias.some(function(m){
+      return a === m || a.indexOf(m) > -1 || m.indexOf(a) > -1;
+    });
+  }
+
   function finalesFiltrados(){
     var q  = document.getElementById("finBuscar").value.toLowerCase();
     var l  = document.getElementById("finLlamado").value;
     var d  = document.getElementById("finDepto").value;
     var c  = document.getElementById("finCarrera").value;
     var an = document.getElementById("finAnio").value;
+    var miDep = miDepartamento();
     return MESAS_FINALES.map(mesaConAjustes).filter(function(m){
+      if(!mesaVisible(m.asignatura)) return false;
+      if(miDep && (m.departamento || "") !== miDep) return false;
       if(q && m.asignatura.toLowerCase().indexOf(q) === -1) return false;
       if(String(m.llamado) !== l) return false;
       if(d && m.departamento !== d) return false;
@@ -26629,7 +26745,15 @@
     }).join("");
 
     var q = (document.getElementById("finBuscar").value || "").toLowerCase();
-    var todas = MESAS_SEDES[sede] || [];
+    var miDepS = miDepartamento();
+    var todas = (MESAS_SEDES[sede] || []).filter(function(m){
+      if(!mesaVisible(m.asignatura)) return false;
+      if(miDepS){
+        var dep = departamentoDeAsignatura(m.asignatura);
+        if(dep !== miDepS) return false;
+      }
+      return true;
+    });
     var delLlamado = todas.filter(function(m){ return llamadoNormalizado(sede, m.llamado) === actual; });
     var filas = delLlamado.filter(function(m){
       return !q || (m.asignatura || "").toLowerCase().indexOf(q) !== -1;
@@ -27165,7 +27289,9 @@
       });
 
     var html = '<table class="admin"><thead><tr>' +
-      '<th>Correo institucional</th><th style="width:230px;">Rol</th><th style="width:120px;">Origen</th><th style="width:90px;"></th>' +
+      '<th>Correo institucional</th><th style="width:230px;">Rol</th>' +
+      '<th style="width:250px;">Departamento</th>' +
+      '<th style="width:110px;">Origen</th><th style="width:90px;"></th>' +
       '</tr></thead><tbody>';
     lista.forEach(function(f){
       var esM = f.origen === "maestro";
@@ -27178,6 +27304,18 @@
                 return '<option value="' + r + '"' + (f.rol === r ? ' selected' : '') + '>' + esc(ROLES_NOMBRE[r]) + '</option>';
               }).join("") +
             '</select>') + '</td>' +
+        /* El departamento solo aplica a las cuentas con rol Departamento:
+           define qué materias ve en Cursadas - La Plata y en Finales. */
+        '<td>' + (f.rol === "departamento"
+          ? '<select class="perm-depto" data-email="' + esc(f.email) + '">' +
+              '<option value="">— Sin asignar (no ve nada) —</option>' +
+              DEPARTAMENTOS.map(function(d){
+                return '<option value="' + esc(d) + '"' +
+                       (departamentoDeCuenta(f.email) === d ? ' selected' : '') + '>' +
+                       esc(DEPARTAMENTO_NOMBRE[d] || d) + '</option>';
+              }).join("") +
+            '</select>'
+          : '<span style="font-size:11.5px; color:var(--ink-soft);">—</span>') + '</td>' +
         '<td><span style="font-size:11.5px; color:var(--ink-soft);">' +
           (esM ? "fija" : (f.origen === "panel" ? "asignado acá" : "predefinido")) + '</span></td>' +
         '<td>' + (esM ? "" :
@@ -27186,6 +27324,22 @@
     });
     html += '</tbody></table>';
     wrap.innerHTML = html;
+
+    if(!permisos().editarPermisos){
+      Array.prototype.forEach.call(wrap.querySelectorAll("select, button"), function(el){
+        el.disabled = true;
+      });
+    }
+
+    Array.prototype.forEach.call(wrap.querySelectorAll(".perm-depto"), function(sel){
+      sel.addEventListener("change", function(){
+        var em = sel.getAttribute("data-email");
+        if(sel.value){ DEPTO_CUENTA[em] = sel.value; } else { delete DEPTO_CUENTA[em]; }
+        persistirPermisos(sel.value
+          ? (em + " queda asignado al " + (DEPARTAMENTO_NOMBRE[sel.value] || sel.value) + ".")
+          : ("Se quitó el departamento de " + em + "."));
+      });
+    });
 
     Array.prototype.forEach.call(wrap.querySelectorAll(".perm-select"), function(sel){
       sel.addEventListener("change", function(){
@@ -27223,6 +27377,20 @@
     });
   }
 
+  (function(){
+    var sel = document.getElementById("permDepto");
+    sel.innerHTML = '<option value="">Seleccionar departamento…</option>' +
+      DEPARTAMENTOS.map(function(d){
+        return '<option value="' + esc(d) + '">' + esc(DEPARTAMENTO_NOMBRE[d] || d) + '</option>';
+      }).join("");
+    function alternarCampo(){
+      document.getElementById("permDeptoCampo").style.display =
+        document.getElementById("permRol").value === "departamento" ? "" : "none";
+    }
+    document.getElementById("permRol").addEventListener("change", alternarCampo);
+    alternarCampo();
+  })();
+
   document.getElementById("permAddBtn").addEventListener("click", function(){
     var em = document.getElementById("permEmail").value.trim().toLowerCase();
     var rol = document.getElementById("permRol").value;
@@ -27230,9 +27398,18 @@
     if(!emailValido(em)){ msg.className="save-msg err"; msg.textContent="Ingresá un correo válido."; return; }
     if(!esInstitucional(em)){ msg.className="save-msg err"; msg.textContent="Solo se admiten correos @" + DOMINIO_INSTITUCIONAL + "."; return; }
     if(esEmailMaestro(em)){ msg.className="save-msg err"; msg.textContent="Las cuentas maestras no pueden modificarse."; return; }
+    var dep = document.getElementById("permDepto").value;
+    if(rol === "departamento" && !dep){
+      msg.className="save-msg err";
+      msg.textContent="Elegí a qué departamento pertenece esta cuenta.";
+      return;
+    }
     ROLES_ASIGNADOS[em] = rol;
+    if(rol === "departamento"){ DEPTO_CUENTA[em] = dep; } else { delete DEPTO_CUENTA[em]; }
     document.getElementById("permEmail").value = "";
-    persistirPermisos("Rol asignado a " + em + ".");
+    document.getElementById("permDepto").value = "";
+    persistirPermisos("Rol asignado a " + em +
+      (rol === "departamento" ? " (" + (DEPARTAMENTO_NOMBRE[dep] || dep) + ")" : "") + ".");
   });
 
   /* ---------- lista blanca de correos habilitados ---------- */
@@ -27471,6 +27648,12 @@
       } else {
         if(tipoP !== "cursada") return false;
       }
+      /* Un docente solo ve sus propias propuestas en este panel */
+      if(!permisos().verTodas && !esPropia(p)) return false;
+      /* Un Departamento ve solo sus materias en "Cursadas - La Plata".
+         "Cursadas - Sedes Regionales" se muestra completo a todos. */
+      var miDep = miDepartamento();
+      if(miDep && !bloqueSedes && departamentoDe(p) !== miDep) return false;
       var carreras = p.carreras || [];
       var planes = p.planes || [];
       var okSearch = !search || (p.asignatura||"").toLowerCase().indexOf(search) > -1;
@@ -27734,7 +27917,12 @@
             var dep = departamentoDe(p);
             if(dep){ lineas.push("Departamento de " + esc(deptoBonito(dep))); }
 
+            /* En "Cursadas para sedes", una etiqueta cobre identifica la sede */
+            var chipSede = ((p.tipoPropuesta || "cursada") === "cursada_sede")
+              ? '<span class="chip-sede">' + esc(p.sedeNombre || p.sede || "Sede") + '</span>'
+              : "";
             html += '<td rowspan="' + totalFilas + '" class="saa-merged saa-ident">' +
+              chipSede +
               '<span class="id-asig">' + esc(p.asignatura||"—") + '</span>' +
               (p.docente ? '<span class="id-doc">' + esc(p.docente) + '</span>' : '') +
               lineas.map(function(l){ return '<span class="id-linea">' + l + '</span>'; }).join("") +
@@ -28817,6 +29005,18 @@
     html += '<h3>Registro de carga</h3>';
     html += '<div class="kv"><b>Cargada el</b><span>' + esc(textoSelloTiempo(p.createdAt)) +
       (p.cargadoPor ? ' · ' + esc(p.cargadoPor) : '') + '</span></div>';
+    /* Si quien la cargó no es el docente de contacto, se deja constancia
+       (por ejemplo, un Departamento que carga en reemplazo del docente). */
+    if(p.cargadoPor && p.email && p.cargadoPor.toLowerCase() !== p.email.toLowerCase()){
+      var rolQuien = rolDe(p.cargadoPor);
+      var depQuien = departamentoDeCuenta(p.cargadoPor);
+      html += '<div class="kv"><b>Cargada en nombre de</b><span>' + esc(p.docente || "—") +
+        ' (' + esc(p.email) + ') · la cargó <b>' + esc(p.cargadoPor) + '</b>' +
+        (rolQuien === "departamento"
+          ? ' — ' + esc(depQuien ? (DEPARTAMENTO_NOMBRE[depQuien] || depQuien) : "Departamento")
+          : '') +
+        '</span></div>';
+    }
     if(p.updatedAt && String(p.updatedAt).slice(0,16) !== String(p.createdAt||"").slice(0,16)){
       html += '<div class="kv"><b>Última modificación</b><span>' + esc(textoSelloTiempo(p.updatedAt)) +
         (p.editadoPor ? ' · ' + esc(p.editadoPor) : '') + '</span></div>';
@@ -28828,23 +29028,31 @@
       html += '<div class="kv"><b>Carrera(s)</b><span>' + esc((p.carreras||[]).join(", ") || "—") + '</span></div>';
       html += '<div class="kv"><b>Plan(es) de estudio</b><span>' + esc((p.planes||[]).join(", ") || "—") + '</span></div>';
 
-      html += '<h3>Cronograma de mesas de final</h3>';
+      html += '<h3>Día y horario de las mesas de final</h3>';
       var sedesP = p.sedes;
-      /* propuestas guardadas antes de dividir por sede */
-      if(!sedesP && (p.mesas||[]).length){ sedesP = [{ id:"laplata", nombre:"La Plata", mesas:p.mesas }]; }
-      if(!sedesP || sedesP.length === 0){ html += '<p>Sin mesas cargadas.</p>'; }
+      if(!sedesP && (p.mesas||[]).length){
+        var r = p.mesas.filter(function(m){ return m.hora || m.fecha; })[0] || {};
+        sedesP = [{ id:"laplata", nombre:"La Plata", dia:r.dia || "", hora:r.hora || "" }];
+      }
+      if(!sedesP || sedesP.length === 0){ html += '<p>Sin sedes cargadas.</p>'; }
       else {
+        html += '<table class="mini"><thead><tr><th>Sede</th><th>Día</th><th>Hora</th>' +
+                '<th>Llamados del año</th><th>Observaciones</th></tr></thead><tbody>';
         sedesP.forEach(function(s){
-          html += '<p style="margin:12px 0 2px;"><b>' + esc(s.nombre || s.id) + '</b></p>';
-          if(!(s.mesas||[]).length){ html += '<p style="font-size:13px;">Sin mesas cargadas.</p>'; return; }
-          html += '<table class="mini"><thead><tr><th>Llamado</th><th>Fecha</th><th>Día</th><th>Hora</th><th>Observaciones</th></tr></thead><tbody>';
-          s.mesas.forEach(function(m){
-            html += '<tr><td>' + esc(m.llamado || "—") + '</td><td>' + fmtDate(m.fecha) + '</td>' +
-                    '<td>' + esc(m.dia || "—") + '</td><td>' + esc(m.hora || "—") + '</td>' +
-                    '<td>' + esc(m.observaciones || "") + '</td></tr>';
-          });
-          html += '</tbody></table>';
+          /* compatibilidad con propuestas que traían fecha por fecha */
+          var dia = s.dia, hora = s.hora;
+          if(dia === undefined && (s.mesas||[]).length){
+            var ref = s.mesas.filter(function(m){ return m.hora || m.dia; })[0] || {};
+            dia = ref.dia; hora = ref.hora;
+          }
+          html += '<tr><td><b>' + esc(s.nombre || s.id) + '</b></td>' +
+                  '<td>' + esc(dia || "—") + '</td><td>' + esc(hora || "—") + '</td>' +
+                  '<td>' + ((s.llamados||[]).length ? esc(s.llamados.join(" · ")) : "—") + '</td>' +
+                  '<td>' + esc(s.observaciones || "") + '</td></tr>';
         });
+        html += '</tbody></table>';
+        html += '<p style="font-size:12.5px; color:var(--ink-soft);">Las fechas exactas de cada llamado ' +
+                'surgen del calendario académico del año.</p>';
       }
 
       html += '<h3>Clases de consulta</h3>';
