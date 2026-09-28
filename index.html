@@ -71,6 +71,48 @@
   }
   #formFinal table.grid td{padding:5px 6px; vertical-align:middle;}
 
+  /* Fila del cronograma de parciales pintada según el estado, para que el
+     conflicto se vea de un vistazo sin tener que leer la columna Estado. */
+  tr.fila-estado.ev-verde    > td{background:#EDF6F0 !important;}
+  tr.fila-estado.ev-rojo     > td{background:#FBEBEA !important;}
+  tr.fila-estado.ev-amarillo > td{background:#FDF6E3 !important;}
+  tr.fila-estado.ev-gris     > td{background:transparent;}
+  tr.fila-estado.ev-rojo     > td.ev-fecha{font-weight:700; color:#9E2B25;}
+
+  .ev-chip.ev-gris, select.ev-gris{background:#E6E4DF !important; color:#5A5750 !important;}
+
+  /* Anchos del cronograma de parciales, declarados en el colgroup */
+  table.tabla-eval{table-layout:fixed;}
+  table.tabla-eval col.c-asig{width:280px;}
+  table.tabla-eval col.c-carr{width:56px;}
+  table.tabla-eval col.c-mod{width:92px;}
+  table.tabla-eval col.c-inst{width:136px;}
+  table.tabla-eval col.c-com{width:74px;}
+  table.tabla-eval col.c-fecha{width:96px;}
+  table.tabla-eval col.c-hora{width:58px;}
+  table.tabla-eval col.c-ideal{width:104px;}
+  table.tabla-eval col.c-hora-ideal{width:70px;}
+  table.tabla-eval col.c-estado{width:120px;}
+  table.tabla-eval col.c-conf-fecha{width:96px;}
+  table.tabla-eval col.c-conf-hora{width:58px;}
+
+  /* Encabezado agrupado del cronograma de parciales */
+  table.tabla-eval tr.grupo-head th{
+    font-size:11px; font-weight:700; letter-spacing:.3px; text-transform:uppercase;
+    padding:6px 8px; border-bottom:2px solid var(--line); text-align:center;
+  }
+  table.tabla-eval tr.grupo-head th small{
+    display:block; font-weight:500; text-transform:none; letter-spacing:0;
+    font-size:10px; opacity:.8;
+  }
+  table.tabla-eval tr.grupo-head th.grupo-doc,
+  table.tabla-eval tr.grupo-head th.grupo-saa,
+  table.tabla-eval tr.grupo-head th.grupo-conf{background:#fff; color:var(--ink-soft);}
+  table.tabla-eval td.ev-conf-fecha{font-weight:700; text-align:center;}
+  table.tabla-eval td.ev-conf-fecha.hay-conf{color:#1E6B38;}
+  table.tabla-eval td.ev-conf-hora{text-align:center; font-size:11.5px; color:var(--ink-soft);}
+  .ev-pendiente{font-weight:500; font-size:11.5px; color:var(--ink-soft); font-style:italic;}
+
   /* etiqueta de sede en la columna Asignatura del panel de Secretaría */
   .chip-sede{
     display:inline-block; margin:0 0 5px; padding:2px 9px; border-radius:999px;
@@ -349,11 +391,11 @@
   /* Tabla de mesas de finales */
   table.tabla-fin{table-layout:fixed; min-width:1290px; border-collapse:collapse; width:100%;}
   table.tabla-fin th, table.tabla-fin td{
-    padding:5px 7px; font-size:11px; line-height:1.25;
+    padding:5px 7px; font-size:12px; line-height:1.25;
     vertical-align:middle;
     border-bottom:1px solid #E8E4DA; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
   }
-  table.tabla-fin th{font-size:9.5px;}
+  table.tabla-fin th{font-size:10.5px;}
   table.tabla-fin th.f-asig, table.tabla-fin td.f-asig{
     width:auto; min-width:250px;
     white-space:normal; line-height:1.2;
@@ -600,6 +642,7 @@
   .ev-est.ev-verde{background:#2F8F4E;}
   .ev-est.ev-amarillo{background:#E3B341;}
   .ev-est.ev-rojo{background:#C0392B;}
+  .ev-est.ev-gris{background:#C7C4BD;}
 
   /* Vista lista */
   .cal-lista{margin-top:10px; border-top:1px solid var(--line);}
@@ -957,8 +1000,11 @@
   .cupos-sin.activo{font-size:11px; font-weight:600; color:var(--teal-deep);}
 
   /* Tabla de evaluaciones: columnas compactas para que entren las fechas */
+  /* La tabla mantiene sus anchos reales: si la pantalla es angosta, se
+     desplaza en horizontal en vez de comprimir y recortar las primeras
+     columnas (Asignatura, Carrera, Examen e Instancia siempre legibles). */
   #saaTableWrap table.tabla-eval,
-  #cronoTableWrap table.tabla-eval{min-width:0; width:100%;}
+  #cronoTableWrap table.tabla-eval{min-width:1240px; width:100%;}
   #saaTableWrap table.tabla-eval th,
   #cronoTableWrap table.tabla-eval th,
   #saaTableWrap table.tabla-eval td,
@@ -969,19 +1015,13 @@
   #cronoTableWrap table.tabla-eval th.ev-asig,
   #saaTableWrap table.tabla-eval td.ev-asig,
   #cronoTableWrap table.tabla-eval td.ev-asig{
-    width:210px; min-width:210px; max-width:210px; white-space:normal;
+    width:280px; min-width:280px; max-width:280px; white-space:normal;
   }
   #saaTableWrap table.tabla-eval th.ev-carr,
   #cronoTableWrap table.tabla-eval th.ev-carr,
   #saaTableWrap table.tabla-eval td.ev-carr,
   #cronoTableWrap table.tabla-eval td.ev-carr{
     width:56px; min-width:56px; max-width:56px; text-align:center;
-  }
-  #saaTableWrap table.tabla-eval th.ev-cat,
-  #cronoTableWrap table.tabla-eval th.ev-cat,
-  #saaTableWrap table.tabla-eval td.ev-cat,
-  #cronoTableWrap table.tabla-eval td.ev-cat{
-    width:74px; min-width:74px; max-width:74px; text-align:center;
   }
   #saaTableWrap table.tabla-eval th.ev-mod,
   #cronoTableWrap table.tabla-eval th.ev-mod,
@@ -1007,13 +1047,50 @@
   #cronoTableWrap table.tabla-eval th.ev-ideal,
   #saaTableWrap table.tabla-eval td.ev-ideal,
   #cronoTableWrap table.tabla-eval td.ev-ideal{
-    width:118px; min-width:118px; max-width:118px; text-align:center;
+    width:98px; min-width:98px; max-width:98px; text-align:center;
   }
+
+  /* Bloques del docente y de la fecha confirmada: mismo ancho, centrados */
+  #saaTableWrap table.tabla-eval th.ev-fecha,
+  #cronoTableWrap table.tabla-eval th.ev-fecha,
+  #saaTableWrap table.tabla-eval td.ev-fecha,
+  #cronoTableWrap table.tabla-eval td.ev-fecha,
+  #saaTableWrap table.tabla-eval th.ev-conf-fecha,
+  #cronoTableWrap table.tabla-eval th.ev-conf-fecha,
+  #saaTableWrap table.tabla-eval td.ev-conf-fecha,
+  #cronoTableWrap table.tabla-eval td.ev-conf-fecha{
+    width:92px; min-width:92px; max-width:92px; text-align:center;
+  }
+  /* Las horas son angostas: solo entran HH:MM */
+  #saaTableWrap table.tabla-eval th.ev-hora,
+  #cronoTableWrap table.tabla-eval th.ev-hora,
+  #saaTableWrap table.tabla-eval td.ev-hora,
+  #cronoTableWrap table.tabla-eval td.ev-hora,
+  #saaTableWrap table.tabla-eval th.ev-conf-hora,
+  #cronoTableWrap table.tabla-eval th.ev-conf-hora,
+  #saaTableWrap table.tabla-eval td.ev-conf-hora,
+  #cronoTableWrap table.tabla-eval td.ev-conf-hora{
+    width:54px; min-width:54px; max-width:54px; text-align:center;
+    padding-left:2px; padding-right:2px;
+  }
+  #saaTableWrap table.tabla-eval th.ev-hora-ideal,
+  #cronoTableWrap table.tabla-eval th.ev-hora-ideal,
+  #saaTableWrap table.tabla-eval td.ev-hora-ideal,
+  #cronoTableWrap table.tabla-eval td.ev-hora-ideal{
+    width:62px; min-width:62px; max-width:62px; text-align:center;
+    padding-left:2px; padding-right:2px;
+  }
+  /* los campos de fecha y hora ocupan su celda, sin desbordarla */
+  table.tabla-eval td.ev-ideal input,
+  table.tabla-eval td.ev-hora-ideal input{
+    width:100%; box-sizing:border-box; padding:3px 4px; font-size:11px;
+  }
+  table.tabla-eval td.ev-estado select{width:100%; box-sizing:border-box;}
   #saaTableWrap table.tabla-eval th.ev-estado,
   #cronoTableWrap table.tabla-eval th.ev-estado,
   #saaTableWrap table.tabla-eval td.ev-estado,
   #cronoTableWrap table.tabla-eval td.ev-estado{
-    width:auto; min-width:104px; text-align:center;
+    width:116px; min-width:116px; max-width:116px; text-align:center;
   }
   #saaTableWrap table.tabla-eval input.saa-input-ideal,
   #cronoTableWrap table.tabla-eval input.saa-input-ideal{
@@ -1042,12 +1119,6 @@
   #saaTableWrap table.tabla-eval td.ev-fecha,
   #cronoTableWrap table.tabla-eval td.ev-fecha{
     width:92px; min-width:92px; max-width:92px; text-align:center; font-weight:600;
-  }
-  #saaTableWrap table.tabla-eval th.ev-hora,
-  #cronoTableWrap table.tabla-eval th.ev-hora,
-  #saaTableWrap table.tabla-eval td.ev-hora,
-  #cronoTableWrap table.tabla-eval td.ev-hora{
-    width:70px; min-width:70px; max-width:70px; text-align:center;
   }
 
   /* Referencia de colores */
@@ -2238,7 +2309,7 @@
 
   /* Columnas que cada rol puede editar en el panel de Secretaría */
   var COLUMNAS_EDITABLES = {
-    secretaria:   ["modalidad","categoria","estadoSiu","estadoCupos","cupos","fechaIdeal","estadoEval","marcaComision"],
+    secretaria:   ["modalidad","categoria","estadoSiu","estadoCupos","cupos","fechaIdeal","horaIdeal","estadoEval","marcaComision"],
     departamento: [],
     docente:      [],
     /* Dirección de Enseñanza: únicamente los indicadores SIU y Cupos.
@@ -2748,49 +2819,106 @@
 
   function semillaPruebaPropuestas(){
     var hoy = new Date().toISOString();
+    var yo  = "docente.prueba@modo-prueba.local";
+    var otro = "otro.docente@modo-prueba.local";
+
+    function fila(doc, mod, dia, hora){
+      var f = { docente:doc, modalidad:mod || "Teórico - Práctica", metodologia:"Presencial",
+                lunes:"", martes:"", miercoles:"", jueves:"", viernes:"", sabado:"" };
+      if(dia) f[dia] = hora;
+      return f;
+    }
+    function base(id, asig, carreras, planes, quien, extra){
+      var p = {
+        id:id, asignatura:asig, carreras:carreras, planes:planes,
+        semestre:"1° Semestre", tipoCurso:"Curso Regular - CPR",
+        docente:(quien === yo ? "Prof. Ejemplo (vos)" : "Prof. Otro Docente"),
+        email:quien, cargadoPor:quien, estado:"pendiente",
+        createdAt:hoy, updatedAt:hoy, fechaInicio:"", fechaFin:"",
+        fundamentacion:"Texto de ejemplo para probar la vista de detalle.",
+        metEnsenanza:"Texto de ejemplo.", metEvaluacion:"Texto de ejemplo.",
+        dictado:[], evaluacion:[], evalModo:"unificado",
+        cronograma:[{semana:"General", fecha:"", contenido:"Contenido de ejemplo."}]
+      };
+      Object.keys(extra || {}).forEach(function(k){ p[k] = extra[k]; });
+      return p;
+    }
+
     return [
-      {
-        id: "prueba_contabilidad1",
-        asignatura: "Contabilidad I (Bases y Fundamentos) - Cátedra A",
-        carreras: ["Contador Público"], planes: ["VII"], semestre: "1° Semestre",
-        tipoCurso: "Curso Regular - CPR", docente: "Prof. Ejemplo",
-        email: "docente.prueba@modo-prueba.local", cargadoPor: "docente.prueba@modo-prueba.local",
-        estado: "pendiente", createdAt: hoy, updatedAt: hoy,
-        fechaInicio: "", fechaFin: "",
-        fundamentacion: "Texto de ejemplo para probar la vista de detalle.",
-        metEnsenanza: "Texto de ejemplo.", metEvaluacion: "Texto de ejemplo.",
-        dictado: [{comision:"1", filas:[
-          {docente:"Prof. Ejemplo", modalidad:"Teórico - Práctica", metodologia:"Presencial",
-           lunes:"10 - 13", martes:"", miercoles:"", jueves:"", viernes:"", sabado:""}
-        ]}],
-        evaluacion: [
-          {instancia:"1° Parcial", comision:"", fecha:"2027-09-20", hora:"10:00", estadoEval:"pendiente"},
-          {instancia:"2° Parcial", comision:"", fecha:"2027-11-15", hora:"10:00", estadoEval:"sintratar"}
+      /* ---- Cursadas de La Plata, de distintos departamentos ---- */
+      base("pr_conta1", "Contabilidad I (Bases y Fundamentos) - Cátedra A",
+           ["Contador Público"], ["VII"], yo, {
+        dictado:[{comision:"1", filas:[fila("Prof. Ejemplo (vos)", "Teoría", "lunes", "10 - 13")]},
+                 {comision:"2", filas:[fila("Ayudante Ejemplo", "Práctica", "miercoles", "10 - 13")]}],
+        evaluacion:[
+          /* fecha en domingo: el sistema la marca "Superpuesto" automáticamente */
+          {instancia:"1° Parcial", comision:"1", fecha:"2027-09-19", hora:"10:00",
+           fechaIdeal:"2027-09-18", estadoEval:"sintratar"},
+          {instancia:"2° Parcial", comision:"1", fecha:"2027-11-15", hora:"10:00",
+           fechaIdeal:"2027-11-15", estadoEval:"confirmado"}
+        ]
+      }),
+      base("pr_audit", "Auditoria", ["Contador Público"], ["VI","VII"], yo, {
+        estado:"revisada",
+        dictado:[{comision:"1", filas:[fila("Prof. Ejemplo (vos)", "Teórico - Práctica", "viernes", "19 - 22")]}],
+        evaluacion:[{instancia:"1° Parcial", comision:"1", fecha:"2027-10-02", hora:"19:00",
+                     fechaIdeal:"2027-09-25", estadoEval:"sintratar"}]
+      }),
+      base("pr_marketing", "Marketing Estratégico", ["Lic. en Administración"], ["VII"], otro, {
+        estado:"revisada",
+        dictado:[{comision:"1", filas:[(function(){
+          var f = fila("Prof. Otro Docente", "Teórico - Práctica", "martes", "16 - 19");
+          f.estadoSiu = "cargado"; f.estadoCupos = "cargado"; return f;
+        })()]}]
+      }),
+      base("pr_turismo", "Geografía Turística Mundial", ["Lic. en Turismo"], ["III"], otro, {
+        dictado:[{comision:"1", filas:[fila("Prof. Otro Docente", "Teórico - Práctica", "jueves", "8 - 11")]}]
+      }),
+
+      /* ---- Cursadas de sedes regionales ---- */
+      base("pr_sede_bra", "Contabilidad I (Bases y Fundamentos) - Cátedra A",
+           ["Contador Público"], ["VII"], yo, {
+        tipoPropuesta:"cursada_sede", sede:"brandsen", sedeNombre:"Brandsen",
+        dictado:[{comision:"1", filas:[fila("Prof. Ejemplo (vos)", "Teórico - Práctica", "sabado", "9 - 13")]}]
+      }),
+      base("pr_sede_sal", "Auditoria", ["Contador Público"], ["VII"], otro, {
+        tipoPropuesta:"cursada_sede", sede:"saladillo", sedeNombre:"Saladillo",
+        dictado:[{comision:"1", filas:[fila("Prof. Otro Docente", "Teórico - Práctica", "viernes", "18 - 22")]}]
+      }),
+      base("pr_sede_dol", "Introducción al turismo", ["Lic. en Turismo"], ["III"], otro, {
+        tipoPropuesta:"cursada_sede", sede:"dolores", sedeNombre:"Dolores",
+        dictado:[{comision:"1", filas:[fila("Prof. Otro Docente", "Teórico - Práctica", "sabado", "10 - 14")]}]
+      }),
+
+      /* ---- Propuestas de mesas de final ---- */
+      base("pr_final_lp", "Contabilidad I (Bases y Fundamentos) - Cátedra A",
+           ["Contador Público"], ["VII"], yo, {
+        tipoPropuesta:"final",
+        sedes:[{id:"laplata", nombre:"La Plata — FCE", dia:"Jueves", hora:"16:00",
+                observaciones:"Aula 12",
+                llamados:["Febrero","Marzo","Mayo","Junio","Agosto","Septiembre","Octubre","Diciembre"]}],
+        consultas:[
+          {mesa:"Febrero", dia:"Martes", horario:"10:00", docente:"Prof. Ejemplo (vos)",
+           modalidad:"Virtual", detalles:"Por videollamada"},
+          {mesa:"Marzo", dia:"Martes", horario:"10:00", docente:"Prof. Ejemplo (vos)",
+           modalidad:"Presencial", detalles:"Box 3"}
         ],
-        evalModo: "unificado",
-        cronograma: [{semana:"General", fecha:"", contenido:"Contenido de ejemplo."}]
-      },
-      {
-        id: "prueba_marketing",
-        asignatura: "Marketing Estratégico",
-        carreras: ["Lic. en Administración"], planes: ["VII"], semestre: "1° Semestre",
-        tipoCurso: "Curso Regular - CPR", docente: "Prof. Ejemplo Dos",
-        email: "otro.docente@modo-prueba.local", cargadoPor: "otro.docente@modo-prueba.local",
-        estado: "revisada", createdAt: hoy, updatedAt: hoy,
-        fechaInicio: "", fechaFin: "",
-        fundamentacion: "Segunda propuesta de ejemplo, ya revisada por Secretaría.",
-        metEnsenanza: "Texto de ejemplo.", metEvaluacion: "Texto de ejemplo.",
-        dictado: [{comision:"1", filas:[
-          {docente:"Prof. Ejemplo Dos", modalidad:"Teórico - Práctica", metodologia:"Presencial",
-           lunes:"", martes:"16 - 19", miercoles:"", jueves:"", viernes:"", sabado:"",
-           estadoSiu:"cargado", estadoCupos:"cargado"}
-        ]}],
-        evaluacion: [
-          {instancia:"1° Parcial", comision:"", fecha:"2027-09-22", hora:"16:00", estadoEval:"confirmado"}
-        ],
-        evalModo: "unificado",
-        cronograma: [{semana:"General", fecha:"", contenido:"Contenido de ejemplo."}]
-      }
+        metodEvaluacion:[
+          {n:1, modalidad:"Escrito", detalle:"Dos ejercicios prácticos"},
+          {n:2, modalidad:"Oral", detalle:"Coloquio sobre la parte teórica"}
+        ]
+      }),
+      base("pr_final_cdo", "Procesos de negocio",
+           ["Ciencia de Datos en Organizaciones"], ["I"], otro, {
+        tipoPropuesta:"final",
+        sedes:[{id:"cdatos", nombre:"La Plata — Ciencia de Datos", dia:"Martes", hora:"19:00",
+                observaciones:"",
+                llamados:["Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto",
+                          "Septiembre","Octubre","Noviembre","Diciembre"]}],
+        consultas:[{mesa:"", dia:"Lunes", horario:"18:00", docente:"Prof. Otro Docente",
+                    modalidad:"Híbrida", detalles:""}],
+        metodEvaluacion:[{n:1, modalidad:"Trabajo final", detalle:"Defensa de un caso"}]
+      })
     ];
   }
 
@@ -26572,22 +26700,46 @@
     }
     selL.value = elegido;
     LLAMADOS_DISPONIBLES = claves;
+    poblarDeptoYAnio();
+  }
+
+  /* Departamentos y años del filtro de finales.
+     Se rearman de cero cada vez (antes se iban acumulando y se duplicaban). */
+  function poblarDeptoYAnio(){
     var selD = document.getElementById("finDepto");
-    Object.keys(deps).sort().forEach(function(d){
-      selD.innerHTML += '<option value="' + esc(d) + '">' + esc(deptoBonito(d)) + '</option>';
-    });
     var selA = document.getElementById("finAnio");
-    Object.keys(anios).sort().forEach(function(a){
-      selA.innerHTML += '<option value="' + esc(a) + '">' + esc(a) + '°año'.replace("°año","") + esc(a) + '</option>';
-    });
-    /* se rehace el listado de años con etiquetas simples */
-    selA.innerHTML = '<option value="">Todos los años</option>' +
-      Object.keys(anios).sort().map(function(a){
-        return '<option value="' + esc(a) + '">' + esc(a) + '</option>';
+    var previoD = selD.value, previoA = selA.value;
+
+    var opciones;
+    if(finVista === "cdatos"){
+      /* Ciencia de Datos se reparte entre dos facultades */
+      opciones = [{v:"ECONÓMICAS", t:"Económicas"}, {v:"INFORMÁTICA", t:"Informática"}];
+    } else {
+      var deps = {};
+      MESAS_FINALES.forEach(function(m){ if(m.departamento) deps[m.departamento] = 1; });
+      opciones = Object.keys(deps).sort().map(function(d){
+        return {v:d, t:deptoBonito(d)};
+      });
+    }
+    selD.innerHTML = '<option value="">Todos los departamentos</option>' +
+      opciones.map(function(o){
+        return '<option value="' + esc(o.v) + '">' + esc(o.t) + '</option>';
       }).join("");
+    if(previoD){ selD.value = previoD; }
+
+    selA.innerHTML = '<option value="">Todos los años</option>' +
+      ["1°","2°","3°","4°","5°"].map(function(a){
+        return '<option value="' + a + '">' + a + '</option>';
+      }).join("");
+    if(previoA){ selA.value = previoA; }
   }
 
   function puedeEditarFinales(){ return permisos().editarTodas; }
+  /* Pintar el estado de una mesa es un permiso aparte de editar sus datos:
+     Dirección de Enseñanza puede marcar, pero no modificar las celdas. */
+  function puedeMarcarFinales(){
+    return permisos().editarTodas || rolUsuario() === "staff";
+  }
 
   /* Devuelve la mesa con los ajustes guardados aplicados */
   function mesaConAjustes(m){
@@ -26644,6 +26796,24 @@
       if(dia && normalizarNombre(m.dia || "") !== normalizarNombre(dia)) return false;
       return true;
     });
+  }
+
+  /* La carrera de Ciencia de Datos se dicta entre dos facultades: estas son
+     las materias que corresponden a Económicas; el resto son de Informática. */
+  var CDO_ECONOMICAS = [
+    "Contabilidad e interpretación de estados contables",
+    "Costos e información para la gestión",
+    "Economía y Medición Económica",
+    "Gestión de las Organizaciones",
+    "Gestión de personas y equipos",
+    "Procesos de Negocio"
+  ];
+  function facultadDeMesaCDO(asignatura){
+    var a = normalizarNombre(asignatura || "");
+    for(var i=0;i<CDO_ECONOMICAS.length;i++){
+      if(normalizarNombre(CDO_ECONOMICAS[i]) === a) return "ECONÓMICAS";
+    }
+    return "INFORMÁTICA";
   }
 
   var NOMBRE_SEDE = { laplata:"La Plata", cdatos:"Ciencia de Datos",
@@ -26705,7 +26875,7 @@
   }
 
   function guardarMesasSede(sede, el){
-    if(!puedeEditarFinales()){ alert("No tenés permisos para modificar las mesas de finales."); return; }
+    if(!puedeMarcarFinales()){ alert("No tenés permisos para modificar las mesas de finales."); return; }
     if(el){ el.classList.add("saa-guardando"); }
     finalesSedesStorage.guardar(MESAS_SEDES).then(function(){
       if(el){
@@ -26729,6 +26899,7 @@
      en La Plata y todas las celdas editables por la Secretaría. */
   function renderSedeFinales(sede){
     var wrap = document.getElementById("finTableWrap");
+    poblarDeptoYAnio();
     var lista = LLAMADOS_SEDE[sede] || [];
     if(!LLAMADO_ACTUAL_SEDE[sede]){ LLAMADO_ACTUAL_SEDE[sede] = llamadoSugerido(sede); }
     var actual = LLAMADO_ACTUAL_SEDE[sede];
@@ -26746,12 +26917,22 @@
 
     var q = (document.getElementById("finBuscar").value || "").toLowerCase();
     var miDepS = miDepartamento();
+    var filtroDep = document.getElementById("finDepto").value;
+    var filtroAnio = document.getElementById("finAnio").value;
     var todas = (MESAS_SEDES[sede] || []).filter(function(m){
       if(!mesaVisible(m.asignatura)) return false;
       if(miDepS){
         var dep = departamentoDeAsignatura(m.asignatura);
         if(dep !== miDepS) return false;
       }
+      /* filtro de la barra superior */
+      if(filtroDep){
+        var propio = (sede === "cdatos")
+          ? facultadDeMesaCDO(m.asignatura)
+          : departamentoDeAsignatura(m.asignatura);
+        if(propio !== filtroDep) return false;
+      }
+      if(filtroAnio && soloOrdinales(m.anio || "") !== filtroAnio) return false;
       return true;
     });
     var delLlamado = todas.filter(function(m){ return llamadoNormalizado(sede, m.llamado) === actual; });
@@ -26760,6 +26941,7 @@
     });
 
     var editable = puedeEditarFinales();
+    var marcable = puedeMarcarFinales();
     var html = '<section class="cal-mes-bloque"><div class="cal-mes-head">' +
       '<h2>' + esc(NOMBRE_SEDE[sede] || sede) + ' <em>' + esc(actual) + '</em></h2>' +
       '<span class="cal-mes-count">' + filas.length + ' mesas</span></div>';
@@ -26803,7 +26985,7 @@
           var marca = m.marca || "sin";
           var celdaAsig = '<div class="fin-celda-asig">' +
             '<span class="fin-punto m-' + marca + '"' +
-              (editable ? ' data-marca-sede="' + sede + '" data-idx="' + i + '"' : '') +
+              (marcable ? ' data-marca-sede="' + sede + '" data-idx="' + i + '"' : '') +
               ' title="Cargado en SIU / Mesa modificada / Pendiente de carga"></span>' +
             (editable
               ? '<input type="text" class="fin-input fin-asig" data-sede-edit="' + sede +
@@ -26869,6 +27051,7 @@
     var html = "";
     var statsPuestas = false;
     var editableLP = puedeEditarFinales();
+    var marcableLP = puedeMarcarFinales();
 
 
     if(filas.length === 0){
@@ -26926,7 +27109,7 @@
           '<td class="f-asig fin-marca m-' + esc(marcaLP) + '" title="' + esc(m.asignatura) + '">' +
             '<div class="fin-celda-asig">' +
               '<span class="fin-punto m-' + esc(marcaLP) + '"' +
-                (editableLP ? ' data-marca-lp="' + esc(m.id) + '"' : '') +
+                (marcableLP ? ' data-marca-lp="' + esc(m.id) + '"' : '') +
                 ' title="Cargado en SIU / Mesa modificada / Pendiente de carga"></span>' +
               (editableLP
                 ? '<input type="text" class="fin-input fin-asig" data-lp-edit="' + esc(m.id) +
@@ -26976,7 +27159,7 @@
   }
 
   function guardarAjusteFinal(mid, campo, valor, el){
-    if(!puedeEditarFinales()){ alert("No tenés permisos para modificar las mesas de finales."); return; }
+    if(!puedeMarcarFinales()){ alert("No tenés permisos para modificar las mesas de finales."); return; }
     var base = null;
     for(var i=0;i<MESAS_FINALES.length;i++){ if(MESAS_FINALES[i].id === mid){ base = MESAS_FINALES[i]; break; } }
     if(!base) return;
@@ -27809,11 +27992,12 @@
 
     remoteStorage.set(pid, p).then(function(){
       el.classList.remove("saa-guardando");
-      if(campo === "estadoEval"){
-        el.classList.remove("ev-verde","ev-amarillo","ev-rojo");
-        el.classList.add(estadoEvalClase(valor));
+      el.classList.add("saa-guardado");
+      /* La fecha confirmada y el color de la fila dependen de estos tres
+         campos, así que se rehace la tabla para que queden al día. */
+      if(campo === "estadoEval" || campo === "fechaIdeal" || campo === "horaIdeal"){
+        setTimeout(renderSaaTable, 150);
       } else {
-        el.classList.add("saa-guardado");
         setTimeout(function(){ el.classList.remove("saa-guardado"); }, 1200);
       }
     }).catch(function(err){
@@ -28714,12 +28898,33 @@
   function tablaEvaluacionesHtml(filtered, filtroInstOpc){
     var conf = detectarConflictos(filtered);
     var html = panelAlertasHtml(conf);
-    html += '<table class="admin saa-table tabla-eval"><thead><tr>' +
-      '<th class="ev-asig">Asignatura</th><th class="ev-carr">Carrera</th>' +
-      '<th class="ev-cat">Categoría</th><th class="ev-mod">Examen</th>' +
-      '<th class="ev-inst">Instancia</th><th class="ev-com">Comisión</th>' +
-      '<th class="ev-fecha">Fecha propuesta</th><th class="ev-hora">Hora</th>' +
-      '<th class="ev-ideal sep-izq">Fecha ideal</th><th class="ev-estado">Estado</th>' +
+    html += '<table class="admin saa-table tabla-eval">' +
+      /* El ancho de cada columna se fija acá: con encabezados agrupados
+         (colspan) el navegador reparte mal si no se declara un colgroup. */
+      '<colgroup>' +
+        '<col class="c-asig"><col class="c-carr"><col class="c-mod">' +
+        '<col class="c-inst"><col class="c-com">' +
+        '<col class="c-fecha"><col class="c-hora">' +
+        '<col class="c-ideal"><col class="c-hora-ideal"><col class="c-estado">' +
+        '<col class="c-conf-fecha"><col class="c-conf-hora">' +
+      '</colgroup>' +
+      '<thead>' +
+      /* Tres bloques: lo que propuso el docente, lo que propone Secretaría
+         para resolver una superposición, y la fecha que queda en firme. */
+      '<tr class="grupo-head">' +
+        '<th colspan="5"></th>' +
+        '<th colspan="2" class="grupo-doc">Propuesta del docente</th>' +
+        '<th colspan="3" class="grupo-saa sep-izq">Propuesta de Secretaría <small>(si hay superposición)</small></th>' +
+        '<th colspan="2" class="grupo-conf sep-izq">Fecha confirmada</th>' +
+      '</tr>' +
+      '<tr>' +
+        '<th class="ev-asig">Asignatura</th><th class="ev-carr">Carrera</th>' +
+        '<th class="ev-mod">Examen</th>' +
+        '<th class="ev-inst">Instancia</th><th class="ev-com">Comisión</th>' +
+        '<th class="ev-fecha">Fecha</th><th class="ev-hora">Hora</th>' +
+        '<th class="ev-ideal sep-izq">Fecha ideal</th><th class="ev-hora-ideal">Hora</th>' +
+        '<th class="ev-estado">Estado</th>' +
+        '<th class="ev-conf-fecha sep-izq">Fecha</th><th class="ev-conf-hora">Hora</th>' +
       '</tr></thead><tbody>';
 
     var filtroInst = (filtroInstOpc !== undefined)
@@ -28746,15 +28951,16 @@
       var indices = visibles.map(function(x){ return x.idx; });
       var n = filas.length;
       filas.forEach(function(r, i){
-        html += '<tr class="' + (i === 0 ? "saa-first" : "") + '">';
+        var avisosFila = conf.porClave[p.id + "|" + indices[i]];
+        var estadoFila = estadoEvalEfectivo(visibles[i].r ? visibles[i].r.estadoEval : null, !!avisosFila);
+        html += '<tr class="' + (i === 0 ? "saa-first " : "") +
+          'fila-estado ' + estadoEvalClase(estadoFila) + '">';
         if(i === 0){
           html += '<td rowspan="' + n + '" class="saa-merged ev-asig" title="' + esc(p.asignatura||"") + '"><b>' + esc(p.asignatura||"—") + '</b>' +
             (p.semestre ? '<div class="saa-tags"><span class="tag sem">' + esc(p.semestre) + '</span></div>' : '') +
             '</td>';
           html += '<td rowspan="' + n + '" class="saa-merged ev-carr" title="' + esc((p.carreras||[]).join(", ")) + '">' +
             esc(abreviarCarreras(p.carreras)) + '</td>';
-          html += '<td rowspan="' + n + '" class="saa-merged ev-cat" title="' + esc(p.tipoCurso||"") + '">' +
-            esc(abreviarCategoria(p.tipoCurso)) + '</td>';
           html += '<td rowspan="' + n + '" class="saa-merged ev-mod"><span class="tag ' + (porComision ? "plan" : "") + '">' +
             (porComision ? "Por comisión" : "Unificado") + '</span></td>';
         }
@@ -28764,6 +28970,7 @@
         html += '<td class="ev-com">' +
           (porComision ? esc(r.comision || "—") : '<span class="tag">Todas</span>') + '</td>';
         var avisos = conf.porClave[p.id + "|" + indices[i]];
+        var estadoEfectivo = estadoEvalEfectivo(r.estadoEval, !!avisos);
         var marca = avisos
           ? '<span class="ev-warn" title="' + esc(avisos.map(function(a){ return "• " + a.texto; }).join("\n")) + '">⚠</span> '
           : '';
@@ -28771,7 +28978,16 @@
           (r.fecha ? fmtDate(r.fecha) : "") + '</td>';
         html += '<td class="ev-hora">' + (r.hora ? esc(r.hora) + " hs" : "") + '</td>';
         html += '<td class="ev-ideal sep-izq">' + inputFechaIdealHtml(p.id, indices[i], r.fechaIdeal) + '</td>';
-        html += '<td class="ev-estado">' + selectEstadoEvalHtml(p.id, indices[i], r.estadoEval) + '</td>';
+        html += '<td class="ev-hora-ideal">' + inputHoraIdealHtml(p.id, indices[i], r.horaIdeal) + '</td>';
+        html += '<td class="ev-estado">' +
+          selectEstadoEvalHtml(p.id, indices[i], estadoEfectivo, !!avisos) + '</td>';
+
+        /* Fecha confirmada: se calcula sola a partir de las dos anteriores */
+        var conf1 = fechaConfirmadaDe(r, !!avisos, estadoEfectivo);
+        html += '<td class="ev-conf-fecha sep-izq' + (conf1.fecha ? ' hay-conf' : '') + '" title="' +
+          esc(conf1.motivo) + '">' +
+          (conf1.fecha ? fmtDate(conf1.fecha) : '<span class="ev-pendiente">A confirmar</span>') + '</td>';
+        html += '<td class="ev-conf-hora">' + (conf1.hora ? esc(conf1.hora) + " hs" : "") + '</td>';
         html += '</tr>';
       });
     });
@@ -28780,20 +28996,34 @@
 
   /* Estado de acuerdo de la fecha de examen */
   var ESTADO_EVAL_OPCIONES = [
-    {valor:"confirmado", etiqueta:"Confirmado", clase:"ev-verde"},
-    {valor:"pendiente",  etiqueta:"Pendiente",  clase:"ev-amarillo"},
-    {valor:"sintratar",  etiqueta:"Sin tratar", clase:"ev-rojo"}
+    {valor:"confirmado",    etiqueta:"Confirmado",    clase:"ev-verde"},
+    {valor:"superpuesto",   etiqueta:"Superpuesto",   clase:"ev-rojo"},
+    {valor:"reprogramando", etiqueta:"Reprogramando", clase:"ev-amarillo"},
+    {valor:"sintratar",     etiqueta:"Sin tratar",    clase:"ev-gris"}
   ];
+
+  /* Una fecha con avisos de restricción queda marcada como "Superpuesto"
+     automáticamente: es el estado que ve todo el mundo hasta que se resuelva. */
+  function estadoEvalEfectivo(valor, tieneAvisos){
+    var v = valor || "sintratar";
+    /* compatibilidad con el estado "pendiente" que se usaba antes */
+    if(v === "pendiente") v = "reprogramando";
+    /* Si hay conflicto y nadie lo revisó todavía, queda "Superpuesto".
+       Si la Secretaría ya le puso un estado, manda esa decisión: el aviso ⚠
+       sobre la fecha sigue visible de todos modos. */
+    if(tieneAvisos && v === "sintratar") return "superpuesto";
+    return v;
+  }
   function estadoEvalClase(v){
     for(var i=0;i<ESTADO_EVAL_OPCIONES.length;i++){ if(ESTADO_EVAL_OPCIONES[i].valor===v) return ESTADO_EVAL_OPCIONES[i].clase; }
-    return "ev-rojo";
+    return "ev-gris";
   }
   function estadoEvalEtiqueta(v){
     for(var i=0;i<ESTADO_EVAL_OPCIONES.length;i++){ if(ESTADO_EVAL_OPCIONES[i].valor===v) return ESTADO_EVAL_OPCIONES[i].etiqueta; }
     return "Sin tratar";
   }
 
-  function selectEstadoEvalHtml(pid, idx, valor){
+  function selectEstadoEvalHtml(pid, idx, valor, superpuestoAuto){
     var v = valor || "sintratar";
     if(!puedeEditarColumna("estadoEval")){
       return '<span class="ev-chip ' + estadoEvalClase(v) + '">' + esc(estadoEvalEtiqueta(v)) + '</span>';
@@ -28804,6 +29034,37 @@
         return '<option value="' + o.valor + '"' + (v === o.valor ? ' selected' : '') + '>' + esc(o.etiqueta) + '</option>';
       }).join("") +
       '</select>';
+  }
+
+  function inputHoraIdealHtml(pid, idx, valor){
+    if(!puedeEditarColumna("fechaIdeal")){
+      return valor ? esc(valor) + " hs" : "—";
+    }
+    return '<input type="time" class="saa-input-ideal" data-saa-eval="horaIdeal" ' +
+      'data-pid="' + esc(pid) + '" data-idx="' + idx + '" value="' + esc(horaParaReloj(valor)) + '">';
+  }
+
+  /* ---------- Fecha confirmada ----------
+     Sin superposición, vale la fecha del docente.
+     Con superposición, queda a confirmar hasta que Secretaría marque
+     "Confirmado": ahí vale la fecha ideal (o la del docente, si Secretaría
+     confirmó la original sin proponer una nueva). */
+  function fechaConfirmadaDe(r, tieneAvisos, estado){
+    if(!tieneAvisos){
+      return r.fecha
+        ? { fecha:r.fecha, hora:r.hora || "", motivo:"Sin superposición: vale la fecha propuesta por el docente." }
+        : { fecha:"", hora:"", motivo:"El docente todavía no cargó la fecha." };
+    }
+    if(estado !== "confirmado"){
+      return { fecha:"", hora:"",
+               motivo:"La fecha se superpone. Queda a confirmar hasta que Secretaría resuelva la reprogramación." };
+    }
+    if(r.fechaIdeal){
+      return { fecha:r.fechaIdeal, hora:r.horaIdeal || r.hora || "",
+               motivo:"Reprogramada por Secretaría y confirmada." };
+    }
+    return { fecha:r.fecha || "", hora:r.hora || "",
+             motivo:"Secretaría confirmó la fecha original pese a la superposición." };
   }
 
   function inputFechaIdealHtml(pid, idx, valor){
